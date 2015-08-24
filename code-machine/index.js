@@ -28,7 +28,7 @@ marked.get('**/*.html', function (req, res) {
     var absolutePath = path.join(__dirname, 'resources/marked-html', req.path);
     res.sendFile(absolutePath);
 });
-marked.use('/', other)
+marked.use('/', other);
 
 var clean = express();
 clean.get('**/*.html', function (req, res) {
@@ -36,7 +36,7 @@ clean.get('**/*.html', function (req, res) {
     var absolutePath = path.join(__dirname, 'resources/clean-html', req.path);
     res.sendFile(absolutePath);
 });
-clean.use('/', other)
+clean.use('/', other);
 
 
 // Serve marked html resources

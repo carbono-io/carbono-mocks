@@ -1,5 +1,5 @@
 {
-  "name": "referencia",
+  "name": "carbono-mocks",
   "version": "0.0.0",
   "description": "",
   "main": "index.js",
@@ -29,6 +29,8 @@
     "sinon": "1.15.4"
   },
   "dependencies": {
+    "body-parser": "^1.13.3",
+    "config": "^1.15.0",
     "consign": "^0.1.1",
     "express": "^4.13.3"
   }
