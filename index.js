@@ -14,7 +14,8 @@ app.use('/code-machine', require('./code-machine'));
 
 app.use('/ide-mission-control', require('./ide-mission-control'));
 
-app.use('/ide-development-container-manager', require('./ide-development-container-manager'));
+app.use('/ide-development-container-manager',
+        require('./ide-development-container-manager'));
 
 var server = app.httpServer.listen(config.get('port'), function () {
     var host = server.address().address;
