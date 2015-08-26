@@ -1,0 +1,65 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<html uuid="16c12477-97dd-465b-9a3f-6e336a4d5218">
+<head uuid="7f846903-c2f3-4170-8f65-e4dee886c6cf">
+
+  <title uuid="4e0e2be2-180a-49d9-aaab-a85cab2839f0">iron-iconset-svg</title>
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+  <link href="../../paper-styles/demo-pages.html" rel="import" uuid="1d3f6eee-d649-481c-a0cc-23b606fd40c0">
+
+  <link rel="import" href="svg-sample-icons.html" uuid="bf9a08cb-1277-425b-ad4d-fede206fca09">
+  <style is="custom-style">
+
+    .centered {
+      text-align: center;
+    }
+    
+    iron-icon {
+      height: 64px;
+      width: 64px;
+      margin: auto 1em;
+    }
+
+    iron-icon:nth-of-type(1) {
+      fill: orange;
+    }
+
+    iron-icon:nth-of-type(2) {
+      fill: green;
+    }
+
+    iron-icon:nth-of-type(3) {
+      fill: navy;
+    }
+
+    iron-icon {
+      transition: all 0.5s;
+      -webkit-transition: all 0.5s;
+    }
+
+    iron-icon:hover {
+      -webkit-filter: drop-shadow( 2px 2px 2px var(--google-grey-700) );
+      filter: drop-shadow( 2px 2px 2px var(--google-grey-700) );
+    }
+  </style>
+</head>
+<body uuid="f1bfb7f9-8888-4162-8eec-1125c2fec9dd">
+
+  <div class="vertical-section vertical-section-container centered" uuid="ba227ed2-006e-44f1-9731-c4cffc849f58">
+    <iron-icon icon="svg-sample-icons:codepen" uuid="55672de7-e17c-422b-9302-f7a2bd04ca4c"></iron-icon>
+    <iron-icon icon="svg-sample-icons:twitter" uuid="f942fa4b-cd8a-4335-9c63-72ec88030244"></iron-icon>
+    <iron-icon icon="svg-sample-icons:youtube" uuid="1d2baf94-e300-45f2-ad25-991835aa8604"></iron-icon>
+  </div>
+
+</body>
+</html>

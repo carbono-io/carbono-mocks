@@ -1,0 +1,118 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE
+The complete set of authors may be found at http://polymer.github.io/AUTHORS
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS
+-->
+
+<link rel="import" href="../iron-flex-layout.html" uuid="33bb81ee-5aef-4226-8335-a2fbc0291551">
+
+<dom-module id="x-app" uuid="f03d1ed2-fd7e-4905-b588-ef8cdf2939b1">
+
+  <style>
+
+    :host {
+      @apply(--layout-horizontal);
+      @apply(--paper-font-body2);
+    }
+
+    [nav] {
+      @apply(--layout-vertical);
+
+      width: 200px;
+      background-color: var(--paper-grey-300);
+    }
+
+    [item] {
+      @apply(--layout-horizontal);
+      @apply(--layout-center);
+
+      height: 60px;
+      padding-left: 16px;
+      border-bottom: 1px solid var(--paper-grey-400);
+    }
+
+    [main] {
+      @apply(--layout-flex);
+      @apply(--layout-vertical);
+    }
+
+    [header] {
+      @apply(--layout-horizontal);
+      @apply(--layout-center);
+
+      @apply(--paper-font-subhead);
+
+      height: 60px;
+      background-color: var(--google-blue-700);
+      padding: 0 16px;
+      color: white;
+    }
+
+    [tool] {
+      @apply(--layout-inline);
+    }
+
+    [content] {
+      @apply(--layout-flex);
+
+      overflow: auto;
+      padding: 0 10px;
+    }
+
+    [card] {
+      @apply(--layout-vertical);
+      @apply(--layout-center-center);
+
+      @apply(--shadow-elevation-2dp);
+
+      height: 300px;
+      max-width: 800px;
+      margin: 16px auto;
+      font-weight: bold;
+      background-color: var(--paper-grey-200);
+    }
+
+  </style>
+
+  <template uuid="95e9e41c-bbb5-4e5f-b63d-1c77eafb5200">
+
+    <div nav="" uuid="a51548fe-c83e-4e51-be4c-842dd848b4f1">
+      <div content="" uuid="9a8be48d-410b-4842-a97c-58ed6a1df668">
+        <div item="" uuid="a8f66341-7fbb-4758-bae2-a2e68ed3226a">ITEM 1</div>
+        <div item="" uuid="db2430e5-2ac5-4744-8493-4e80dcfbbb52">ITEM 2</div>
+        <div item="" uuid="2a60a159-4d9f-42b4-94dc-cf51d02ca49a">ITEM 3</div>
+        <div item="" uuid="e2ddf32a-f93a-41d6-8bbd-8acb07f502a1">ITEM 4</div>
+        <div item="" uuid="a6da82c8-4e98-4634-95d3-4e84c7d318d2">ITEM 5</div>
+      </div>
+    </div>
+
+    <div main="" uuid="d543fb67-d419-4f3d-b8fe-4d0589d3606e">
+      <div header="" uuid="9862da73-ac67-407a-aa7d-ad1eb530acbc">
+        <div tool="" uuid="d810b939-1284-4462-a254-4c62323b516e">Foo</div>
+        <div class="flex" uuid="6497195f-6879-4b16-8ea1-dfe33a33b136"></div>
+        <div tool="" uuid="a4fd9a0f-2965-4aae-a51c-b3e2fee281bb">Bar</div>
+      </div>
+      <div content="" uuid="7a0a1612-166c-4e28-afba-e93aff589cfc">
+        <div card="" uuid="0a5a880b-4ec0-475c-88f2-cebd8280f926">CARD 1</div>
+        <div card="" uuid="465e4508-3453-4350-8295-712841a120c0">CARD 2</div>
+        <div card="" uuid="ff0766b7-8e12-47fd-8180-f965a069f3f8">CARD 3</div>
+        <div card="" uuid="419b81d5-3e79-4af2-82f2-918f36a77fe0">CARD 4</div>
+        <div card="" uuid="aa7d2671-0d89-4ea7-b8cd-ca3847f961b9">CARD 5</div>
+      </div>
+    </div>
+
+  </template>
+
+</dom-module>
+<script>
+
+  Polymer({
+    is: 'x-app'
+  });
+
+</script>
+

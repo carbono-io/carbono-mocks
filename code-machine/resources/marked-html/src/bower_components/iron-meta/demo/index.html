@@ -1,0 +1,46 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<html uuid="51c40f7d-a064-4eab-9eb4-ec5d5113533a">
+<head uuid="f8e1a338-9d39-46bb-9d70-109725bb35e1">
+
+  <meta charset="utf-8" uuid="d7d13332-c06a-4e69-9f3f-5d34ef8f8cbf">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" uuid="a29ca576-a3af-4dec-b612-e1a13a3b50ff">
+
+  <title uuid="10f5721a-f8a4-42ea-b5b3-81048cfc3bbd">iron-meta</title>
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../../paper-styles/demo-pages.html" uuid="efba9c11-7daa-4f24-b8a6-68d6a441af1f">
+  <link rel="import" href="../iron-meta.html" uuid="508a17c6-d7df-4c78-b40d-47b8992883a5">
+</head>
+<body uuid="34be043f-3a5a-4a2a-950d-fc6183606110">
+
+  <div class="vertical-section vertical-section-container centered" uuid="1c4d1337-ed96-4427-b462-9f7cf710555c">
+    <h1 uuid="fd1cf4b1-573d-4233-8929-90754b07d689">&lt;iron-meta&gt;</h1>
+    <iron-meta key="info" value="foo/bar" uuid="e944ddb4-ae57-4bf9-bdfd-b8887a5f311b"></iron-meta>
+    The <code uuid="e457b00a-6082-45e4-b4aa-1fa49fa76408">value</code> stored at <code uuid="a690a717-a412-4e49-9d36-76bd29db3c98">key="info"</code> is <code uuid="c3128f87-9cdd-4130-91af-cd397b0f3ccf"><meta-test uuid="7decd939-0058-4154-a79d-822be3b0aea1"></meta-test></code>.
+  </div>
+
+  <script>
+
+    Polymer({
+
+      is: 'meta-test',
+
+      ready: function() {
+        this.textContent = new Polymer.IronMetaQuery({key: 'info'}).value;
+      }
+
+    });
+
+  </script>
+
+</body>
+</html>

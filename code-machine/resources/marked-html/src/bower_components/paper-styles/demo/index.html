@@ -1,0 +1,358 @@
+<!doctype html>
+
+<!--
+  @license
+  Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+  This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+  The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+  The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+  Code distributed by Google as part of the polymer project is also
+  subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<html uuid="c7bdc2f1-3116-45ae-a715-9de484a9185b">
+  <head uuid="12d3d66b-0112-4c4f-ba69-0da032ed1656">
+
+    <meta charset="utf-8" uuid="01a5f6e4-36c3-4613-bace-4d81e8a3885e">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes" uuid="7d2e95ad-bbbd-4032-ac1b-3621d39ea19d">
+
+    <title uuid="4be4436a-5a2c-4604-b251-379c07bb0c73">paper-styles demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../paper-styles.html" uuid="f4d31a17-9498-4e16-844c-9fb8f6dda313">
+    <link rel="import" href="../demo-pages.html" uuid="eb943dd9-98c1-4640-993b-684fb6d46a00">
+
+    <style>
+
+      .redlines {
+        background: linear-gradient(0deg, transparent, transparent 3.5px, rgba(255,0,0,0.2) 3.5px, rgba(255,0,0,0.2) 4px);
+        background-size: 100% 4px;
+      }
+
+      .paragraph {
+        margin-bottom: 20px;
+      }
+
+    </style>
+
+  </head>
+  <body unresolved="" uuid="20c04ea4-1d45-4be3-8615-9adeb340d44d">
+
+    <!-- FIXME remove when https://github.com/Polymer/polymer/issues/1415 is resolved -->
+    <dom-module id="x-demo" uuid="6b456587-62cd-4865-9a84-b890c55c26fa">
+
+      <style>
+
+        .paper-font-display4 {
+          @apply(--paper-font-display4);
+        }
+
+        .paper-font-display3 {
+          @apply(--paper-font-display3);
+        }
+
+        .paper-font-display2 {
+          @apply(--paper-font-display2);
+        }
+
+        .paper-font-display1 {
+          @apply(--paper-font-display1);
+        }
+
+        .paper-font-headline {
+          @apply(--paper-font-headline);
+        }
+
+        .paper-font-title {
+          @apply(--paper-font-title);
+        }
+
+        .paper-font-subhead {
+          @apply(--paper-font-subhead);
+        }
+
+        .paper-font-body2 {
+          @apply(--paper-font-body1);
+        }
+
+        .paper-font-body1 {
+          @apply(--paper-font-body1);
+        }
+
+        .paper-font-caption {
+          @apply(--paper-font-caption);
+        }
+
+        .paper-font-menu {
+          @apply(--paper-font-menu);
+        }
+
+        .paper-font-button {
+          @apply(--paper-font-button);
+        }
+
+        .mobile-app {
+          max-width: 320px;
+        }
+
+        .toolbar {
+          height: 144px;
+          padding: 16px;
+
+          background: var(--default-primary-color);
+          color: var(--text-primary-color);
+          @apply(--paper-font-display1);
+        }
+
+        .item, .disabled-item {
+          position: relative;
+          padding: 8px;
+          border: 1px solid;
+          border-color: var(--divider-color);
+          border-top: 0;
+        }
+
+        .item .primary {
+          color: var(--primary-text-color);
+
+          @apply(--paper-font-body2);
+        }
+
+        .item .secondary {
+          color: var(--secondary-text-color);
+
+          @apply(--paper-font-body1);
+        }
+
+        .disabled-item {
+          color: var(--disabled-text-color);
+
+          @apply(--paper-font-body2);
+        }
+
+        .fab {
+          position: absolute;
+          box-sizing: border-box;
+          padding: 8px;
+          width: 56px;
+          height: 56px;
+          right: 16px;
+          top: -28px;
+          border-radius: 50%;
+          text-align: center;
+
+          background: var(--accent-color);
+          color: var(--text-primary-color);
+          @apply(--paper-font-display1);
+        }
+
+        .shadow {
+          display: inline-block;
+          padding: 8px;
+          margin: 16px;
+          height: 50px;
+          width: 50px;
+        }
+
+        .shadow-2dp {
+          @apply(--shadow-elevation-2dp);
+        }
+
+        .shadow-3dp {
+          @apply(--shadow-elevation-3dp);
+        }
+
+        .shadow-4dp {
+          @apply(--shadow-elevation-4dp);
+        }
+
+        .shadow-6dp {
+          @apply(--shadow-elevation-6dp);
+        }
+
+        .shadow-8dp {
+          @apply(--shadow-elevation-8dp);
+        }
+
+        .shadow-16dp {
+          @apply(--shadow-elevation-16dp);
+        }
+
+      </style>
+
+      <template uuid="7627bf7a-bbc3-4ec1-b58d-97a0e6770ff0">
+
+        <h1 uuid="6add754b-1cb4-444d-a21c-ce37cc29995c">paper-styles</h1>
+
+        <section id="default-theme" uuid="aff48894-5ae3-4919-b069-2373b0f3545c">
+          <h2 uuid="f22eee67-b9ea-4c7c-9c70-66e6245a7ab9">default-theme.html</h2>
+
+          <section class="mobile-app" uuid="2678775d-6fda-4e9e-8d4b-1d68cdad44aa">
+            <div class="toolbar" uuid="8fc3cb7c-b107-44c5-aa25-afa95131580b">
+              Title
+            </div>
+            <div class="item" uuid="9cdfa8e3-cd92-41dd-b804-aa42c88d43a6">
+              <div class="fab" uuid="69a9f9a6-0bdc-4481-93d0-c23feb83ac1a">+</div>
+              <div class="primary" uuid="c3c0f3e0-650a-42a8-aa80-fa251737b6e8">Primary text</div>
+              <div class="secondary" uuid="bbd08cb1-c6eb-4e5a-b489-afa7145aa92b">Secondary text</div>
+            </div>
+            <div class="disabled-item" uuid="0680ca98-4615-46f6-ae61-8f1f9e16f9e2">
+              Disabled
+            </div>
+          </section>
+        </section>
+
+        <section id="typography" uuid="0c5e2518-ae5f-4ea8-ab53-496edc9c9637">
+          <h2 uuid="4a4596c8-d663-45aa-9c79-22558df360df">typography.html</h2>
+          <p uuid="92791c5b-4586-4487-a126-cbd207cece51">
+            Grumpy wizards make toxic brew for the evil Queen and Jack.
+          </p>
+          <section class="redlines paragraph" uuid="cd86d45b-4d0e-43ae-a079-ddc9b1ea4af8">
+            <div class="paper-font-display4" uuid="341752d2-b848-4cb4-8f60-709fac33b5ab">Display 4</div>
+            <div class="paper-font-display3" uuid="0428096f-cac6-49c1-ac3f-9e9a6f33c29d">Display 3</div>
+            <div class="paper-font-display2" uuid="4eac9ebf-01a9-4a98-9b42-0796e9e045f4">Display 2</div>
+            <div class="paper-font-display1" uuid="2375f9da-3a3a-444b-9ec3-0200e656cca3">Display 1</div>
+            <div class="paper-font-headline" uuid="d3724ca4-90f9-4782-959c-e69d24b086c2">Headline</div>
+            <div class="paper-font-title" uuid="3cd7cc0a-f86a-49e1-a2d9-eb76496bed7a">Title</div>
+            <div class="paper-font-subhead" uuid="6d8bf56f-3abc-4b81-b022-72871e8a3114">Subhead</div>
+            <div class="paper-font-body2" uuid="bb995563-9c8b-463b-b459-c82195597755">Body 2</div>
+            <div class="paper-font-body1" uuid="b7c0826c-972d-4643-a50f-97a36554ebef">Body 1</div>
+            <div class="paper-font-caption" uuid="4076a742-dbaf-4cd5-8793-410c92d511e7">Caption</div>
+            <div class="paper-font-menu" uuid="1a0cdb47-240f-4837-987c-71eae2a2433b">Menu</div>
+            <div class="paper-font-button" uuid="fa34c14a-6cb6-47ea-aeb0-1e4fc589cb8d">Button</div>
+          </section>
+
+          <h3 uuid="2fb5fa1c-fe0d-4378-a303-772e801b9fbd">Paragraphs</h3>
+
+          <h4 uuid="694933ff-943b-410c-9dd9-b97c807e7f94">body2</h4>
+          <section class="paper-font-body2 redlines" uuid="f95ce59f-7d79-4c42-b758-4173979714c5">
+            <p uuid="fa4eb658-0d5a-494d-a26b-053d7e929e97">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+              tincidunt dui sit amet mi auctor, ac gravida magna aliquam. Fusce quis
+              purus elementum, tempus nisi vel, volutpat nulla. Vestibulum mollis
+              dictum tellus, vulputate porttitor arcu. Curabitur imperdiet risus id
+              egestas accumsan. Donec lectus felis, dignissim id iaculis sit amet,
+              faucibus in leo.
+            </p>
+            <p uuid="8932e155-d41c-471b-b62f-19f7a9e72597">
+              Mauris id urna ac ante ultrices commodo a imperdiet elit. Vivamus
+              interdum neque magna, eget dapibus est auctor et. Donec accumsan
+              libero nec augue scelerisque, ac egestas ante tincidunt. Proin
+              sollicitudin, mi eget sagittis mollis, arcu orci scelerisque turpis, a
+              sollicitudin tellus quam non sapien.
+            </p>
+          </section>
+
+          <h4 uuid="162feacc-b432-4eb4-a426-30dd9e1b9951">body1</h4>
+          <section class="paper-font-body1 redlines" uuid="7649a597-fa90-454f-ba3f-6d56522f6710">
+            <p uuid="b9ac20e0-9202-42d0-918f-efafac59bf2c">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+              tincidunt dui sit amet mi auctor, ac gravida magna aliquam. Fusce quis
+              purus elementum, tempus nisi vel, volutpat nulla. Vestibulum mollis
+              dictum tellus, vulputate porttitor arcu. Curabitur imperdiet risus id
+              egestas accumsan. Donec lectus felis, dignissim id iaculis sit amet,
+              faucibus in leo.
+            </p>
+            <p uuid="64d86d1e-9933-47ce-92b3-e2923dfe498f">
+              Mauris id urna ac ante ultrices commodo a imperdiet elit. Vivamus
+              interdum neque magna, eget dapibus est auctor et. Donec accumsan
+              libero nec augue scelerisque, ac egestas ante tincidunt. Proin
+              sollicitudin, mi eget sagittis mollis, arcu orci scelerisque turpis, a
+              sollicitudin tellus quam non sapien.
+            </p>
+          </section>
+        </section>
+
+        <section id="shadow" uuid="74fc9db2-fe5a-4060-97c0-3dcc43210069">
+          <h2 uuid="1fc1f201-7ab8-49f7-bab6-e3049a142714">shadow.html</h2>
+          <div class="shadow shadow-2dp" uuid="627a2475-d15d-4264-824f-ab6b7e0bbf54">2dp</div>
+          <div class="shadow shadow-3dp" uuid="acc36433-0708-454c-80a9-b9efc76f6e39">3dp</div>
+          <div class="shadow shadow-4dp" uuid="18288587-e630-484c-b484-31f1a9e3de0f">4dp</div>
+          <div class="shadow shadow-6dp" uuid="50bb5ed8-3c54-4a12-86b6-1ed83a52653a">6dp</div>
+          <div class="shadow shadow-8dp" uuid="9cc0875f-5eee-4fb3-b411-b1e0cbd4186c">8dp</div>
+          <div class="shadow shadow-16dp" uuid="f780bedb-584d-4113-9881-c6a339ed5bfd">16dp</div>
+        </section>
+
+      </template>
+    </dom-module>
+
+    <script>
+      document.addEventListener('HTMLImportsLoaded', function() {
+        Polymer({
+          is: 'x-demo',
+          enableCustomStyleProperties: true
+        });
+      });
+    </script>
+
+    <x-demo uuid="9fa5246a-08e4-487a-b564-e06adf9ef8c0"></x-demo>
+
+    <section id="demo-page" uuid="46d2c403-54f8-42ff-9191-dea40e9c3c51">
+      <h2 uuid="9333b499-532f-4a3f-a336-75d20dff2243">demo-pages.html</h2>
+
+      <h3 uuid="de0a9018-eee4-4851-bfcb-21cb7a822a35">Horizontal sections</h3>
+      <div class="horizontal-section-container" uuid="f9968d03-bb45-4082-9d1e-3d1bfb1f6e61">
+        <div uuid="5c5f4674-c6ee-4093-8085-1be6b11368d6">
+          <h4 uuid="a0ee9055-bbea-4897-8efd-33d86749853a">Column 1</h4>
+          <div class="horizontal-section" uuid="239aad4b-c311-4eb7-ae4f-3752a3b21b9b">
+            <div uuid="f1212759-9ee0-46c4-b313-2109605d29d3">Oxygen</div>
+            <div uuid="a1571464-b5b5-44b2-ab88-dbe5a3a4bc06">Carbon</div>
+            <div uuid="f38353f1-8a2b-4377-89c6-bc7e4062814a">Hydrogen</div>
+            <div uuid="f6bb3725-52af-4d6f-a972-dddf377adb3c">Nitrogen</div>
+            <div uuid="3d51660a-f6e6-4e4b-b948-c47b2a665956">Calcium</div>
+          </div>
+        </div>
+
+        <div uuid="40b03b89-e183-4e74-b50a-f1c5a27ec7f7">
+          <h4 uuid="7c16974a-4b40-4d69-b29b-f9550606b5bf">Column 2</h4>
+          <div class="horizontal-section" uuid="26308dee-fc22-40b3-8534-638a496eaa16">
+            <div uuid="916900e3-af1a-4109-949d-fc3d81d61563">Oxygen</div>
+            <div uuid="a8e33d6f-e858-4d2c-9477-a17ddb7d7a4d">Carbon</div>
+            <div uuid="47124154-1eb6-4b09-9d9c-d9f320f3cb96">Hydrogen</div>
+            <div uuid="7810e8b3-5eca-43ac-98e9-3c1fbfdbf5a9">Nitrogen</div>
+            <div uuid="40158a61-3633-4d6a-a36d-bf813e901d40">Calcium</div>
+          </div>
+        </div>
+
+        <div uuid="fe462a7a-8c4f-4a01-b888-9ad517a6d9a5">
+          <h4 uuid="6a5cc741-2be5-454b-8462-dc7eaa43732a">Column 3</h4>
+          <div class="horizontal-section" uuid="7198f21d-843c-4882-a268-e13515f8a6f5">
+            <div uuid="5acbeb2c-db93-4976-8947-6ff599ba1be9">Oxygen</div>
+            <div uuid="1bc1a914-55cd-48f4-8b74-cab4178b94ca">Carbon</div>
+            <div uuid="513e7c00-af6d-48cb-ae8f-9a607d261589">Hydrogen</div>
+            <div uuid="766ae4de-1c20-4cd6-8a27-41d3b7e9774e">Nitrogen</div>
+            <div uuid="5ce2fef6-921b-4e1e-93ee-3c00d89922c3">Calcium</div>
+          </div>
+        </div>
+      </div>
+
+      <h3 uuid="2c20f25d-d548-4aed-83c1-0b27d037471a">Vertical sections</h3>
+      <div class="vertical-section-container" uuid="7951cab0-1d9a-4d09-9ab3-083959bbc8d6">
+        <div uuid="f54caee9-2cca-4008-b5d7-f84708a16d0f">
+          <h4 uuid="d2055e27-f9dd-4b00-a91e-059148062656">Section 1</h4>
+          <div class="vertical-section" uuid="b024d556-bb0f-4a11-a5b8-b0654c7aa15c">
+            <div uuid="30515bdc-ad91-4ed5-813d-feb15636b71e">Oxygen</div>
+            <div uuid="1cccf895-2296-48a3-9527-58d84e2cf08e">Carbon</div>
+            <div uuid="0a2242f5-18af-4c63-8b64-be1e489bd673">Hydrogen</div>
+            <div uuid="f768a846-e754-447d-b5fd-27796129e5db">Nitrogen</div>
+            <div uuid="0b188cf6-db23-4b7c-a3f2-39a0d42e45a7">Calcium</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="vertical-section-container centered" uuid="affdd1b0-3197-4424-b322-a1f1350c453f">
+        <h4 uuid="08e5845f-2a77-48de-ac01-49108598bea8">Section 2 (centered)</h4>
+        <div class="vertical-section" uuid="5a5f88a6-f311-4400-b542-83721d1cccb8">
+          <div uuid="62fd39b9-0d1d-4f31-84c9-646947dd96b8">Oxygen</div>
+          <div uuid="a72338a8-520c-4f78-bf41-36724a6e1c62">Carbon</div>
+          <div uuid="70017410-27d5-4f83-8e5d-85aebbd10128">Hydrogen</div>
+          <div uuid="9d6a0aa0-b480-4174-b845-f052527b8b1d">Nitrogen</div>
+          <div uuid="1adccbd5-3a2c-4757-b33f-63129e03d084">Calcium</div>
+        </div>
+      </div>
+
+    </section>
+
+  </body>
+</html>

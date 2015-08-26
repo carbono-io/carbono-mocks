@@ -1,0 +1,132 @@
+<!doctype html>
+<!--
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<html uuid="2fa2d44b-1336-4fc1-8839-d364091dc7ee">
+<head uuid="011983c6-cae1-46cf-b449-cfb472143525">
+
+  <title uuid="7aac7ffe-9269-4eb1-adce-b379021c50f3">iron-icons</title>
+
+  <!-- polyfill WebComponents, if needed -->
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+  <!-- styles for the demo -->
+  <link href="../../paper-styles/demo-pages.html" rel="import" uuid="20113e83-ed15-4530-9e57-cd076cf627dd">
+
+  <!-- load layout classes -->
+  <link rel="import" href="../../iron-flex-layout/classes/iron-flex-layout.html" uuid="dc03f39e-3ee0-4cdc-9bdb-8df311c1f8a0">
+
+  <!-- load default iconset -->
+  <link rel="import" href="../iron-icons.html" uuid="da3be009-5399-420a-8eb4-43e4fb5e6215">
+
+  <!-- load the rest -->
+  <link rel="import" href="../av-icons.html" uuid="f18ac787-6dc2-4da9-955d-181d4a6b51dd">
+  <link rel="import" href="../communication-icons.html" uuid="dcd5cd5a-c1b3-4280-8cc2-73ec120b5ea0">
+  <link rel="import" href="../device-icons.html" uuid="45188b17-8cca-42a5-9ce1-b2debd868eed">
+  <link rel="import" href="../editor-icons.html" uuid="8112e5a2-eb72-417e-935c-cc325e036ef6">
+  <link rel="import" href="../hardware-icons.html" uuid="eb75d7ef-498f-4cc6-b517-8b8dd1bfec65">
+  <link rel="import" href="../image-icons.html" uuid="f449e339-4801-4e00-8030-d2bbf9cab068">
+  <link rel="import" href="../maps-icons.html" uuid="586b0eaf-97f9-4e53-bc8b-8dc5a782b40c">
+  <link rel="import" href="../notification-icons.html" uuid="2ed549f3-9199-4371-ba04-284debe6b873">
+  <link rel="import" href="../social-icons.html" uuid="0de93bf6-9768-4ec9-a659-857bd6459ce8">
+
+  <style is="custom-style">
+    
+    h2 {
+      text-transform: capitalize;
+    }
+
+    iron-icon {
+      transition: all 0.2s;
+      -webkit-transition: all 0.2s;
+    }
+
+    iron-icon:hover {
+      fill: var(--google-yellow-700);
+    }
+
+    .set {
+      margin: auto;
+      padding: 1em 0;
+      border-bottom: 1px solid silver;
+    }
+
+    .set:last-of-type {
+      border-bottom: none;
+    }
+
+    .set:nth-of-type(4n-3) {
+      color: var(--paper-grey-700);
+    }
+
+    .set:nth-of-type(4n-2) {
+      color: var(--google-yellow-300);
+    }
+
+    .set:nth-of-type(4n-1) {
+      color: var(--google-green-500);
+    }
+
+    .set:nth-of-type(4n) {
+      color: var( --google-blue-500);
+    }
+
+    .container {
+      min-width: 10em;
+      padding: 1em 0.5em;
+      text-align: center;
+    }
+
+    .container > div {
+      margin-top: 0.5em;
+      color: black;
+      font-size: 10px;
+    }
+
+  </style>
+
+</head>
+<body uuid="34378c89-b90b-4732-85fe-e180a906724a">
+
+  
+  <template is="dom-bind" uuid="9c5a21f7-beed-42df-8a96-e92a36b0891f">
+
+   <iron-meta type="iconset" list="{{iconsets}}" uuid="c9fae0fd-d74f-4a5a-a73c-33c789fd9ab8"></iron-meta>
+
+    <template is="dom-repeat" items="{{iconsets}}" uuid="672fe4df-44f0-4c44-a1e6-c95991af5cd7">
+
+      <h2 uuid="9214e436-ecf2-4044-a66e-be0dde3013fa">{{item.name}}</h2>
+
+      <div class="set horizontal wrap layout" uuid="5529070a-6edf-4103-ae9b-8d31271e5ee2">
+
+        <template is="dom-repeat" items="{{getIconNames(item)}}" uuid="ada56ee5-f754-4baf-8426-e328525607a4">
+
+          <span class="container vertical center layout flex-1" uuid="809d0d23-31ca-4910-b1d6-cf38e72a14f4">
+            <iron-icon icon="{{item}}" uuid="ff016a17-cb59-4889-a305-bf8c4218a173"></iron-icon>
+            <div uuid="1c163f9e-2bdf-4c8f-9bc5-bb29f685c2d4">{{item}}</div>
+          </span>
+
+        </template>
+
+      </div>
+
+    </template>
+
+  </template>
+
+  <script>
+
+    document.querySelector('[is=dom-bind]').getIconNames = function(iconset) {
+      return iconset.getIconNames();
+    };
+
+  </script>
+
+</body>
+</html>

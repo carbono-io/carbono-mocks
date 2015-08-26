@@ -1,0 +1,413 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<!doctype html>
+<html uuid="a7aebe55-78a7-4866-bd92-a00bfddd44e4">
+<head uuid="8baf015d-3cad-46c4-a230-340a2b745c80">
+  <title uuid="12f1b429-e941-4edc-8ea0-de396cdfbcbc">paper-ripple demo</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" uuid="ddbd5eb7-adad-4dc1-8ff7-3d561f27fecd">
+  <meta name="mobile-web-app-capable" content="yes" uuid="15074997-afcd-48cb-85d0-46c6d3e426c3">
+  <meta name="apple-mobile-web-app-capable" content="yes" uuid="4f00aeb2-7c11-472c-89ec-c91f8de986d6">
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+  <link rel="import" href="../../iron-icons/iron-icons.html" uuid="fa9fa27b-49c1-4202-afb1-6bd54f89278b">
+  <link rel="import" href="../paper-ripple.html" uuid="5a2548c6-5f3f-4440-8983-dd0a70f29b7a">
+  <link rel="import" href="../../paper-styles/classes/typography.html" uuid="dab9c274-2c63-412d-a3d5-9f870ca2fc88">
+  <link rel="import" href="../../iron-icon/iron-icon.html" uuid="93af4cf1-b40e-4da7-9faa-2415c28d7b2d">
+
+  <style>
+
+    body {
+      background-color: #f9f9f9;
+      font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
+      -webkit-touch-callout: none;
+    }
+
+    section {
+      padding: 30px 25px;
+    }
+
+    section > * {
+      margin: 10px
+    }
+
+    /* Button */
+    .button {
+      display: inline-block;
+      position: relative;
+      width: 120px;
+      height: 32px;
+      line-height: 32px;
+      border-radius: 2px;
+      font-size: 0.9em;
+      background-color: #fff;
+      color: #646464;
+    }
+
+    .button > paper-ripple {
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .button.narrow {
+      width: 60px;
+    }
+
+    .button.grey {
+      background-color: #eee;
+    }
+
+    .button.blue {
+      background-color: #4285f4;
+      color: #fff;
+    }
+
+    .button.green {
+      background-color: #0f9d58;
+      color: #fff;
+    }
+
+    .button.raised {
+      transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      transition-delay: 0.2s;
+      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    }
+
+    .button.raised:active {
+      box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);
+      transition-delay: 0s;
+    }
+
+    /* Icon Button */
+    .icon-button {
+      position: relative;
+      display: inline-block;
+      width: 56px;
+      height: 56px;
+    }
+
+    .icon-button > iron-icon {
+      margin: 16px;
+      transition: -webkit-transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .icon-button:hover > iron-icon {
+      -webkit-transform: scale(1.2);
+      transform: scale(1.2);
+    }
+
+    .icon-button > paper-ripple {
+      overflow: hidden;
+      color: #646464;
+    }
+
+    .icon-button.red > iron-icon::shadow path {
+      fill: #db4437;
+    }
+
+    .icon-button.red > paper-ripple {
+      color: #db4437;
+    }
+
+    .icon-button.blue > iron-icon::shadow path {
+      fill: #4285f4;
+    }
+
+    .icon-button.blue > paper-ripple {
+      color: #4285f4;
+    }
+
+    /* FAB */
+    .fab {
+      position: relative;
+      display: inline-block;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      color: #fff;
+      overflow: hidden;
+      transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      transition-delay: 0.2s;
+      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    }
+
+    .fab.red {
+      background-color: #d23f31;
+    }
+
+    .fab.blue {
+      background-color: #4285f4;
+    }
+
+    .fab.green {
+      background-color: #0f9d58;
+    }
+
+    .fab:active {
+      box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);
+      transition-delay: 0s;
+    }
+
+    .fab > iron-icon {
+      margin: 16px;
+    }
+
+    .fab > iron-icon::shadow path {
+      fill: #fff;
+    }
+
+    /* Menu */
+    .menu {
+      display: inline-block;
+      width: 180px;
+      background-color: #fff;
+      box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .item {
+      position: relative;
+      height: 48px;
+      line-height: 48px;
+      color: #646464;
+      font-size: 0.9em;
+    }
+
+    .menu.blue > .item {
+      color: #4285f4;
+    }
+
+    /* Card, Dialog */
+    .card, .dialog {
+      position: relative;
+      display: inline-block;
+      width: 300px;
+      height: 240px;
+      vertical-align: top;
+      background-color: #fff;
+      box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24);
+    }
+
+    .dialog {
+      box-sizing: border-box;
+      padding: 16px;
+    }
+
+    .dialog > .content {
+      height: 170px;
+      font-size: 0.9em;
+    }
+
+    .dialog > .content > .title {
+      font-size: 1.3em;
+    }
+
+    .dialog > .button {
+      width: 90px;
+      float: right;
+    }
+
+    .card.image {
+      background: url(http://lorempixel.com/300/240/nature/);
+      color: #fff;
+    }
+
+    /* Misc */
+    .center {
+      text-align: center;
+    }
+
+    .label {
+      padding: 0 16px;
+    }
+
+    .label-blue {
+      color: #4285f4;
+    }
+
+    .label-red {
+      color: #d23f31;
+    }
+
+  </style>
+
+</head>
+<body uuid="f5a4805e-74c8-4e5b-a1d4-c7681c37d3fd">
+
+  <section uuid="6ed229cf-344e-4e24-88ca-519d6589d01c">
+
+    <div class="button raised" uuid="649cadc6-85b2-454a-8560-dacc81e56529">
+      <div class="center" fit="" uuid="7fe863eb-8d4d-4db1-bca1-8ef21b5c2b7b">SUBMIT</div>
+      <paper-ripple uuid="7352ecdb-20b5-43ea-a278-34469e002947"></paper-ripple>
+    </div>
+
+    <div class="button raised grey" uuid="db641c69-2c8e-43ab-b048-e1f8a33a0ee4">
+      <div class="center" fit="" uuid="00e6b290-1377-4871-8908-60345dd3e497">CANCEL</div>
+      <paper-ripple uuid="f505fed7-b8b8-4773-9446-70e927b5aaa3"></paper-ripple>
+    </div>
+
+    <div class="button raised blue" uuid="f364806a-db7d-4208-8507-94a0cc4658e6">
+      <div class="center" fit="" uuid="0ece1ddc-ad8b-46b2-b10e-d5bde4b06532">COMPOSE</div>
+      <paper-ripple uuid="85d53350-55c7-4096-8f0a-bcb0d91a2945"></paper-ripple>
+    </div>
+
+    <div class="button raised green" uuid="d218d0c4-475d-4856-9f40-f87d55f1f99a">
+      <div class="center" fit="" uuid="08f078ea-6a7b-4d4a-a1c5-ed87e7fe9f50">OK</div>
+      <paper-ripple uuid="5eec25cb-5862-4f52-ae5b-c3b39897e348"></paper-ripple>
+    </div>
+
+  </section>
+
+  <section uuid="ebe022c5-e6c5-4434-b60a-ab6ac9ff59e6">
+
+    <div class="button raised grey narrow" uuid="33ff7614-34ec-40ba-89b1-a46a2f4c4318">
+      <div class="center" fit="" uuid="49131fe4-eb23-420f-84f6-dd2d265610b0">+1</div>
+      <paper-ripple uuid="8140d932-8235-40a4-b536-7d806c5e2d88"></paper-ripple>
+    </div>
+
+    <div class="button raised grey narrow label-blue" uuid="2899e037-ab86-4871-88c2-6c1abf95aa16">
+      <div class="center" fit="" uuid="1349c8c3-44fd-49ad-9c4a-0fbc5ab4f29a">+1</div>
+      <paper-ripple uuid="b8c22108-34c3-4566-abbe-d91fc09ddc5c"></paper-ripple>
+    </div>
+
+    <div class="button raised grey narrow label-red" uuid="061f3d3c-7372-41d8-abb2-2c30b2b8e6b0">
+      <div class="center" fit="" uuid="cb4594de-7338-4693-8afe-b5617126ae61">+1</div>
+      <paper-ripple uuid="efe32c60-b602-48bf-bafd-b829517e3a0c"></paper-ripple>
+    </div>
+
+  </section>
+
+  <section uuid="11ee9cc3-3a7c-4465-951a-8e49b1c81c5d">
+
+    <div class="icon-button" uuid="4fef1e20-9c08-4497-bbce-c8abce19f9b8">
+      <iron-icon icon="menu" uuid="40ea3e55-ce22-41b2-a2aa-35471430bbdf"></iron-icon>
+      <paper-ripple class="circle" recenters="" uuid="7558b5b6-1c33-46ab-a2e8-2795068db984"></paper-ripple>
+    </div>
+
+    <div class="icon-button" uuid="8cbaafc2-f992-4072-9cc1-98b6a4617777">
+      <iron-icon icon="more-vert" uuid="57b90078-c32b-4f99-880b-64217853a38d"></iron-icon>
+      <paper-ripple class="circle" recenters="" uuid="b9c212e9-f61c-4f75-beae-eb9c449cc0c2"></paper-ripple>
+    </div>
+
+    <div class="icon-button red" uuid="76ba8036-8c32-4d5c-9be4-df1316105f7a">
+      <iron-icon icon="delete" uuid="fb7989bc-0641-4791-8550-3819fbe0a83e"></iron-icon>
+      <paper-ripple class="circle" recenters="" uuid="3aa4b05c-b37a-4800-8f60-00415e1b0ba1"></paper-ripple>
+    </div>
+
+    <div class="icon-button blue" uuid="be4f4a24-5ea4-4172-8977-6f6ee9731bc1">
+      <iron-icon icon="account-box" uuid="ffdd05c7-f9be-4c01-9be1-ba030d0af6ff"></iron-icon>
+      <paper-ripple class="circle" recenters="" uuid="75ee3f37-a8a3-4daf-ab26-8460354ee05e"></paper-ripple>
+    </div>
+
+  </section>
+
+  <section uuid="69f9c92d-2e88-4d32-8f47-41c57916bdd2">
+
+    <div class="fab red" uuid="ff6f9c7b-446c-4e54-91e7-95dc0b931eff">
+      <iron-icon icon="add" uuid="db01de39-c645-40c6-82ff-62ee6df968b8"></iron-icon>
+      <paper-ripple class="circle" recenters="" uuid="b22ddff9-b66a-49b9-ad3e-f455e7264a71"></paper-ripple>
+    </div>
+
+    <div class="fab blue" uuid="f607018b-d8b9-4711-95be-5976722fbb8b">
+      <iron-icon icon="mail" uuid="fc00daef-2042-4f7e-ae1f-0fe0ab03f831"></iron-icon>
+      <paper-ripple class="circle" recenters="" uuid="02c371f5-e31d-4f64-9c60-ce69583c2555"></paper-ripple>
+    </div>
+
+    <div class="fab green" uuid="4f7685a3-7118-42f0-96d9-7998cf77cd97">
+      <iron-icon icon="create" uuid="5c0e308a-52e7-43d6-bb08-2ac33047b9d4"></iron-icon>
+      <paper-ripple class="circle" recenters="" uuid="9d37831f-8d47-4380-b4c8-dc49b0855024"></paper-ripple>
+    </div>
+
+  </section>
+
+  <section uuid="1f46e806-217e-4800-9773-f53c956bd70b">
+
+    <div class="menu" uuid="0931762e-6169-4358-b2e4-173b330e41dd">
+
+      <div class="item" uuid="c9031aed-74a5-4a4a-b61e-66c6fb556e8b">
+        <div class="label" fit="" uuid="4685ff8d-363a-4fad-948b-b61d4a8656ec">Mark as unread</div>
+        <paper-ripple uuid="f202de6e-03a1-43d6-a4bb-0c0b57ab38bf"></paper-ripple>
+      </div>
+      <div class="item" uuid="aca04cff-3307-4c05-8efe-cbfa4d4c5755">
+        <div class="label" fit="" uuid="2d2be4bc-8030-4fe6-9bfc-79752e010752">Mark as important</div>
+        <paper-ripple uuid="81ea6826-93bf-477c-93c7-9cd25cf7c233"></paper-ripple>
+      </div>
+      <div class="item" uuid="50a53ba5-5959-4906-8212-3b7ff9033f94">
+        <div class="label" fit="" uuid="b6bb58c8-e35f-4d7a-be6d-69ae4533fd56">Add to Tasks</div>
+        <paper-ripple uuid="59157e51-6dee-4fea-bf26-57dad6da7c1d"></paper-ripple>
+      </div>
+      <div class="item" uuid="a137ddcc-7bdc-45f2-94bd-f33a5398d1fe">
+        <div class="label" fit="" uuid="2095a094-0d80-4cf7-b429-9cb5d0882a59">Create event</div>
+        <paper-ripple uuid="b2348da1-2f0a-496a-81bb-b4b12749d65e"></paper-ripple>
+      </div>
+
+    </div>
+
+    <div class="menu blue" uuid="7c5aa27a-2006-437f-abb6-241617eb4883">
+
+      <div class="item" uuid="31c374bc-b623-4eb8-8273-5984b7ae2e08">
+        <div class="label" fit="" uuid="5bda5500-e121-4db5-b6f0-746f82138e99">Import</div>
+        <paper-ripple uuid="f7a7e1af-50df-4136-8ff6-7b649f0eae3e"></paper-ripple>
+      </div>
+      <div class="item" uuid="4dfaf21d-d401-4c88-a68d-05d59e45dc3f">
+        <div class="label" fit="" uuid="6dbdc171-fa28-4fb2-a5d9-46358a116acb">Export</div>
+        <paper-ripple uuid="3c4c0488-810e-4bde-aaad-47b728fddd60"></paper-ripple>
+      </div>
+      <div class="item" uuid="82b7d731-20f3-499e-a41f-bea86ac32dce">
+        <div class="label" fit="" uuid="53d819c9-46d8-455a-bd8e-e7a18555e382">Print</div>
+        <paper-ripple uuid="123427ba-a0ab-457e-bf81-0c2f6722c14a"></paper-ripple>
+      </div>
+      <div class="item" uuid="94553fe7-1c6d-462c-82b0-70ab1edde711">
+        <div class="label" fit="" uuid="03f55409-f6aa-42d9-9c09-2bc9eddc0663">Restore contacts</div>
+        <paper-ripple uuid="58f25d67-b762-4910-84f5-0bae1345dd03"></paper-ripple>
+      </div>
+
+    </div>
+
+  </section>
+
+  <section uuid="6e8f44f2-15db-47a8-85fc-03de22de3623">
+
+    <div class="dialog" uuid="64ca5d8f-52c0-4e27-8d73-47d6923bcaec">
+
+      <div class="content" uuid="35d048fa-5757-4d0f-a238-f66c37577a87">
+        <div class="title" uuid="39d59b49-93b5-4106-92a1-67524fcbd7cb">Permission</div><br uuid="8b2e70f4-b3b9-45e7-acf4-4c084c834879">
+        <div uuid="312498ee-2ab2-48b1-a4c7-ee52c486a59f">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</div>
+      </div>
+
+      <div class="button label-blue" uuid="02f7a457-d7bb-47dd-8586-b6658366c341">
+        <div class="center" fit="" uuid="9d073f1c-39a9-453f-ac7c-f5ad014274ee">ACCEPT</div>
+        <paper-ripple uuid="bde874b6-c0ea-4090-89cc-4ffd1d44340c"></paper-ripple>
+      </div>
+
+      <div class="button" uuid="feb25552-9a70-4cc8-a234-105e77c1ff4b">
+        <div class="center" fit="" uuid="3767d99e-b1b2-4974-9214-1367ef0ea873">DECLINE</div>
+        <paper-ripple uuid="c69b6587-a24c-4470-91e6-c4637332a348"></paper-ripple>
+      </div>
+
+    </div>
+
+    <div class="card" uuid="17e394d6-e430-446e-9ecd-a85562516b2b">
+      <paper-ripple recenters="" uuid="2ff56d38-2f2e-48a8-96eb-23b7931a3748"></paper-ripple>
+    </div>
+
+    <div class="card image" uuid="301be7d0-ae35-494c-b4f3-48251b53a82d">
+
+      <paper-ripple recenters="" uuid="8ccf0def-4d0f-473b-a90b-ee2df3e0d079"></paper-ripple>
+
+    </div>
+
+  </section>
+
+</body>
+</html>
+

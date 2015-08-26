@@ -1,0 +1,48 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<html uuid="e2a19634-5012-46ba-a2de-6fe5464610ec">
+<head uuid="04b00822-4899-4a5e-92c1-177099f529f4">
+  <title uuid="1639c901-9154-4db0-ad5f-9cb2a9bd3f22">iron-icon demo</title>
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../iron-icon.html" uuid="4910aca4-ee28-4822-8eb2-a25d944d1072">
+  <link rel="import" href="../../iron-iconset/iron-iconset.html" uuid="91762bc2-3c5d-489f-be40-3b264688b705">
+  <link href="../../paper-styles/demo-pages.html" rel="import" uuid="176900f6-4e57-4737-86ea-ce35f5a78e94">
+
+  <style is="custom-style">
+    .vertical-section h4 {
+      border-left: 3px solid var(--paper-grey-300);
+      padding-left: 10px;
+    }
+
+    .vertical-section h4:hover {
+      border-left-color: var(--google-blue-700);
+    }
+  </style>
+</head>
+<body uuid="a437ceba-0371-4913-9e29-ef238e31fdeb">
+  <div class="vertical-section-container centered" uuid="b84ae19f-6c41-4d3d-b2bf-81e9a9cae651">
+    <h4 uuid="4f9b4113-b995-4769-bdd0-75fcba27bc38">This demo is for a single &lt;iron-icon&gt;. If you're looking for the
+      whole set of available icons, check out the &lt;iron-icons&gt; demo.</h4>
+
+    <div class="vertical-section" uuid="e660a0e9-bf34-41f5-8049-f497c10ee383">
+      <!-- iron-icon using a iron-iconset as its icon source -->
+      <iron-iconset name="example" icons="location" src="location.png" size="24" width="24" uuid="57c66118-0152-4748-8ba2-f3f205ef4b87"></iron-iconset>
+
+      <h4 uuid="99342854-9629-4120-b28c-b8f3f7b7e269">&lt;iron-icon icon="example:location"&gt;</h4>
+      <iron-icon icon="example:location" uuid="64b39610-ca3b-4c00-8c8b-7caba6e9155e"></iron-icon>
+
+      <!-- iron-icon using an image url as its icon source -->
+      <h4 uuid="8583c5a8-5a45-40af-9b5c-eef2321e373f">&lt;iron-icon src="location.png"&gt;</h4>
+      <iron-icon src="location.png" uuid="77b69378-d7d7-4386-9cde-110c3d53e56e"></iron-icon>
+    </div>
+  </div>
+</body>
+</html>

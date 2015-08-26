@@ -1,0 +1,62 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<html uuid="6d0533a4-7f0c-4c8b-a793-14ba0b528e34">
+<head uuid="8529b07f-d505-4740-894b-91a5bb28e104">
+  <title uuid="730f6b6e-251d-4784-a4cc-508bf4595e1e">paper-radio-button-behavior</title>
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+  <script src="../../test-fixture/test-fixture-mocha.js"></script>
+  <script src="../../iron-test-helpers/mock-interactions.js"></script>
+
+  <link rel="import" href="../../polymer/polymer.html" uuid="a89876ba-a64f-4d69-b361-0a89d9ba1dd0">
+  <link rel="import" href="../../test-fixture/test-fixture.html" uuid="d5e9320c-c321-49b6-a30c-bf66270c631a">
+  <link rel="import" href="test-radio-button.html" uuid="44f32991-be0d-4466-a80c-dd6029846d1b">
+</head>
+<body uuid="ac4b4fba-1914-4488-b178-06002f365bd2">
+
+  <test-fixture id="basic" uuid="80ed7cf1-1088-421e-8954-b7ccf208e15a">
+    <template uuid="f2fa550f-4d12-4c7b-a45f-52a8175084a7">
+      <test-radio-button uuid="1afff243-d76e-470b-96f6-f9f58c8d8645"></test-radio-button>
+    </template>
+  </test-fixture>
+
+  <script>
+    suite('basic', function() {
+      var button;
+      var ink;
+
+      setup(function() {
+        button = fixture('basic');
+        ink = button.querySelector('paper-ripple');
+        MockInteractions.blur(button);
+      });
+
+      test('normal (no states)', function() {
+        assert.isFalse(button.focused);
+        assert.isFalse(ink._animating);
+        assert.equal(ink.ripples.length, 0);
+      });
+
+      test('receives focus', function() {
+        MockInteractions.focus(button);
+
+        assert.isTrue(button.focused);
+        assert.isTrue(ink._animating);
+        assert.equal(ink.ripples.length, 1);
+      });
+
+    });
+  </script>
+
+</body>
+</html>

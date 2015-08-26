@@ -1,0 +1,94 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<html uuid="ff241971-06ff-48ca-940e-a05a50b0f9ee">
+<head uuid="e5589db4-62a9-4e3d-97cb-baac3bb68419">
+  <meta charset="UTF-8" uuid="e7602d77-8b15-4aaa-ad3c-24411c3f16da">
+  <title uuid="b6c47fce-3f32-4db3-8e7a-6021d65a8b77">paper-icon-button a11y tests</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" uuid="0ce7f9e1-29b7-4dcf-a6b2-8eeae8d8b57b">
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+  <script src="../../test-fixture/test-fixture-mocha.js"></script>
+
+  <link rel="import" href="../../iron-icons/iron-icons.html" uuid="a6dbfb53-71f1-4991-8013-63b1736d1bd4">
+  <link rel="import" href="../../test-fixture/test-fixture.html" uuid="079fb00c-9c67-44d9-b198-dd580b6b7933">
+  <link rel="import" href="../paper-icon-button.html" uuid="a56da028-0f05-4ad2-81c1-0d5243bcc0ec">
+
+</head>
+<body uuid="5a54a00b-1da3-4309-ba66-01df0d0410c9">
+
+  <test-fixture id="A11yIconButtons" uuid="24333ddd-0d3c-4cf7-ae0e-5b19bed2661d">
+    <template uuid="ed57b874-16d7-4a49-9fc9-35088b9bb1e3">
+      <paper-icon-button id="iconButton1" icon="add" uuid="bf6d5a5f-15cb-4656-8559-6c831cfa10d8"></paper-icon-button>
+      <paper-icon-button id="iconButton2" icon="add" disabled uuid="fb87b472-0983-429e-a61b-2dc7c1e63a1f"></paper-icon-button>
+      <paper-icon-button id="iconButton3" icon="add" aria-label="custom" uuid="9d448322-90f6-4871-8447-f7637a3a3181"></paper-icon-button>
+      <paper-icon-button id="iconButton4" icon="add" alt="alt text" uuid="86c470a6-f21b-4544-9e05-bd911209b3b6"></paper-icon-button>
+      <paper-icon-button id="iconButton5" icon="add" aria-label="custom" alt="alt text" uuid="45db7507-6ac4-4679-aaab-9a5f06432a11"></paper-icon-button>
+    </template>
+  </test-fixture>
+
+  <script>
+
+    var b1;
+    var b2;
+    var b3;
+    var b4;
+    var b5;
+
+    setup(function() {
+      var iconButtons = fixture('A11yIconButtons');
+
+      b1 = iconButtons[0];
+      b2 = iconButtons[1];
+      b3 = iconButtons[2];
+      b4 = iconButtons[3];
+      b5 = iconButtons[4];
+    });
+
+    test('aria role is a button', function() {
+      assert.strictEqual(b1.getAttribute('role'), 'button');
+    });
+
+    test('aria-disabled is set', function() {
+      assert.strictEqual(b2.getAttribute('aria-disabled'), 'true');
+      b2.removeAttribute('disabled');
+      assert.strictEqual(b2.getAttribute('aria-disabled'), 'false');
+    });
+
+    test('user-defined aria-label is preserved', function() {
+      assert.strictEqual(b3.getAttribute('aria-label'), 'custom');
+      b3.icon = 'arrow-forward';
+      assert.strictEqual(b3.getAttribute('aria-label'), 'custom');
+    });
+
+    test('alt attribute is used for the aria-label', function() {
+      assert.strictEqual(b4.getAttribute('aria-label'), 'alt text');
+      b4.icon = 'arrow-forward';
+      assert.strictEqual(b4.getAttribute('aria-label'), 'alt text');
+    });
+
+    test('aria-label wins over alt attribute', function() {
+      assert.strictEqual(b5.getAttribute('aria-label'), 'custom');
+      b5.icon = 'arrow-forward';
+      b5.alt = 'other alt'
+      assert.strictEqual(b5.getAttribute('aria-label'), 'custom');
+    });
+
+    test('alt attribute can be updated', function() {
+      assert.strictEqual(b4.getAttribute('aria-label'), 'alt text');
+      b4.alt = 'alt again';
+      assert.strictEqual(b4.getAttribute('aria-label'), 'alt again');
+    });
+
+  </script>
+
+</body>
+</html>

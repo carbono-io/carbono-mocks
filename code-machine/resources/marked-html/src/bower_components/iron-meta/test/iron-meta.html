@@ -1,0 +1,186 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<html uuid="349e4801-2841-448c-a692-ef9fd7aa9d09">
+  <head uuid="e854155c-87b3-43b9-84c2-6fa52953d1ab">
+
+    <title uuid="6799513f-280a-49a4-b100-a0de94f884e8">iron-meta</title>
+    <meta charset="utf-8" uuid="3b3516f4-6c91-4ad7-9383-f87013dff6d1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" uuid="df78b5e7-4d81-4f39-849c-5a7e54d507e6">
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+    <script src="../../test-fixture/test-fixture-mocha.js"></script>
+
+    <link rel="import" href="../iron-meta.html" uuid="e217e13c-0964-44b8-aa25-ddaaa816263c">
+    <link rel="import" href="../../test-fixture/test-fixture.html" uuid="dfdf0a84-3e4f-4fde-b7de-ff21c275add8">
+
+  </head>
+  <body uuid="34ea071e-c191-418e-86dc-d093ee0a6cd9">
+
+    <test-fixture id="TrivialMeta" uuid="e0d7227f-0a91-41d6-a096-5331b13342f1">
+      <template uuid="b518c2c5-660f-46ff-86be-290be5a7dae0">
+        <iron-meta self="" key="info" uuid="8a18b6ab-500f-47c8-a855-27888baab99f"></iron-meta>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="ManyMetas" uuid="54530ffa-a8cd-4715-a908-9090942b7abc">
+      <template uuid="bb248868-4859-4588-8033-1a809d37cbe5">
+        <iron-meta self="" key="default1" uuid="4e3ca282-5dbb-44ad-a94b-6009824dbd5d"></iron-meta>
+        <iron-meta self="" key="default2" uuid="b8143af2-312b-4cf8-8952-250ace1c3360"></iron-meta>
+        <iron-meta self="" key="default3" uuid="31df279b-582b-49b5-bfc4-3b690a55fd6e"></iron-meta>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="DifferentTypedMetas" uuid="3af03456-c257-4634-95a6-ef141e203d46">
+      <template uuid="fe69f38d-4c6b-4841-b6fd-3ca06cc60a6d">
+        <iron-meta self="" type="foo" key="foobarKey" uuid="8eb17743-2c23-4eaf-b591-8d8394725b24"></iron-meta>
+        <iron-meta self="" type="bar" key="foobarKey" uuid="9d902928-07e1-4ca0-b28d-5ea0b2a26a02"></iron-meta>
+        <iron-meta self="" key="defaultKey" uuid="cc2ae17c-73a9-4db8-8f48-9eeffd776dd0"></iron-meta>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="ClashingMetas" uuid="8faf1c77-56b5-491f-8e23-4f7549c1c764">
+      <template uuid="db6a1c81-db70-45cb-9ab6-94865390e042">
+        <iron-meta self="" key="baz" uuid="c448669c-ce69-4b9f-8a6e-06544932b0ac"></iron-meta>
+        <iron-meta self="" key="baz" uuid="4cee1d56-8999-43dc-9d8f-4536018e86f0"></iron-meta>
+      </template>
+    </test-fixture>
+
+    <script>
+suite('<iron-meta>', function () {
+  suite('basic behavior', function () {
+    var meta;
+
+    setup(function () {
+      meta = fixture('TrivialMeta');
+    });
+
+    teardown(function () {
+      meta.key = null;
+    });
+
+    test('uses itself as the default value', function () {
+      expect(meta.value).to.be.equal(meta);
+    });
+
+    test('can be assigned alternative values', function () {
+      meta.value = 'foobar';
+
+      expect(meta.list[0]).to.be.equal('foobar');
+    });
+
+    test('can access same-type meta values by key', function () {
+      expect(meta.byKey(meta.key)).to.be.equal(meta.value);
+    });
+
+    test('yields a list of same-type meta data', function () {
+      expect(meta.list).to.be.ok;
+      expect(meta.list.length).to.be.equal(1);
+      expect(meta.list[0]).to.be.equal(meta);
+    });
+  });
+
+  suite('many same-typed metas', function () {
+    var metas;
+
+    setup(function () {
+      metas = fixture('ManyMetas');
+    });
+
+    teardown(function () {
+      metas.forEach(function (meta) {
+        meta.key = null;
+      });
+    });
+
+    test('all cache all meta values', function () {
+      metas.forEach(function (meta, index) {
+        expect(meta.list.length).to.be.equal(metas.length);
+        expect(meta.list[index].value).to.be.equal(meta.value);
+      });
+    });
+
+    test('can be unregistered individually', function () {
+      metas[0].key = null;
+
+      expect(metas[0].list.length).to.be.equal(2);
+      expect(metas[0].list).to.be.deep.equal([metas[1], metas[2]])
+    });
+
+    test('can access each others value by key', function () {
+      expect(metas[0].byKey('default2')).to.be.equal(metas[1].value);
+    });
+  });
+
+  suite('different-typed metas', function () {
+    var metas;
+
+    setup(function () {
+      metas = fixture('DifferentTypedMetas');
+    });
+
+    teardown(function () {
+      metas.forEach(function (meta) {
+        meta.key = null;
+      });
+    });
+
+    test('cache their values separately', function () {
+      var fooMeta = metas[0];
+      var barMeta = metas[1];
+
+      expect(fooMeta.value).to.not.be.equal(barMeta.value);
+      expect(fooMeta.byKey('foobarKey')).to.be.equal(fooMeta.value);
+      expect(barMeta.byKey('foobarKey')).to.be.equal(barMeta.value);
+    });
+
+    test('cannot access values of other types', function () {
+      var defaultMeta = metas[2];
+
+      expect(defaultMeta.byKey('foobarKey')).to.be.equal(undefined);
+    });
+
+    test('only list values of their type', function () {
+      metas.forEach(function (meta) {
+        expect(meta.list.length).to.be.equal(1);
+        expect(meta.list[0]).to.be.equal(meta.value);
+      })
+    });
+  });
+
+  suite('metas with clashing keys', function () {
+    var metaPair;
+
+    setup(function () {
+      metaPair = fixture('ClashingMetas');
+    });
+
+    teardown(function () {
+      metaPair.forEach(function (meta) {
+        meta.key = null;
+      });
+    });
+
+    test('let the last value win registration against the key', function () {
+      var registeredValue = metaPair[0].byKey(metaPair[0].key);
+      var firstValue = metaPair[0].value;
+      var secondValue = metaPair[1].value;
+
+      expect(registeredValue).to.not.be.equal(firstValue);
+      expect(registeredValue).to.be.equal(secondValue);
+    });
+  });
+});
+    </script>
+
+  </body>
+</html>
