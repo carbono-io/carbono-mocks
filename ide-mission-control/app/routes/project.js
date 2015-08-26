@@ -1,27 +1,17 @@
 'use strict'
 
 var express = require('express');
+var resources = require('./resources');
+var projectController = require('../controllers/project');
 
 var project = express();
 
-project.post('/project', project.create);
+// create project
+project.post('/', projectController.create);
     
 // list project
-project.get('/project/:projectId', project.list);
+project.get('/:projectId', projectController.list);
 
-module.exports = function(app) {
-    
-    var project = app.controllers.project;
+project.use('/:projectId/resources', resources);
 
-    // create project
-    app.post('/project', project.create);
-    
-    // list project
-    app.get('/project/:projectId', project.list);
-    
-    // app.use('/project/:projectId/resources/marked', resources.marked);
-
-    // app.use('/project/:projectId/resources/clean', resources.clean);
-    
-    return this;
-};
+module.exports = project;
