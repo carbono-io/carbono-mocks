@@ -4,7 +4,8 @@ var express = require('express');
 var resourcesController = require('../controllers/resources');
 
 var clean = express();
-// gets all .html
+
+// gets an .html
 clean.get('**/*.html', resourcesController.clean);
 
 // delegates to other route
