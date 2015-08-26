@@ -1,0 +1,200 @@
+<!doctype html>
+<!--
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<html uuid="c231c71a-0ae8-4886-abe8-af6a87ecbb1a">
+<head uuid="56769a1b-b36e-4e32-ac5a-c0697efaea5f">
+  <title uuid="8bd0265b-5046-442e-b44c-0e913ec32be5">active-state</title>
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+  <script src="../../test-fixture/test-fixture-mocha.js"></script>
+  <script src="../../iron-test-helpers/mock-interactions.js"></script>
+
+  <link rel="import" href="../../polymer/polymer.html" uuid="8e1fbcea-613f-4155-96a0-f4a946613029">
+  <link rel="import" href="../../test-fixture/test-fixture.html" uuid="4ca0931a-0bb6-4fe2-af34-37c4b88ce7d8">
+  <link rel="import" href="test-elements.html" uuid="54553c77-d58e-460e-bf95-b57da9118bd8">
+</head>
+<body uuid="a6a2b7bc-0c20-477e-ac40-f5f8a058296b">
+  <test-fixture id="TrivialActiveState" uuid="1b7ef33e-111b-445c-9cf1-01f6c0b34b97">
+    <template uuid="c2410265-f87d-41fd-904f-7a2b5f030896">
+      <test-button uuid="fdfe271d-abe7-4c06-b9c4-3dcdd05cf4b0"></test-button>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="ToggleActiveState" uuid="6d80adf1-1031-43be-8268-658c7fe47e6a">
+    <template uuid="c262e372-7722-449a-854a-3caafe73de4f">
+      <test-button toggles="" uuid="379d9504-fdac-4a25-b49c-c1e229cda57c"></test-button>
+    </template>
+  </test-fixture>
+
+  <script>
+    suite('active-state', function() {
+      var activeTarget;
+
+      setup(function() {
+        activeTarget = fixture('TrivialActiveState');
+      });
+
+      suite('non-primary pointer input source', function() {
+        test('does not cause state to change', function() {
+          var rightClickMouseEvent = new CustomEvent('mousedown');
+          rightClickMouseEvent.buttons = 2;
+          activeTarget.dispatchEvent(rightClickMouseEvent);
+          expect(activeTarget.pressed).to.be.equal(false);
+        });
+      });
+
+      suite('active state with toggles attribute', function() {
+        setup(function() {
+          activeTarget = fixture('ToggleActiveState');
+        });
+
+        suite('when clicked', function() {
+          test('is activated', function(done) {
+            MockInteractions.downAndUp(activeTarget, function() {
+              try {
+                expect(activeTarget.hasAttribute('active')).to.be.eql(true);
+                expect(activeTarget.hasAttribute('aria-pressed')).to.be.eql(true);
+                expect(activeTarget.getAttribute('aria-pressed')).to.be.eql('true');
+                done();
+              } catch (e) {
+                done(e);
+              }
+            });
+          });
+
+          test('is deactivated by a subsequent click', function(done) {
+            MockInteractions.downAndUp(activeTarget, function() {
+              MockInteractions.downAndUp(activeTarget, function() {
+                try {
+                  expect(activeTarget.hasAttribute('active')).to.be.eql(false);
+                  expect(activeTarget.hasAttribute('aria-pressed')).to.be.eql(true);
+                  expect(activeTarget.getAttribute('aria-pressed')).to.be.eql('false');
+                  done();
+                } catch (e) {
+                  done(e);
+                }
+              });
+            });
+          });
+
+          test('the correct aria attribute is set', function(done) {
+            activeTarget.ariaActiveAttribute = 'aria-checked';
+            MockInteractions.downAndUp(activeTarget, function() {
+              try {
+                expect(activeTarget.hasAttribute('active')).to.be.eql(true);
+                expect(activeTarget.hasAttribute('aria-checked')).to.be.eql(true);
+                expect(activeTarget.getAttribute('aria-checked')).to.be.eql('true');
+                done();
+              } catch (e) {
+                done(e);
+              }
+            });
+          });
+
+          test('the aria attribute is updated correctly', function(done) {
+            activeTarget.ariaActiveAttribute = 'aria-checked';
+            MockInteractions.downAndUp(activeTarget, function() {
+              try {
+                expect(activeTarget.hasAttribute('active')).to.be.eql(true);
+                expect(activeTarget.hasAttribute('aria-checked')).to.be.eql(true);
+                expect(activeTarget.getAttribute('aria-checked')).to.be.eql('true');
+
+                activeTarget.ariaActiveAttribute = 'aria-pressed';
+                expect(activeTarget.hasAttribute('aria-checked')).to.be.eql(false);
+                expect(activeTarget.hasAttribute('aria-pressed')).to.be.eql(true);
+                expect(activeTarget.getAttribute('aria-pressed')).to.be.eql('true');
+                done();
+              } catch (e) {
+                done(e);
+              }
+            });
+          });
+        });
+      });
+
+      suite('without toggles attribute', function() {
+        suite('when mouse is down', function() {
+          test('does not get an active attribute', function() {
+            expect(activeTarget.hasAttribute('active')).to.be.eql(false);
+            MockInteractions.down(activeTarget);
+            expect(activeTarget.hasAttribute('active')).to.be.eql(false);
+          });
+        });
+
+        suite('when mouse is up', function() {
+          test('does not get an active attribute', function() {
+            MockInteractions.down(activeTarget);
+            expect(activeTarget.hasAttribute('active')).to.be.eql(false);
+            MockInteractions.up(activeTarget);
+            expect(activeTarget.hasAttribute('active')).to.be.eql(false);
+          });
+        });
+      });
+
+      suite('when space is pressed', function() {
+        test('triggers a click event', function(done) {
+          activeTarget.addEventListener('click', function() {
+            done();
+          });
+          MockInteractions.pressSpace(activeTarget);
+        });
+
+        test('only triggers click after the key is released', function(done) {
+          var keyupTriggered = false;
+
+          activeTarget.addEventListener('keyup', function() {
+            keyupTriggered = true;
+          });
+
+          activeTarget.addEventListener('click', function() {
+            try {
+              expect(keyupTriggered).to.be.eql(true);
+              done();
+            } catch (e) {
+              done(e);
+            }
+          });
+
+          MockInteractions.pressSpace(activeTarget);
+        });
+      });
+
+      suite('when enter is pressed', function() {
+        test('triggers a click event', function(done) {
+          activeTarget.addEventListener('click', function() {
+            done();
+          });
+
+          MockInteractions.pressEnter(activeTarget);
+        });
+
+        test('only triggers click before the key is released', function(done) {
+          var keyupTriggered = false;
+
+          activeTarget.addEventListener('keyup', function() {
+            keyupTriggered = true;
+          });
+
+          activeTarget.addEventListener('click', function() {
+            try {
+              expect(keyupTriggered).to.be.eql(false);
+              done();
+            } catch (e) {
+              done(e);
+            }
+          });
+
+          MockInteractions.pressEnter(activeTarget);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

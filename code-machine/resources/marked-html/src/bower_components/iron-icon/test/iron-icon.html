@@ -1,0 +1,120 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<html uuid="7471f8f4-2b29-4cdb-a352-a99614ac5632">
+<head uuid="d1029816-cb18-41c5-9a5c-4d8f66c347de">
+
+  <title uuid="36b9db11-5fc5-45be-b1cc-cf52afd9adfe">iron-icon</title>
+  <meta charset="utf-8" uuid="1a2ca391-7631-45aa-87c2-408005bbdd87">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" uuid="a4f27fe9-c32e-40d8-9b66-1a19347a14f5">
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+  <script src="../../test-fixture/test-fixture-mocha.js"></script>
+
+  <link rel="import" href="../iron-icon.html" uuid="5999936f-703a-4850-b14e-24aa50ddf489">
+  <link rel="import" href="../../iron-iconset/iron-iconset.html" uuid="0ff2e420-fe34-4bd8-ba24-26f12fcedc25">
+  <link rel="import" href="../../test-fixture/test-fixture.html" uuid="fe15999f-7d59-47f2-ad10-a682705985ce">
+
+</head>
+<body uuid="58b8d247-8b4e-47ae-80cf-cde14e133b9a">
+
+  <test-fixture id="TrivialIcon" uuid="c33f500c-dfe1-4105-ae38-207e88849bab">
+    <template uuid="9dfbe525-27ce-4e0e-ae0b-6f66e938229d">
+      <iron-icon src="../demo/location.png" uuid="4c6e7114-461d-4141-ae9f-b48a2189808c"></iron-icon>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="IconFromIconset" uuid="c0282ce3-1b04-486e-90f6-2f27e0eeb700">
+    <template uuid="ad844411-b541-4766-950e-6789aebbbcbd">
+      <iron-iconset name="example" icons="location blank" src="location.png" size="24" width="48" uuid="4fe28b2e-45ac-4264-b6f7-4ca61375d632"></iron-iconset>
+      <iron-icon icon="example:location" uuid="ab4074cb-2ef8-4051-98cf-dad517173894"></iron-icon>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="WithoutAnIconSource" uuid="66ddd8ec-dc3b-4bcf-a0ca-54aee4089793">
+    <template uuid="8957d2fd-35fc-4893-9d73-7d472a158dea">
+      <iron-icon icon="" uuid="2a8f5b0e-2a64-41ee-bc05-41eedd6c3b90"></iron-icon>
+      <iron-icon uuid="05fac945-7599-4058-864e-d52f07b7594b"></iron-icon>
+      <iron-icon src="" uuid="e22d0f49-f158-41ec-bb24-6fdadf720dcf"></iron-icon>
+    </template>
+  </test-fixture>
+
+  <script>
+function iconElementFor (node) {
+  var nodes = Polymer.dom(node.root).childNodes;
+
+  for (var i = 0; i < nodes.length; ++i) {
+    if (nodes[i].nodeName.match(/DIV|IMG/)) {
+      return nodes[i];
+    }
+  }
+}
+
+function hasIcon (node) {
+  return /png/.test(node.style.backgroundImage);
+}
+
+suite('<iron-icon>', function() {
+  suite('basic behavior', function() {
+    var icon;
+
+    setup(function() {
+      icon = fixture('TrivialIcon');
+    });
+
+    test('can be assigned an icon with the src attribute', function() {
+      expect(iconElementFor(icon)).to.be.ok;
+      expect(iconElementFor(icon).src).to.match(/demo\/location\.png/);
+    });
+
+    test('can change its src dynamically', function() {
+      icon.src = 'foo.png';
+
+      expect(iconElementFor(icon).src).to.match(/foo\.png/);
+    });
+  });
+
+  suite('when paired with an iconset', function() {
+    var icon;
+
+    setup(function() {
+      var elements = fixture('IconFromIconset');
+
+      icon = elements[1];
+    });
+
+    test('can be assigned an icon from the iconset', function() {
+      expect(hasIcon(icon)).to.be.ok;
+    });
+
+    test('can change its icon dynamically', function() {
+      var style = icon.style;
+
+      expect(style.backgroundPosition).to.match(/0(%|px) 0(%|px)/);
+
+      icon.icon = "example:blank";
+
+      expect(style.backgroundPosition).to.match(/-24px 0(%|px)/);
+    });
+  });
+
+  suite('when no icon source is provided', function() {
+    test('will politely wait for an icon source without throwing', function() {
+      document.createElement('iron-icon');
+      fixture('WithoutAnIconSource');
+    });
+  })
+});
+  </script>
+
+</body>
+</html>

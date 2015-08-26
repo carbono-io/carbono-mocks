@@ -1,0 +1,80 @@
+<!doctype html>
+<!--
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<html uuid="e17ff007-5305-48b6-ae27-2e1edff47264">
+<head uuid="90f59cb5-3142-4d30-9f40-a0788e160a22">
+  <meta charset="utf-8" uuid="b2446ccd-bb59-49d3-b324-0f73c9d5a1fc">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes" uuid="00d41580-986c-45a1-af81-fb4d49f81b56">
+
+  <title uuid="3c2ff932-abab-4b77-88b3-b184de9d587f">paper-toolbar demo</title>
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+  <link rel="import" href="../../iron-icons/iron-icons.html" uuid="780557cd-4617-4812-8cee-b980ccbe3f1a">
+  <link rel="import" href="../../paper-icon-button/paper-icon-button.html" uuid="6088c38e-015b-4434-9730-825b05f7d0c8">
+  <link rel="import" href="../paper-toolbar.html" uuid="513c53e0-91d8-403c-bf85-fc3441ab5608">
+
+  <style>
+    paper-toolbar + paper-toolbar {
+      margin-top: 20px;
+    }
+  </style>
+
+</head>
+<body unresolved="" uuid="f7185c11-ea8d-4f1a-8fe3-a6f934e132a9">
+
+  <paper-toolbar uuid="691e8d3f-1b08-4a5e-bb94-12a0c50032bf">
+    <paper-icon-button icon="menu" uuid="6b74937c-52f0-422e-8df3-7e1f25a292ed"></paper-icon-button>
+    <span class="title" uuid="6cda198b-c3b1-46e5-b114-beaa603c0aa4">Toolbar</span>
+    <paper-icon-button icon="refresh" uuid="c4ce651d-7230-4254-a573-f46ac13fe049"></paper-icon-button>
+    <paper-icon-button icon="add" uuid="41f7b23b-9f1d-4b11-b121-d0924f729055">+</paper-icon-button>
+  </paper-toolbar>
+
+  <paper-toolbar class="tall" uuid="68657f84-2358-4a84-8f0f-abdd5f03de8f">
+    <paper-icon-button icon="menu" uuid="bedaec52-d499-4907-98d3-08f1de85218e"></paper-icon-button>
+    <span class="title" uuid="463fb544-3a9f-4663-bb12-9ea4451e874d">Toolbar: tall</span>
+    <paper-icon-button icon="refresh" uuid="ba440dff-5de1-4a54-a9e5-6795b1db9944"></paper-icon-button>
+    <paper-icon-button icon="add" uuid="4a2da196-48af-41cd-947e-800a1459b2b3">+</paper-icon-button>
+  </paper-toolbar>
+
+  <paper-toolbar class="tall" uuid="53105f77-4b94-49c6-b80b-c11f5fbc5dc6">
+    <paper-icon-button icon="menu" class="bottom" uuid="b7b917fd-5186-457e-bc0f-7669219ad9d2"></paper-icon-button>
+    <span class="bottom title" uuid="8dd0a030-c630-4a07-9bd6-b942566b2a99">Toolbar: tall with elements pin to the bottom</span>
+    <paper-icon-button icon="refresh" class="bottom" uuid="79df84c1-2df5-4819-845d-adfc7225b8bf"></paper-icon-button>
+    <paper-icon-button icon="add" class="bottom" uuid="83b02bf3-da2a-4f45-bc96-2caa88c51ec2">+</paper-icon-button>
+  </paper-toolbar>
+
+  <paper-toolbar class="medium-tall" uuid="f3d9d00e-1884-4082-8a28-11315ea5f372">
+    <paper-icon-button icon="menu" uuid="90cac100-5872-4ef0-9cd8-a3c33cbeba98"></paper-icon-button>
+    <span class="flex" uuid="a84006ab-3870-4ba1-b1ab-aa40a6208bd3"></span>
+    <paper-icon-button icon="refresh" uuid="cc24b2c6-17ea-4de2-b008-b33dbddff544"></paper-icon-button>
+    <paper-icon-button icon="add" uuid="23190925-917d-439a-a71e-16d754c973c4">+</paper-icon-button>
+    <span class="bottom title" uuid="bee48b90-7f23-4188-a080-1e3226a16975">Toolbar: medium-tall with label aligns to the bottom</span>
+  </paper-toolbar>
+
+  <paper-toolbar class="tall" uuid="dcc0c2a9-2335-4e41-a6e8-d3198fb52460">
+    <paper-icon-button icon="menu" uuid="9b6ad770-fe4f-457d-91eb-9bb95841a873"></paper-icon-button>
+    <div class="flex" uuid="d6d1689e-a295-47fd-90f5-7199b8268ac1"></div>
+    <paper-icon-button icon="refresh" uuid="22ec12c6-c90f-4840-a50e-023b95dad2fb"></paper-icon-button>
+    <paper-icon-button icon="add" uuid="5f7f05b9-4429-4bc4-be74-d1fe35d9deba">+</paper-icon-button>
+    <div class="middle title" uuid="97282aa7-7610-4431-8c37-20dd7577cab6">label aligns to the middle</div>
+    <div class="bottom title" uuid="2eee3186-40d4-48a2-9b94-f2724e9b03d9">some stuffs align to the bottom</div>
+  </paper-toolbar>
+
+  <paper-toolbar class="tall" uuid="d2e62f2f-bd23-4126-ba7a-d908730ae893">
+    <paper-icon-button icon="menu" uuid="663e5f65-bbfd-4ceb-a564-ffe10ec1359c"></paper-icon-button>
+    <div class="flex" uuid="a8471822-cf50-46be-93bd-6750a0842f3d"></div>
+    <paper-icon-button icon="refresh" uuid="6cd03a4e-1c87-49cb-8ea0-3883f5d1d478"></paper-icon-button>
+    <paper-icon-button icon="add" uuid="c647eab8-a646-4a18-9382-a9632566d3a8">+</paper-icon-button>
+    <div class="middle title" uuid="d5febc98-fb8e-4e32-b364-24dc134eaa73">element (e.g. progress) fits at the bottom of the toolbar</div>
+    <div class="bottom fit" style="height: 20px; background-color: #0f9d58;" uuid="99eecb36-cb18-4b30-9be1-923ccfe0c07e"></div>
+  </paper-toolbar>
+
+</body>
+</html>

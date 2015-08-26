@@ -1,0 +1,85 @@
+<!doctype html>
+<!--
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<html uuid="128ebe3c-1dd9-4fd8-89ad-4e2a2a83fde5">
+<head uuid="d6cda85b-c316-4892-987a-562fafa083f2">
+  <title uuid="a69cd545-bafa-43cc-a7ce-eb83ee3f0362">disabled-state</title>
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+  <script src="../../test-fixture/test-fixture-mocha.js"></script>
+
+  <link rel="import" href="../../polymer/polymer.html" uuid="318deb1c-299d-4f3d-b6d5-0fa20d46cba1">
+  <link rel="import" href="../../test-fixture/test-fixture.html" uuid="bf831ac8-dba0-4634-a474-0183813d25f9">
+  <link rel="import" href="test-elements.html" uuid="6d0b8bce-6722-4215-b112-79a9014ebdcb">
+</head>
+<body uuid="f498ddcc-1428-4b23-bc06-ca3d787f7379">
+
+  <test-fixture id="TrivialDisabledState" uuid="e0cbcdfa-c7e6-4904-a00a-d7fccfddba6f">
+    <template uuid="e56ff931-0c32-401d-8b86-6fbbbe4648d6">
+      <test-control uuid="8b2f8a5d-ebd7-49f3-b4da-7daf2039206d"></test-control>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="InitiallyDisabledState" uuid="37e90e6a-c8b7-4b2f-9664-6d1032099c81">
+    <template uuid="401eb064-706d-431a-80f4-06cbbb51c09e">
+      <test-control disabled uuid="573f5b9f-ca18-4eca-95ee-6cb018b97305"></test-control>
+    </template>
+  </test-fixture>
+
+  <script>
+    suite('disabled-state', function() {
+      var disableTarget;
+
+      suite('a trivial disabled state', function() {
+        setup(function() {
+          disableTarget = fixture('TrivialDisabledState');
+        });
+
+        suite('when disabled is true', function() {
+          test('receives a disabled attribute', function() {
+            disableTarget.disabled = true;
+            expect(disableTarget.hasAttribute('disabled')).to.be.eql(true);
+          });
+
+          test('receives an appropriate aria attribute', function() {
+            disableTarget.disabled = true;
+            expect(disableTarget.getAttribute('aria-disabled')).to.be.eql('true');
+          });
+        });
+
+        suite('when disabled is false', function() {
+          test('loses the disabled attribute', function() {
+            disableTarget.disabled = true;
+            expect(disableTarget.hasAttribute('disabled')).to.be.eql(true);
+            disableTarget.disabled = false;
+            expect(disableTarget.hasAttribute('disabled')).to.be.eql(false);
+          });
+        });
+      });
+
+      suite('a state with an initially disabled target', function() {
+        setup(function() {
+          disableTarget = fixture('InitiallyDisabledState');
+        });
+
+        test('preserves the disabled attribute on target', function() {
+          expect(disableTarget.hasAttribute('disabled')).to.be.eql(true);
+          expect(disableTarget.disabled).to.be.eql(true);
+        });
+
+        test('adds `aria-disabled` to the target', function() {
+          expect(disableTarget.getAttribute('aria-disabled')).to.be.eql('true');
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

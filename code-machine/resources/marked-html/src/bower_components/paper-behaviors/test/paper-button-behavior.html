@@ -1,0 +1,82 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<html uuid="dc03c215-2bbf-411e-909a-929726ebb8f4">
+<head uuid="ea29faeb-a055-4503-8536-a1b49a421b19">
+  <title uuid="c70f9832-318e-485a-bfea-b389cc2215eb">paper-button-behavior</title>
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+  <script src="../../test-fixture/test-fixture-mocha.js"></script>
+  <script src="../../iron-test-helpers/mock-interactions.js"></script>
+
+  <link rel="import" href="../../polymer/polymer.html" uuid="3c8a590c-3d86-459e-bfac-961e50b0f75c">
+  <link rel="import" href="../../test-fixture/test-fixture.html" uuid="66b21ec3-4bef-495a-a5ba-10ab69ca3c5a">
+  <link rel="import" href="test-button.html" uuid="367e6e04-5496-4748-a62f-b33be33f2258">
+</head>
+<body uuid="fcfe87e3-6579-49bf-832a-8933f6495ebb">
+
+  <test-fixture id="basic" uuid="bdcdfc1e-3ddc-4ad5-9319-1d9a087594ab">
+    <template uuid="6d8e0c3a-b9fc-4382-b808-b2ec886dcc31">
+      <test-button uuid="6b714bb4-acf2-4d2b-8688-72f5dae744aa"></test-button>
+    </template>
+  </test-fixture>
+
+  <script>
+    suite('basic', function() {
+      var button;
+
+      setup(function() {
+        button = fixture('basic');
+      });
+
+      test('normal (no states)', function() {
+        assert.equal(button._elevation, 1);
+      });
+
+      test('set disabled property', function() {
+        button.disabled = true;
+        assert.equal(button._elevation, 0);
+      });
+
+      test('pressed and released', function() {
+        MockInteractions.down(button);
+        assert.equal(button._elevation, 4);
+        MockInteractions.up(button);
+        assert.equal(button._elevation, 1);
+      });
+
+      suite('a button with toggles', function() {
+        setup(function() {
+          button.toggles = true;
+        });
+
+        test('activated by tap', function(done) {
+          MockInteractions.downAndUp(button, function() {
+            try {
+              assert.equal(button._elevation, 4);
+              done();
+            } catch (e) {
+              done(e);
+            }
+          });
+        });
+      });
+
+      test('receives focused', function() {
+        MockInteractions.focus(button);
+        assert.equal(button._elevation, 3);
+      });
+    });
+  </script>
+
+</body>
+</html>

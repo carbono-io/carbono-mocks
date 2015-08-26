@@ -1,0 +1,118 @@
+<!doctype html>
+<!--
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<html uuid="6df1c426-1ebe-490d-be62-f802edb0d0eb">
+<head uuid="c418a30a-32cc-437e-baee-9a4739e3a0fa">
+  <title uuid="e7c8966a-ecd6-4742-a058-0f265d9e49a7">focused-state</title>
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+  <script src="../../test-fixture/test-fixture-mocha.js"></script>
+  <script src="../../iron-test-helpers/mock-interactions.js"></script>
+
+  <link rel="import" href="../../polymer/polymer.html" uuid="db7545ac-28e0-4997-a3b2-31728d8de305">
+  <link rel="import" href="../../test-fixture/test-fixture.html" uuid="bec3da4f-c778-4eb9-8ae8-c1783b10c77b">
+  <link rel="import" href="test-elements.html" uuid="185b1239-00e6-45c0-a289-1e83f0fafe35">
+</head>
+<body uuid="ef39cd0b-95c0-4b62-8bed-2549e5248c15">
+
+  <test-fixture id="TrivialFocusedState" uuid="11787112-c9e3-4359-abc1-179321ebc235">
+    <template uuid="806d8555-236e-4259-a01a-fa2341f5a610">
+      <test-control tabindex="-1" uuid="6536ee62-c6a9-4282-a520-27ebb2ad400f"></test-control>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="NestedFocusedState" uuid="9070d1c8-0b8d-4112-8249-cf8b62619367">
+    <template uuid="613aae2a-b8b8-4f8a-a664-550d09f6e9c6">
+      <nested-focusable uuid="53320001-d5de-4698-8051-fd7e73055f73"></nested-focusable>
+    </template>
+  </test-fixture>
+
+  <script>
+    suite('focused-state', function() {
+      var focusTarget;
+
+      setup(function() {
+        focusTarget = fixture('TrivialFocusedState');
+      });
+
+      suite('when is focused', function() {
+        test('receives a focused attribute', function() {
+          expect(focusTarget.hasAttribute('focused')).to.be.eql(false);
+          MockInteractions.focus(focusTarget);
+          expect(focusTarget.hasAttribute('focused')).to.be.eql(true);
+        });
+
+        test('focused property is true', function() {
+          expect(focusTarget.focused).to.not.be.eql(true);
+          MockInteractions.focus(focusTarget);
+          expect(focusTarget.focused).to.be.eql(true);
+        });
+      });
+
+      suite('when is blurred', function() {
+        test('loses the focused attribute', function() {
+          MockInteractions.focus(focusTarget);
+          expect(focusTarget.hasAttribute('focused')).to.be.eql(true);
+          MockInteractions.blur(focusTarget);
+          expect(focusTarget.hasAttribute('focused')).to.be.eql(false);
+        });
+
+        test('focused property is false', function() {
+          MockInteractions.focus(focusTarget);
+          expect(focusTarget.focused).to.be.eql(true);
+          MockInteractions.blur(focusTarget);
+          expect(focusTarget.focused).to.be.eql(false);
+        });
+      });
+
+      suite('when the focused state is disabled', function() {
+        setup(function() {
+          focusTarget.disabled = true;
+        });
+
+        test('will not be focusable', function() {
+          expect(focusTarget.getAttribute('tabindex')).to.be.eql('-1');
+        });
+      });
+    });
+
+    suite('nested focusable', function() {
+      var focusable;
+
+      setup(function() {
+        focusable = fixture('NestedFocusedState');
+      });
+
+      test('focus/blur events fired on host element', function() {
+        var nFocusEvents = 0;
+        var nBlurEvents = 0;
+
+        focusable.addEventListener('focus', function() {
+          nFocusEvents += 1;
+          expect(focusable.focused).to.be.equal(true);
+          MockInteractions.blur(focusable.$.input);
+        });
+        focusable.addEventListener('blur', function() {
+          expect(focusable.focused).to.be.equal(false);
+          nBlurEvents += 1;
+        });
+
+        MockInteractions.focus(focusable.$.input);
+
+        expect(nBlurEvents).to.be.greaterThan(0);
+        expect(nFocusEvents).to.be.greaterThan(0);
+      });
+
+    });
+
+  </script>
+
+</body>
+</html>

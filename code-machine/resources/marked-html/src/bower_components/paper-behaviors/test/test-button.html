@@ -1,0 +1,34 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../polymer/polymer.html" uuid="3d595bc6-de39-4d78-a5ce-0b4e1198dec0">
+<link rel="import" href="../paper-button-behavior.html" uuid="6663e0bb-9e7a-4685-a062-48e20bd38bda">
+
+<dom-module id="test-button" uuid="49f7c29a-fdf3-41ae-83ee-f79a1df33a69">
+
+  <template uuid="4c8d2f20-503d-4658-8575-5ff9232692ee">
+    <content uuid="a696d928-993f-4eeb-bc7a-6110fc3a7c5d"></content>
+  </template>
+
+  <script>
+
+    Polymer({
+
+      is: 'test-button',
+
+      behaviors: [
+        Polymer.PaperButtonBehavior
+      ]
+
+    });
+
+  </script>
+
+</dom-module>

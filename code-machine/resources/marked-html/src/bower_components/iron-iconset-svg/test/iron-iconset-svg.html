@@ -1,0 +1,107 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<html uuid="a8386eb1-a7ce-41cd-b4d2-8938260643a4">
+<head uuid="4e5c26e2-76bf-4268-b71b-0098d09f0db5">
+
+  <title uuid="ce9b4e5f-a421-49f1-a864-fbed62a74f0c">iron-iconset-svg</title>
+  <meta charset="utf-8" uuid="b1ff4ad5-04ce-485a-a04f-f0ca1737298e">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" uuid="7eb51e75-c16f-41da-8acc-0802a4c3d139">
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+  <script src="../../test-fixture/test-fixture-mocha.js"></script>
+
+  <link rel="import" href="../iron-iconset-svg.html" uuid="a5f1c2df-095b-40a6-81ef-03c1c3ca9825">
+  <link rel="import" href="../../iron-meta/iron-meta.html" uuid="cd60699c-7676-446d-812d-606e3c48d790">
+  <link rel="import" href="../../test-fixture/test-fixture.html" uuid="ff793da1-56a2-4f2b-973a-14e1021fb4e0">
+
+</head>
+<body uuid="97f8f54e-6cf7-4c1c-86c7-004588c1f12c">
+
+  <test-fixture id="TrivialIconsetSvg" uuid="55518ef1-0999-45f5-9202-8ecb368435c7">
+    <template uuid="999bd666-552c-4188-a356-ad88dd51a5ea">
+      <iron-iconset-svg name="foo" uuid="8414a0d1-52d8-4c0f-b4e5-ff415abcd1be"></iron-iconset-svg>
+      <iron-meta type="iconset" uuid="35629756-fd81-4be5-abd8-afb2f622467d"></iron-meta>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="StandardIconsetSvg" uuid="d7305813-e80b-46df-b57d-ea08f465eb84">
+    <template uuid="fd57878c-48a0-46d5-aa6f-a4eaa492969f">
+      <iron-iconset-svg name="my-icons" size="20" uuid="f9a34253-d9a3-4106-80a0-1855ed30e8e7">
+        <svg uuid="bfbba14e-f08c-4ab2-9838-56ee99eb665a">
+          <defs uuid="89d11acd-1786-4e06-a265-7e66161b6ec9">
+            <circle id="circle" cx="20" cy="20" r="10" uuid="5bb541f1-9aa1-4aa8-b74e-ce3df8791ebc"/>
+            <rect id="square" x="0" y="0" width="20" height="20" uuid="fbb299aa-c0dd-4c47-b658-7d33bd3f4741"/>
+          </defs>
+        </svg>
+      </iron-iconset-svg>
+      <div uuid="90a6427b-0475-4514-999c-737dc38c3573"></div>
+    </template>
+  </test-fixture>
+
+  <script>
+
+    suite('<iron-iconset>', function () {
+
+      suite('basic behavior', function () {
+        var iconset;
+        var meta;
+
+        setup(function () {
+          var elements = fixture('TrivialIconsetSvg');
+          iconset = elements[0];
+          meta = elements[1];
+        });
+
+        test('it can be accessed via iron-meta', function () {
+          expect(meta.byKey('foo')).to.be.equal(iconset);
+        });
+      });
+
+      suite('when paired with a size and SVG definition', function () {
+        var iconset;
+        var div;
+
+        setup(function () {
+          var elements = fixture('StandardIconsetSvg');
+          iconset = elements[0];
+          div = elements[1];
+        });
+
+        test('appends a child to the target element', function () {
+          expect(div.firstElementChild).to.not.be.ok;
+          iconset.applyIcon(div, 'circle');
+          expect(div.firstElementChild).to.be.ok;
+        });
+
+        test('can be queried for all available icons', function () {
+          expect(iconset.getIconNames()).to.deep.eql(['my-icons:circle', 'my-icons:square']);
+        });
+
+        test('supports any icon defined in the svg', function () {
+          var lastSvgIcon;
+
+          iconset.getIconNames().forEach(function (iconName) {
+            iconset.applyIcon(div, iconName.split(':').pop());
+            expect(div.firstElementChild).to.not.be.equal(lastSvgIcon);
+            lastSvgIcon = div.firstElementChild;
+          });
+        });
+
+      });
+
+    });
+
+  </script>
+
+</body>
+</html>

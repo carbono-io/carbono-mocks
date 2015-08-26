@@ -1,0 +1,71 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../polymer/polymer.html" uuid="25009825-2f21-4282-9c0c-9d9f74e4d729">
+<link rel="import" href="../../paper-material/paper-material.html" uuid="8cfaf8a7-4a04-4278-b0ef-37d29b517909">
+<link rel="import" href="../paper-button-behavior.html" uuid="c82f7660-1147-4a49-add0-ffdb4b291229">
+
+<dom-module id="paper-button" uuid="9e9529cb-1955-4c64-a74b-21608027a9af">
+
+  <style>
+
+    :host {
+      display: inline-block;
+      background-color: #4285F4;
+      color: #fff;
+      border-radius: 3px;
+      text-transform: uppercase;
+      outline: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      -webkit-user-select: none;
+      user-select: none;
+      cursor: pointer;
+    }
+
+    paper-material {
+      border-radius: inherit;
+      padding: 16px;
+    }
+
+    :host([disabled]) {
+      background-color: #888;
+      pointer-events: none;
+    }
+
+    :host([active]),
+    :host([pressed]) {
+      background-color: #3367D6;
+      box-shadow: inset 0 3px 5px rgba(0,0,0,.2);
+    }
+
+  </style>
+
+  <template uuid="2d5ed688-bd06-4064-a548-37807a9fbdf1">
+
+    <paper-material class="content" elevation="[[_elevation]]" animated="" uuid="04325c27-9a1d-43b1-a1e0-5cca7ba84862">
+      <content uuid="05c9b46d-17a2-4b98-94dc-51ee632e3dee"></content>
+    </paper-material>
+
+  </template>
+
+  <script>
+
+    Polymer({
+      is: 'paper-button',
+
+      behaviors: [
+        Polymer.PaperButtonBehavior
+      ]
+    });
+
+  </script>
+
+</dom-module>

@@ -1,0 +1,48 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<html uuid="e5950f91-b5ae-434c-8bcc-5553d0919c3b">
+<head uuid="d64158f1-07b3-46ea-8283-8084cf4003f6">
+
+  <title uuid="ce4e1431-0d57-4c69-8930-5b1b8c43ceb7">iron-meta-basic</title>
+  <meta charset="utf-8" uuid="f18faece-f3bf-4dc5-9dbb-ad6aecc9879d">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" uuid="c5fbe53e-b485-4183-9aa4-9a0ed6881263">
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+
+  <link rel="import" href="../iron-meta.html" uuid="c4dce48b-9419-4359-bd3a-24b673417518">
+
+</head>
+<body uuid="05a91eea-f847-4f0e-9064-16aa29334a90">
+
+  <iron-meta key="info" value="foo/bar" uuid="43447661-57cc-41cf-b0e6-7dbcf4dc5750"></iron-meta>
+
+  <script>
+
+    suite('basic', function() {
+
+      test('byKey', function() {
+        var meta = document.createElement('iron-meta');
+        assert.equal(meta.byKey('info'), 'foo/bar');
+      });
+
+      test('list', function() {
+        var meta = document.createElement('iron-meta');
+        assert.equal(meta.list.length, 1);
+      });
+
+    });
+
+  </script>
+
+</body>
+</html>

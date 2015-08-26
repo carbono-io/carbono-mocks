@@ -1,0 +1,154 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE
+The complete set of authors may be found at http://polymer.github.io/AUTHORS
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS
+-->
+<html uuid="91c36ccb-3145-4e1a-ab5f-b60ceb796b52">
+  <head uuid="366716eb-ecf9-4044-847c-dc539faa68dd">
+    <title uuid="2cb1c9d3-4bcb-443b-b4f5-7128817984ba">paper-icon-button</title>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes" uuid="83f04a53-459a-4b49-b99d-64d127324127">
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../iron-icons/iron-icons.html" uuid="1cdb0321-c6ba-4562-8f76-29064394e2cf">
+    <link rel="import" href="../../paper-styles/color.html" uuid="80c25974-221a-4ffe-aa45-bf2978416211">
+    <link rel="import" href="../../paper-styles/demo-pages.html" uuid="8481c6cf-1284-4ea8-b194-0cc8d9bca14f">
+    <link rel="import" href="../paper-icon-button.html" uuid="bdd8c80a-0ca0-4ca3-afdf-7d098f541671">
+
+    <style is="custom-style">
+      .horizontal-section {
+        min-width: 100px;
+      }
+
+      paper-icon-button {
+        margin-left: 30px;
+        display: block;
+        width: 24px;
+        text-align: center;
+      }
+
+      paper-icon-button.blue {
+        color: var(--paper-light-blue-500);
+      }
+
+      paper-icon-button.red {
+        color: var(--paper-red-500);
+      }
+
+      paper-icon-button.orange {
+        color: var(--paper-orange-500);
+      }
+
+      paper-icon-button.green {
+        color: var(--paper-green-500);
+      }
+
+      paper-icon-button.blue:hover {
+        background: var(--paper-light-blue-50);
+        border-radius: 50%;
+      }
+
+      paper-icon-button.red:hover {
+        background: var(--paper-red-50);
+        border-radius: 50%;
+      }
+
+      paper-icon-button.orange:hover {
+        background: var(--paper-orange-50);
+        border-radius: 50%;
+      }
+
+      paper-icon-button.green:hover {
+        background: var(--paper-green-50);
+        border-radius: 50%;
+      }
+
+      paper-icon-button.huge {
+        margin-left: 0px;
+        width: 100px;
+        --paper-icon-button-ink-color: var(--paper-indigo-500);
+      }
+
+      paper-icon-button.huge::shadow #icon {
+        width: 100px;
+        height: 100px;
+      }
+
+      paper-icon-button.huge #icon {
+        width: 100px;
+        height: 100px;
+      }
+    </style>
+
+  </head>
+
+  <body onclick="clickAction(event);" unresolved="" uuid="8d9cfbf5-88b5-42f0-974d-f75fd6f4af20">
+
+    <div class="horizontal-section-container" uuid="42f71106-2e14-4e0c-99b2-7f25e3419f71">
+      <div uuid="b61ab330-d179-4138-8a95-753d915416cc">
+        <h4 uuid="f893787f-6c60-4fcd-849f-894dc8fd2c99">Enabled</h4>
+        <div class="horizontal-section" uuid="27f14a53-2768-4f3f-8830-9837096e5e4a">
+          <paper-icon-button icon="menu" alt="menu" title="menu" uuid="c94c1e4f-83cc-4a61-8bbd-e916e02c5c68"></paper-icon-button>
+          <paper-icon-button icon="favorite" alt="heart" title="heart" uuid="84d23f15-74b1-48a2-947f-e48d8eddd42c"></paper-icon-button>
+          <paper-icon-button icon="arrow-back" alt="arrow-back" title="arrow-back" uuid="1107e4ef-f4f2-432d-90ea-e69a9c89f187"></paper-icon-button>
+          <paper-icon-button icon="arrow-forward" alt="arrow-forward" title="arrow-forward" uuid="05b58184-ad5c-4821-92b9-ba69a93ce5ae"></paper-icon-button>
+          <paper-icon-button icon="clear" alt="clear" title="clear" uuid="b7593fe5-47de-4286-ba4d-4d31adfeb72e"></paper-icon-button>
+          <paper-icon-button icon="polymer" alt="polymer" title="polymer" uuid="cdf01682-bea3-4c71-8490-219cc2fc1c6f"></paper-icon-button>
+          <paper-icon-button src="https://assets-cdn.github.com/images/modules/logos_page/Octocat.png" alt="octocat" title="octocat" uuid="3b1d2409-c8bb-4f91-8595-cb487a8d850a"></paper-icon-button>
+        </div>
+      </div>
+
+      <div uuid="62fbb1f3-008b-4f6f-8e90-916ce7922b79">
+        <h4 uuid="6e8290f4-fcb1-48bc-af09-88096ee70c89">Disabled</h4>
+        <div class="horizontal-section" uuid="b8d13444-0407-4a69-b296-ae1a370d767b">
+          <paper-icon-button icon="menu" alt="menu" disabled uuid="b5b02689-b151-42a3-8775-cf7634381c9b"></paper-icon-button>
+          <paper-icon-button icon="favorite" alt="heart" disabled uuid="7c8fbcaa-90b9-4b00-806d-367bad1d98a9"></paper-icon-button>
+          <paper-icon-button icon="arrow-back" alt="arrow-back" disabled uuid="72b9f28c-7f40-4bb4-b34c-6757cd497de1"></paper-icon-button>
+          <paper-icon-button icon="arrow-forward" alt="arrow-forward" disabled uuid="59c0bb33-221e-4ab5-b3e8-e67f2a18d172"></paper-icon-button>
+          <paper-icon-button icon="clear" alt="clear" disabled uuid="5a0cda9b-8cbe-4da3-a3ee-f1b417e2ef93"></paper-icon-button>
+          <paper-icon-button icon="polymer" alt="polymer" disabled uuid="e8310289-b277-41a1-a954-946e56d8f81e"></paper-icon-button>
+          <paper-icon-button src="https://assets-cdn.github.com/images/modules/logos_page/Octocat.png" alt="octocat" disabled uuid="bf4acda2-6092-4f93-8a33-53e72c1685d4"></paper-icon-button>
+        </div>
+      </div>
+
+      <div uuid="1ff5e4a9-3806-45d6-be97-e346f0ebdc0c">
+        <h4 uuid="c01a20f7-d87d-4586-af2c-7c82c40a8bfa">Color</h4>
+        <div class="horizontal-section" uuid="99c30ca0-d34f-473e-a1db-a76250ecadc3">
+          <paper-icon-button icon="menu" alt="menu" class="blue" uuid="d8680e3b-e605-4d78-bb06-3427c7db6768"></paper-icon-button>
+          <paper-icon-button icon="favorite" alt="heart" class="red" uuid="4618f52a-b0d0-4156-a1a5-4bd4010fa855"></paper-icon-button>
+          <paper-icon-button icon="arrow-back" alt="arrow-back" class="orange" uuid="fc14d947-d363-4b80-a1ad-431b18e51b0d"></paper-icon-button>
+          <paper-icon-button icon="arrow-forward" alt="arrow-forward" class="green" uuid="a5d8d57b-e82c-4c02-9e65-638be38c2b46"></paper-icon-button>
+          <paper-icon-button icon="clear" alt="clear" class="blue" uuid="49b228aa-6a7f-48a4-8c47-29a1cc2b769d"></paper-icon-button>
+          <paper-icon-button icon="polymer" alt="polymer" class="red" uuid="c0dea590-7475-4cbd-bbea-40e2748410af"></paper-icon-button>
+          <paper-icon-button class="blue" src="https://assets-cdn.github.com/images/modules/logos_page/Octocat.png" alt="octocat" uuid="b5172504-f5d3-4505-9ccc-dd49cc3d5d49"></paper-icon-button>
+        </div>
+      </div>
+
+      <div uuid="3c8cd5ab-7867-4943-933f-720169e3ec3c">
+        <h4 uuid="c979d389-b983-4fce-945b-fcd7021a2ef4">Size</h4>
+        <div class="horizontal-section" uuid="7bfea683-1e9f-4b2f-9bb2-d0ef95e5309b">
+          <paper-icon-button icon="favorite" alt="heart" class="huge" uuid="015f0d60-eb08-422b-bb0d-ba56fbf0857e"></paper-icon-button>
+          <br uuid="d50e93eb-4d6d-492a-b32c-0899535d0340"><br uuid="6610ce40-7b4e-47c1-b369-989bb036a852"><br uuid="d0a90a15-29c5-46d5-9b4d-f365cb73b241">
+          <paper-icon-button icon="polymer" alt="polymer" class="huge" uuid="0adadf5e-6b4f-40dd-a23d-43d67fae3b02"></paper-icon-button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function clickAction(e) {
+        var t = e.target;
+        if (t.localName === 'paper-icon-button') {
+          if (t.hasAttribute('disabled')) {
+            console.error('should not be able to click disabled button', t);
+          } else {
+            console.log('click', t);
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<html uuid="043e9241-73d5-4b5b-a65f-8314fede0a34">
+<head uuid="da8b8283-347a-44f0-b8ae-eebae7394f19">
+  <meta charset="UTF-8" uuid="06120eb4-20e5-4c22-8a04-10bb9ae3a45a">
+  <title uuid="95fc4c08-80e9-4252-bb53-2219ab25c40a">paper-icon-button basic tests</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" uuid="83d24677-fa1c-469e-8af9-075cb2efdafb">
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+  <script src="../../test-fixture/test-fixture-mocha.js"></script>
+
+  <link rel="import" href="../../test-fixture/test-fixture.html" uuid="a1fc42fd-3fb5-4a8a-9955-97bcbf77c17c">
+  <link rel="import" href="../../iron-icons/iron-icons.html" uuid="7cbdb600-68bb-4fe1-8bc8-9182badae2ee">
+  <link rel="import" href="../paper-icon-button.html" uuid="6ac70956-dce5-445b-b977-81b08bac41c1">
+
+</head>
+<body uuid="8c38d771-c152-49f9-8fa1-7649d5ad3cd5">
+
+  <test-fixture id="TrivialIconButton" uuid="37773784-9e37-4b95-8ef3-48831db0e8df">
+    <template uuid="00158253-5900-40f0-9a40-f8191c0514e2">
+      <div style="line-height:30px;" uuid="c9fcd13c-52c1-4a41-baf9-efddd745be72">
+        <paper-icon-button id="fab1" icon="add" uuid="c621df69-9c61-4d16-89dc-e24dc086e736"></paper-icon-button>
+      </div>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="SrcIconButton" uuid="dfc03ef4-7ad7-4ccc-966d-657153e65f33">
+    <template uuid="00669def-ed57-4f63-bf99-3e7df0b052c2">
+      <paper-icon-button src="add.png" uuid="2ae9fd81-09a6-4ba2-b8ad-6997a1e9f7aa"></paper-icon-button>
+    </template>
+  </test-fixture>
+
+  <script>
+
+    var b1;
+    var b2;
+
+    function centerOf(element) {
+      var rect = element.getBoundingClientRect();
+      return {left: rect.left + rect.width / 2, top: rect.top + rect.height / 2};
+    }
+
+    function approxEqual(p1, p2) {
+      return Math.abs(p1.left - p2.left) <= 2 && Math.abs(p1.top-p2.top) <= 2;
+    }
+
+    setup(function() {
+      b1 = fixture('TrivialIconButton').querySelector('#fab1');
+      b2 = fixture('SrcIconButton');
+    });
+
+    test('applies an icon specified by the `icon` attribute', function() {
+      assert.strictEqual(!!b1.$.icon.src, false);
+      assert.ok(Polymer.dom(b1.$.icon.root).querySelector('svg'));
+    });
+
+    test('applies an icon specified by the `src` attribute', function() {
+
+      assert.strictEqual(!!b2.$.icon.src, true);
+      assert.ok(b2.$.icon.src);
+    });
+
+    test('renders correctly independent of line height', function() {
+      assert.ok(approxEqual(centerOf(b1.$.icon), centerOf(b1)));
+    });
+  </script>
+</body>
+</html>

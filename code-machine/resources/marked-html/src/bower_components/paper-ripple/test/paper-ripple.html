@@ -1,0 +1,166 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<html uuid="191547ea-5d18-4788-8c5a-f9bcaabc46cf">
+<head uuid="85343628-fac4-4170-aa88-d79a57e8c36b">
+
+  <meta charset="UTF-8" uuid="7e880f15-be5e-4b41-ad08-bacaa72ecd78">
+  <title uuid="881733d9-1941-4193-87d0-f036179ced89">paper-ripple</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" uuid="106b1e0d-9d41-4370-8a75-9b48dd14309f">
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+  <script src="../../test-fixture/test-fixture-mocha.js"></script>
+
+  <link rel="import" href="../../test-fixture/test-fixture.html" uuid="17216eb5-348e-406d-bea5-a6f565454e3c">
+  <link rel="import" href="../paper-ripple.html" uuid="10a40cc0-b571-4c29-89cf-68659589f04f">
+
+  <style>
+    #RippleContainer {
+      display: block;
+      position: relative;
+      width: 100px;
+      height: 50px;
+    }
+  </style>
+</head>
+<body uuid="53b336f6-a78a-4f5a-a733-05a0b66d321e">
+  <test-fixture id="TrivialRipple" uuid="c97c907b-547c-4bc9-9884-8e47ba421fb7">
+    <template uuid="3a49b20f-6ece-4183-acb4-419fbe344b83">
+      <div id="RippleContainer" uuid="b5e7d2b8-fdf6-4d6a-b920-95e9f5ec0ff2">
+        <paper-ripple uuid="ce12cf21-291c-4d7b-ada7-3ab9970b8767"></paper-ripple>
+      </div>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="CenteringRipple" uuid="610fccde-53e5-491c-b7c7-a8486b5b8227">
+    <template uuid="8c1f841a-fee3-48b3-b974-6c15bd8ad743">
+      <div id="RippleContainer" uuid="8179705b-2cb4-4ac8-96ea-98f928fd74f2">
+        <paper-ripple center="" uuid="bcd98b4f-ea9c-45f4-8d76-52c799622d88"></paper-ripple>
+      </div>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="RecenteringRipple" uuid="c5c3a04b-6b53-482d-92d5-ae83b0cda433">
+    <template uuid="85d5db31-94d7-41af-a624-a76832ad2d29">
+      <div id="RippleContainer" uuid="e63d3b32-0925-4670-9c63-1729e0af2d12">
+        <paper-ripple recenters="" uuid="105b8269-c6bc-430d-9400-de2e31e7d557"></paper-ripple>
+      </div>
+    </template>
+  </test-fixture>
+
+  <script>
+    function FakeMouseEvent (target, relativeX, relativeX) {
+      var rect = target.getBoundingClientRect();
+
+      return {
+        detail: {
+          x: rect.left + relativeX,
+          y: rect.top + relativeX
+        }
+      };
+    }
+
+    suite('<paper-ripple>', function () {
+      var mouseEvent;
+      var rippleContainer;
+      var ripple;
+
+      suite('when tapped', function () {
+        setup(function () {
+          rippleContainer = fixture('TrivialRipple');
+          ripple = rippleContainer.firstElementChild;
+
+          mouseEvent = new FakeMouseEvent(ripple, 10, 10);
+        });
+
+        test('creates a ripple', function () {
+          expect(ripple.ripples.length).to.be.eql(0);
+          ripple.downAction(mouseEvent);
+          expect(ripple.ripples.length).to.be.eql(1);
+        });
+
+        test('may create multiple ripples that overlap', function () {
+          expect(ripple.ripples.length).to.be.eql(0);
+
+          for (var i = 0; i < 3; ++i) {
+            ripple.downAction(mouseEvent);
+            expect(ripple.ripples.length).to.be.eql(i + 1);
+          }
+        });
+      });
+
+      suite('with the `center` attribute set to true', function () {
+        setup(function () {
+          rippleContainer = fixture('CenteringRipple');
+          ripple = rippleContainer.firstElementChild;
+
+          mouseEvent = new FakeMouseEvent(ripple, 10, 10);
+        });
+
+        test('ripples will center', function (done) {
+          var waveContainerElement;
+          // let's ask the browser what `translate3d(0px, 0px, 0)` will actually look like
+          var div = document.createElement('div');
+          div.style.webkitTransform = 'translate3d(0px, 0px, 0px)';
+          div.style.transform = 'translate3d(0px, 0px, 0)';
+
+          ripple.downAction(mouseEvent);
+
+          waveContainerElement = ripple.ripples[0].waveContainer;
+
+          ripple.upAction(mouseEvent);
+
+          window.requestAnimationFrame(function () {
+            var currentTransform = waveContainerElement.style.transform;
+            try {
+              expect(div.style.transform).to.be.ok;
+              expect(currentTransform).to.be.ok;
+              expect(currentTransform).to.be.eql(div.style.transform);
+
+              done();
+            } catch (e) {
+              done(e);
+            }
+          });
+        });
+      });
+
+      suite('with the `recenters` attribute set to true', function () {
+        setup(function () {
+          rippleContainer = fixture('RecenteringRipple');
+          ripple = rippleContainer.firstElementChild;
+          mouseEvent = new FakeMouseEvent(ripple, 10, 10);
+        });
+        test('ripples will gravitate towards the center', function (done) {
+          var waveContainerElement;
+          var waveTranslateString;
+          ripple.downAction(mouseEvent);
+          waveContainerElement = ripple.ripples[0].waveContainer;
+          waveTranslateString = waveContainerElement.style.transform;
+          ripple.upAction(mouseEvent);
+          window.requestAnimationFrame(function () {
+            try {
+              expect(waveTranslateString).to.be.ok;
+              expect(waveContainerElement.style.transform).to.be.ok;
+              expect(waveContainerElement.style.transform).to.not.be.eql(waveTranslateString);
+              done();
+            } catch (e) {
+              done(e);
+            }
+          });
+        });
+      });
+
+    });
+  </script>
+
+</body>
+</html>
