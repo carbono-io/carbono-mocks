@@ -101,19 +101,20 @@ paths:
           schema:
             $ref: '#/definitions/ResponseError'
 
-  
-
 definitions:
   Item:
     properties:
       projectId:
+        description: The id of a project
         type: string
   ResponseSucess:
     properties:
       id:
         type: string
+        description: Id that identifies the unique success message
       apiVersion:
         type: string
+        description: The version of the api
       data:
         required:
           - id
@@ -121,16 +122,20 @@ definitions:
         properties:
           id:
             type: string
+            description: Id that identifies the unique requested data
           items:
             type: array
+            description: An array of data items
             items:
               $ref: "#/definitions/Item"
   ResponseError:
     properties:
       id:
         type: string
+        description: Id that identifies the unique error message
       apiVersion:
         type: string
+        description: The version of the api
       error:
         required:
           - code
@@ -139,6 +144,8 @@ definitions:
           code:
             type: integer
             format: int64
+            description: The error code (i.e. 400, 404)
           message:
             type: string
+            description: The error message
       
