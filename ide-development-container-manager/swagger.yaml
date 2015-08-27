@@ -1,0 +1,87 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Development Container Manager
+  description: |
+    This API describes all the Development Container Manager operations.
+host: localhost:3000
+basePath: /ide-development-container-manager
+schemes:
+  - http
+paths:
+  /container:
+    post:
+      summary: |
+        Creates a container that will host a new Machine. If this container was already created, this method will retrieve the correct image of the corresponding container.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: projectId
+          in: body
+          description: |
+            Project id, which will be associated to a container.
+          schema:
+            $ref: '#/definitions/TemplateRequest'
+          required: true
+      responses:
+        200:
+          description: Container was successfully created / retrieved.
+          schema:
+            $ref: '#/definitions/TemplateResponse'
+        400:
+          description: Malformed request
+          schema:
+            $ref: '#/definitions/TemplateError'
+
+definitions:
+  TemplateRequest:
+    properties:
+      apiVersion:
+        type: number
+        format: float
+      id:
+        type: string
+      data:
+        properties:
+          id:
+            type: string
+          items:
+            type: array
+            items:
+              properties:
+                projectId:
+                  type: string
+
+  TemplateResponse:
+    properties:
+      apiVersion:
+        type: number
+        format: float
+      id:
+        type: string
+      data:
+        properties:
+          id:
+            type: string
+          items:
+            type: array
+            items:
+              properties:
+                url:
+                  type: string
+
+  TemplateError:
+    properties:
+      apiVersion:
+        type: number
+        format: float
+      id:
+        type: string
+      error:
+        properties:
+          code:
+            type: integer
+          message:
+            type: string
