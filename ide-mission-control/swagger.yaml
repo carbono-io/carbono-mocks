@@ -1,0 +1,144 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Mission Control
+  description: Mock for the communication with the Mission Control module with DCM (Development Container Manager), CM ( Code Machine) and IDE.
+host: localhost:3000
+basePath: /ide-mission-control
+schemes:
+  - http
+consumes:
+  - application/json
+  - text/xml
+produces:
+  - application/json
+  - text/html
+paths:
+  /project:
+    post:
+      responses:
+        200:
+          description:  Project was successfuly created, returns project ID
+          schema:
+            $ref: '#/definitions/ResponseSucess'
+        400:
+          description:  Malformed request
+          schema:
+            $ref: '#/definitions/ResponseError'
+  /project/{projectId}:
+    get:
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: Id of the project
+          required: true
+      responses:
+        200:
+          description:  Project was retrieved
+          schema:
+            $ref: '#/definitions/ResponseSucess'
+        400:
+          description:  Malformed request
+          schema:
+            $ref: '#/definitions/ResponseError'
+        404:
+          description:  Project does not exist
+          schema:
+            $ref: '#/definitions/ResponseError'
+  /project/{projectId}/resources/marked/{fileName}:
+    get:
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: Id of the project
+          required: true
+        - name: fileName
+          in: path
+          type: string
+          description: Name of a file
+          required: true
+      responses:
+        200:
+          description:  Retrieves a marked HTML file if it fileName is HTML or 
+            a pure file
+          schema:
+            type: file
+        400:
+          description:  fileName cannot be null
+          schema:
+            $ref: '#/definitions/ResponseError'
+        404:
+          description:  File not found
+          schema:
+            $ref: '#/definitions/ResponseError'
+  /project/{projectId}/resources/clean/{fileName}:
+    get:
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: Id of the project
+          required: true
+        - name: fileName
+          in: path
+          type: string
+          description: Name of a file
+          required: true
+      responses:
+        200:
+          description:  Retrieves a clean HTML file if it fileName is HTML or 
+            a pure file
+          schema:
+            type: file
+        400:
+          description:  fileName cannot be null
+          schema:
+            $ref: '#/definitions/ResponseError'
+        404:
+          description:  File not found
+          schema:
+            $ref: '#/definitions/ResponseError'
+
+  
+
+definitions:
+  Item:
+    properties:
+      projectId:
+        type: string
+  ResponseSucess:
+    properties:
+      id:
+        type: string
+      apiVersion:
+        type: string
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+          items:
+            type: array
+            items:
+              $ref: "#/definitions/Item"
+  ResponseError:
+    properties:
+      id:
+        type: string
+      apiVersion:
+        type: string
+      error:
+        required:
+          - code
+          - message
+        properties:
+          code:
+            type: integer
+            format: int64
+          message:
+            type: string
+      

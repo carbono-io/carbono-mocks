@@ -2,35 +2,17 @@
 var CJR = require('carbono-json-response');
 var uuid = require('node-uuid');
 
-/*
-* Mock for the creation of a new project that should communicate with CM and
-* DCM and return the projectId
-*
-* @path POST /ide-mission-control/project
-*
-* @param None, the request only needs to have a body
-*
-* @response 200 Project was successfuly created
-*           (@schema {
-*                      "id": <string response_id>,
-*                      "items": [{
-*                          "projectId": <string project_id>
-*                       }]
-*                    })
-*
-*           400 Malformed request
-*           (@schema {
-*                      "code": 400,
-*                      "message": "body cannot be null"
-*                    })
+/**
+* The create function communicates with DCM and CM to create a new project and
+* returns the projectId
 *
 * @usage Assuming that carbono-mocks is running at localhost:3000, you can test
 *        this function with this curl command:
 *        curl -X POST  http://localhost:3000/ide-mission-control/project/
-*        --verbose -H "Content-Type: application/json"
+*        --verbose
 */
 exports.create = function (req, res) {
-    var cjr = new CJR('1.0');
+    var cjr = new CJR({apiVersion: '1.0'});
     try {
         if (!req.body) {
             res.status(400);
@@ -58,38 +40,16 @@ exports.create = function (req, res) {
     }
 };
 
-/*
-* Mock for listing projects
-*
-* @path GET /ide-mission-control/project/:projectId
-*
-* @param projectId Identifies a project.
-*        (@location req.params.projectId)
-*        (@required yes)
-*        (@schema {"projectId": <string>})
-*
-* @response 200 Project was successfuly created
-*           (@schema {
-*                      "id": <string response_id>,
-*                      "items": [{
-*                          "projectId": <string project_id>
-*                       }]
-*                    })
-*
-*           400 Malformed request
-*           (@schema {
-*                      "code": 400,
-*                      "message": "projectId cannot be null"
-*                    })
+/**
+* The list function retrieves a project based on the projectId
 *
 * @usage Assuming that carbono-mocks is running at localhost:3000, you can test
 *        this function with this curl command:
 *        curl -X POST  http://localhost:3000/ide-mission-control/project/
-*        u18923uhe12u90uy781gdu
-*        --verbose -H "Content-Type: application/json"
+*        u18923uhe12u90uy781gdu --verbose
 */
 exports.list = function (req, res) {
-    var cjr = new CJR('1.0');
+    var cjr = new CJR({apiVersion: '1.0'});
     try {
         if (!req.params.projectId) {
             res.status(400);

@@ -4,10 +4,10 @@ var express = require('express');
 
 var resourcesController = require('../controllers/resources');
 
-var marked = express();
+var app = express();
 
-marked.get('**/*.html', resourcesController.marked);
+app.get('**/*.html', resourcesController.marked);
 
-marked.use('/', resourcesController.other);
+app.use('/', resourcesController.other);
 
-module.exports = marked;
+module.exports = app;

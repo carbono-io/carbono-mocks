@@ -4,12 +4,12 @@ var express = require('express');
 var resources = require('./resources');
 var projectController = require('../controllers/project');
 
-var project = express();
+var app = express();
 
-project.post('/', projectController.create);
+app.use('/:projectId/resources', resources);
 
-project.get('/:projectId', projectController.list);
+app.get('/:projectId', projectController.list);
 
-project.use('/:projectId/resources', resources);
+app.post('/', projectController.create);
 
-module.exports = project;
+module.exports = app;
