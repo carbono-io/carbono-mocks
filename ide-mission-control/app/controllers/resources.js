@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 var path = require('path');
 var fs = require('fs');
 var CJR = require('carbono-json-response');
@@ -6,10 +6,10 @@ var CJR = require('carbono-json-response');
 /**
 * The marked function retrieves a marked .html file from a project
 *
-* @usage Assuming that carbono-mocks is running at localhost:3000, you can test
-*        this function with this curl command:
-*        curl -X POST  http://localhost:3000/ide-mission-control/project/
-*		 u18923uhe12u90uy781gdu/resources/marked/index.html --verbose
+* Assuming that carbono-mocks is running at localhost:3000, you can test
+* this function with this curl command:
+*     curl http://localhost:3000/ide-mission-control/project/
+*     u18923uhe12u90uy781gdu/resources/marked/index.html --verbose
 */
 exports.marked = function (req, res) {
     var absolutePath =
@@ -38,10 +38,10 @@ exports.marked = function (req, res) {
 /**
 * The clean function retrieves a clean .html file from a project
 *
-* @usage Assuming that carbono-mocks is running at localhost:3000, you can test
-*        this function with this curl command:
-*        curl -X POST  http://localhost:3000/ide-mission-control/project/
-*		 u18923uhe12u90uy781gdu/resources/clean/index.html --verbose
+* Assuming that carbono-mocks is running at localhost:3000, you can test
+* this function with this curl command:
+*     curl http://localhost:3000/ide-mission-control/project/
+*	  u18923uhe12u90uy781gdu/resources/clean/index.html --verbose
 */
 exports.clean = function (req, res) {
     var absolutePath =
@@ -70,10 +70,10 @@ exports.clean = function (req, res) {
 /**
 * The other function retrieves a file that is not .html
 *
-* @usage Assuming that carbono-mocks is running at localhost:3000, you can test
-*        this function with this curl command:
-*        curl -X POST  http://localhost:3000/ide-mission-control/project/
-*		 u18923uhe12u90uy781gdu/resources/marked/index.js --verbose
+* Assuming that carbono-mocks is running at localhost:3000, you can test
+* this function with this curl command:
+*     curl -X POST  http://localhost:3000/ide-mission-control/project/
+*     u18923uhe12u90uy781gdu/resources/marked/index.js --verbose
 */
 exports.other = function (req, res) {
     var absolutePath =

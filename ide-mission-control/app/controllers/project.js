@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 var CJR = require('carbono-json-response');
 var uuid = require('node-uuid');
 
@@ -6,10 +6,9 @@ var uuid = require('node-uuid');
 * The create function communicates with DCM and CM to create a new project and
 * returns the projectId
 *
-* @usage Assuming that carbono-mocks is running at localhost:3000, you can test
-*        this function with this curl command:
-*        curl -X POST  http://localhost:3000/ide-mission-control/project/
-*        --verbose
+* Assuming that carbono-mocks is running at localhost:3000, you can test
+* this function with this curl command:
+*     curl -X POST http://localhost:3000/ide-mission-control/project/ --verbose
 */
 exports.create = function (req, res) {
     var cjr = new CJR({apiVersion: '1.0'});
@@ -43,10 +42,10 @@ exports.create = function (req, res) {
 /**
 * The list function retrieves a project based on the projectId
 *
-* @usage Assuming that carbono-mocks is running at localhost:3000, you can test
-*        this function with this curl command:
-*        curl -X POST  http://localhost:3000/ide-mission-control/project/
-*        u18923uhe12u90uy781gdu --verbose
+* Assuming that carbono-mocks is running at localhost:3000, you can test
+* this function with this curl command:
+*     curl http://localhost:3000/ide-mission-control/project/
+*     u18923uhe12u90uy781gdu --verbose
 */
 exports.list = function (req, res) {
     var cjr = new CJR({apiVersion: '1.0'});

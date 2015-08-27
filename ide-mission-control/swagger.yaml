@@ -2,20 +2,22 @@ swagger: '2.0'
 info:
   version: 1.0.0
   title: Mission Control
-  description: Mock for the communication with the Mission Control module with DCM (Development Container Manager), CM ( Code Machine) and IDE.
+  description: |
+    Mission Control module's API for communication between DCM (Development Container Manager), CM ( Code Machine) and IDE.
 host: localhost:3000
 basePath: /ide-mission-control
 schemes:
   - http
 consumes:
   - application/json
-  - text/xml
 produces:
   - application/json
   - text/html
 paths:
   /project:
     post:
+      summary: |
+        Creates a new Project.
       responses:
         200:
           description:  Project was successfuly created, returns project ID
@@ -27,6 +29,7 @@ paths:
             $ref: '#/definitions/ResponseError'
   /project/{projectId}:
     get:
+      summary: Retrieves a Project.
       parameters:
         - name: projectId
           in: path
@@ -48,6 +51,7 @@ paths:
             $ref: '#/definitions/ResponseError'
   /project/{projectId}/resources/marked/{fileName}:
     get:
+      summary: Retrieves a marked file {fileName} from a Project using the identifier {projectId}.
       parameters:
         - name: projectId
           in: path
@@ -61,7 +65,7 @@ paths:
           required: true
       responses:
         200:
-          description:  Retrieves a marked HTML file if it fileName is HTML or 
+          description:  Retrieves a marked HTML file if it fileName is HTML or
             a pure file
           schema:
             type: file
@@ -75,6 +79,7 @@ paths:
             $ref: '#/definitions/ResponseError'
   /project/{projectId}/resources/clean/{fileName}:
     get:
+      summary: Retrieves a clean file {fileName} from a Project using the identifier {projectId}.
       parameters:
         - name: projectId
           in: path
@@ -88,7 +93,7 @@ paths:
           required: true
       responses:
         200:
-          description:  Retrieves a clean HTML file if it fileName is HTML or 
+          description:  Retrieves a clean HTML file if it fileName is HTML or
             a pure file
           schema:
             type: file
@@ -148,4 +153,3 @@ definitions:
           message:
             type: string
             description: The error message
-      
