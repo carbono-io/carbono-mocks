@@ -4,10 +4,10 @@ var express = require('express');
 var marked = require('./marked');
 var clean = require('./clean');
 
-var resources = express();
+var app = express();
 
-resources.use('/marked', marked);
+app.use('/marked', marked);
 
-resources.use('/clean', clean);
+app.use('/clean', clean);
 
-module.exports = resources;
+module.exports = app;

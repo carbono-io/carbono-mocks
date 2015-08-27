@@ -3,10 +3,10 @@
 var express = require('express');
 var resourcesController = require('../controllers/resources');
 
-var clean = express();
+var app = express();
 
-clean.get('**/*.html', resourcesController.clean);
+app.get('**/*.html', resourcesController.clean);
 
-clean.use('/', resourcesController.other);
+app.use('/', resourcesController.other);
 
-module.exports = clean;
+module.exports = app;
