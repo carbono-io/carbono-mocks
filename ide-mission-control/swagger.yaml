@@ -20,11 +20,11 @@ paths:
         200:
           description:  Project was successfuly created, returns project ID
           schema:
-            $ref: '#/definitions/Data'
+            $ref: '#/definitions/ResponseSucess'
         400:
           description:  Malformed request
           schema:
-            $ref: '#/definitions/Error'
+            $ref: '#/definitions/ResponseError'
   /project/{projectId}:
     get:
       parameters:
@@ -37,15 +37,15 @@ paths:
         200:
           description:  Project was retrieved
           schema:
-            $ref: '#/definitions/Data'
+            $ref: '#/definitions/ResponseSucess'
         400:
           description:  Malformed request
           schema:
-            $ref: '#/definitions/Error'
+            $ref: '#/definitions/ResponseError'
         404:
           description:  Project does not exist
           schema:
-            $ref: '#/definitions/Error'
+            $ref: '#/definitions/ResponseError'
   /project/{projectId}/resources/marked/{fileName}:
     get:
       parameters:
@@ -68,11 +68,11 @@ paths:
         400:
           description:  fileName cannot be null
           schema:
-            $ref: '#/definitions/Error'
+            $ref: '#/definitions/ResponseError'
         404:
           description:  File not found
           schema:
-            $ref: '#/definitions/Error'
+            $ref: '#/definitions/ResponseError'
   /project/{projectId}/resources/clean/{fileName}:
     get:
       parameters:
@@ -95,38 +95,50 @@ paths:
         400:
           description:  fileName cannot be null
           schema:
-            $ref: '#/definitions/Error'
+            $ref: '#/definitions/ResponseError'
         404:
           description:  File not found
           schema:
-            $ref: '#/definitions/Error'
+            $ref: '#/definitions/ResponseError'
 
   
 
 definitions:
-
-  Data:
-    required:
-      - id
-      - items
-    properties:
-      id:
-        type: string
-      items:
-        type: array
-        items:
-          $ref: "#/definitions/Item"
   Item:
     properties:
       projectId:
         type: string
-  Error:
-    required:
-      - code
-      - message
+  ResponseSucess:
     properties:
-      code:
-        type: integer
-        format: int64
-      message:
+      id:
         type: string
+      apiVersion:
+        type: string
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+          items:
+            type: array
+            items:
+              $ref: "#/definitions/Item"
+  ResponseError:
+    properties:
+      id:
+        type: string
+      apiVersion:
+        type: string
+      error:
+        required:
+          - code
+          - message
+        properties:
+          code:
+            type: integer
+            format: int64
+          message:
+            type: string
+      
