@@ -47,12 +47,19 @@ definitions:
         properties:
           id:
             type: string
+            description: Generated UUID
           items:
             type: array
             items:
               properties:
                 projectId:
                   type: string
+                  description: |
+                    Project id, which will be associated to a container.
+              required: [projectId]
+        required: [id]
+    required: [apiVersion, id, data]
+
 
   TemplateResponse:
     properties:
@@ -65,12 +72,17 @@ definitions:
         properties:
           id:
             type: string
+            description: Container ID.
           items:
             type: array
             items:
               properties:
                 url:
                   type: string
+                  description: URL to access the machine.
+              required: [url]
+        required: [id]
+    required: [apiVersion, id, data]
 
   TemplateError:
     properties:
@@ -83,5 +95,9 @@ definitions:
         properties:
           code:
             type: integer
+            description: HTTP error code. In this case, can be 400.
           message:
             type: string
+            description: Description about the error.
+        required: [code, message]
+    required: [apiVersion, id, error]

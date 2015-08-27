@@ -23,7 +23,7 @@ module.exports.createContainer = function (req, res) {
     try {
         // TODO sanity check for request structure
         if (!req.body || !req.body.data.items[0].projectId ||
-            req.body.appVersion === '1.0') {
+            req.body.apiVersion === '1.0') {
             res.status(400);
             var err = {
                     code: 400,
