@@ -6,4 +6,3 @@ module.exports = function (app) {
     app.use('/resources/clean', fileServer);
     app.use('/resources/marked', fileServer);
 };
-

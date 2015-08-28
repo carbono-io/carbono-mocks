@@ -1,0 +1,16 @@
+swagger: "2.0"
+info:
+  description: |
+    This API describes all the Code Machine operations.
+  version: "1.0.0"
+  title: Code Machine
+basePath: /code-machine
+schemes:
+  - http
+paths:
+  /:
+    get:
+      summary: Echo the module's name.
+      responses:
+        "200":
+          description: module's name ('code-machine').

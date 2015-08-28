@@ -1,4 +1,5 @@
 'use strict';
+
 var path = require('path');
 var consign = require('consign');
 var express = require('express');
