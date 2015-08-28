@@ -12,16 +12,22 @@ var idCodeMachine = '/code-machine';
 var idMissionControl = '/ide-mission-control';
 var idDevContainerManager = '/ide-development-container-manager';
 
+var basePath = url.format({
+    hostname: config.get('host'),
+    port: config.get('port'),
+});
+
 /**
  * Registers a submodule as a service at etcd.
  *
+ * @param {Object} Object representing a ServiceManager.
  * @param {string} service - Service identifier.
  * @param {string} path - Path to access the submodule.
  *
  * @function
  */
-function registerService(service, path) {
-    var registerPromise = global.serviceManager.registerService(service, path);
+function registerService(serviceManager, service, path) {
+    var registerPromise = serviceManager.registerService(service, path);
     registerPromise
         .then(function () {
             console.log(service + ' submodule registered');
@@ -40,17 +46,12 @@ function registerService(service, path) {
  */
 function etcdRegister() {
     if (process.env.ETCD_SERVER) {
-        var basePath = url.format({
-            hostname: config.get('host'),
-            port: config.get('port'),
-        });
-
-        global.serviceManager = new ServiceManager(process.env.ETCD_SERVER);
+        var serviceManager = new ServiceManager(process.env.ETCD_SERVER);
 
         return Q.all([
-            registerService('cm', url.resolve(basePath, idCodeMachine)),
-            registerService('mc', url.resolve(basePath, idMissionControl)),
-            registerService('dcm',
+            registerService(serviceManager, 'mc',
+                    url.resolve(basePath, idMissionControl)),
+            registerService(serviceManager, 'dcm',
                     url.resolve(basePath, idDevContainerManager)),
         ]);
 

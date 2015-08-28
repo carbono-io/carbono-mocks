@@ -1,7 +1,9 @@
 'use strict';
 
+var url = require('url');
+var config = require('config');
 var CJR = require('carbono-json-response');
-var cjr = new CJR({apiVersion: '1.0'});
+var cjr = new CJR('1.0');
 
 /**
  * Mocks the creation of a container that will host a new Machine (in this
@@ -23,7 +25,7 @@ module.exports.createContainer = function (req, res) {
     try {
         // TODO sanity check for request structure
         if (!req.body || !req.body.data.items[0].projectId ||
-            !req.body.apiVersion === '1.0') {
+            req.body.apiVersion !== '1.0') {
             res.status(400);
             var err = {
                     code: 400,
@@ -31,38 +33,25 @@ module.exports.createContainer = function (req, res) {
                 } ;
 
             cjr.setError(err);
-            res.json(cjr);
-            res.end();
         } else {
-            var promiseFind = global.serviceManager.findService('cm');
+            var basePath = url.format({
+                hostname: config.get('host'),
+                port: config.get('port'),
+            });
 
-            promiseFind
-                .then(function (url) {
-                    cjr.setData(
+            cjr.setData(
+                {
+                    id: '1234', // Container id
+                    items: [
                         {
-                            id: '1234', // Container id
-                            items: [
-                                {
-                                    url: url,
-                                },
-                            ],
-                        }
-                    );
-                    res.json(cjr);
-                    res.end();
-
-                }, function (err) {
-                    res.status(400);
-                    var errResponse = {
-                            code: 400,
-                            message: 'Error trying to find CM url.' + err,
-                        } ;
-
-                    cjr.setError(errResponse);
-                    res.json(cjr);
-                    res.end();
-                });
+                            url: url.resolve(basePath, '/code-machine'),
+                        },
+                    ],
+                }
+            );
         }
+        res.json(cjr);
+        res.end();
     } catch (err) {
         res.status(500).end();
     }
