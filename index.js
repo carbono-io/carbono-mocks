@@ -13,6 +13,7 @@ var idMissionControl = '/ide-mission-control';
 var idDevContainerManager = '/ide-development-container-manager';
 
 var basePath = url.format({
+    protocol: 'http',
     hostname: config.get('host'),
     port: config.get('port'),
 });
