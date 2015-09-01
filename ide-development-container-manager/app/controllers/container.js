@@ -35,10 +35,10 @@ module.exports.createContainer = function (req, res) {
             cjr.setError(err);
         } else {
             var basePath = url.format({
+                protocol: 'http',
                 hostname: config.get('host'),
                 port: config.get('port'),
             });
-
             cjr.setData(
                 {
                     id: '1234', // Container id
