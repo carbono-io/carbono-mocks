@@ -9,6 +9,9 @@ var uuid = require('node-uuid');
 * Assuming that carbono-mocks is running at localhost:3000, you can test
 * this function with this curl command:
 *     curl -X POST http://localhost:3000/ide-mission-control/project/ --verbose
+* @param {Object} req - Request object
+* @param {Object} res - Response object (will carry a success or error
+* carbono-json-message)
 */
 exports.create = function (req, res) {
     var cjr = new CJR({apiVersion: '1.0'});
@@ -46,6 +49,10 @@ exports.create = function (req, res) {
 * this function with this curl command:
 *     curl http://localhost:3000/ide-mission-control/project/
 *     u18923uhe12u90uy781gdu --verbose
+* @param {Object} req - Request object
+* @param {string} req.params.projectId - The id of the required project
+* @param {Object} res - Response object (will carry a success or error
+* carbono-json-message)
 */
 exports.list = function (req, res) {
     var cjr = new CJR({apiVersion: '1.0'});
