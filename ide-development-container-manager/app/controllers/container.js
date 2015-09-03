@@ -2,8 +2,8 @@
 
 var url = require('url');
 var config = require('config');
-var CJR = require('carbono-json-response');
-var cjr = new CJR('1.0');
+var CJM = require('carbono-json-messages');
+var cjm = new CJM({apiVersion: '1.0'});
 
 /**
  * Mocks the creation of a container that will host a new Machine (in this
@@ -32,7 +32,7 @@ module.exports.createContainer = function (req, res) {
                     message: 'projectId cannot be null',
                 } ;
 
-            cjr.setError(err);
+            cjm.setError(err);
         } else {
             var basePath = url.format({
                 protocol: 'http',
@@ -40,7 +40,7 @@ module.exports.createContainer = function (req, res) {
                 port: config.get('port'),
             });
 
-            cjr.setData(
+            cjm.setData(
                 {
                     id: '1234', // Container id
                     items: [
@@ -51,7 +51,7 @@ module.exports.createContainer = function (req, res) {
                 }
             );
         }
-        res.json(cjr);
+        res.json(cjm);
         res.end();
     } catch (err) {
         res.status(500).end();

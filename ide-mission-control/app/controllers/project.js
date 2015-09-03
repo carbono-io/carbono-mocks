@@ -1,5 +1,5 @@
 'use strict';
-var CJR = require('carbono-json-response');
+var CJM = require('carbono-json-messages');
 var uuid = require('node-uuid');
 
 /**
@@ -11,7 +11,7 @@ var uuid = require('node-uuid');
 *     curl -X POST http://localhost:3000/ide-mission-control/project/ --verbose
 */
 exports.create = function (req, res) {
-    var cjr = new CJR({apiVersion: '1.0'});
+    var cjm = new CJM({apiVersion: '1.0'});
     try {
         if (!req.body) {
             res.status(400);
@@ -19,9 +19,9 @@ exports.create = function (req, res) {
                    code: 400,
                    message: 'body cannot be null',
                };
-            cjr.setError(err);
+            cjm.setError(err);
         } else {
-            cjr.setData(
+            cjm.setData(
                {
                    id: uuid.v4(),
                    items: [
@@ -32,7 +32,7 @@ exports.create = function (req, res) {
                }
             );
         }
-        res.json(cjr);
+        res.json(cjm);
         res.end();
     } catch (e) {
         res.status(500).end();
@@ -48,7 +48,7 @@ exports.create = function (req, res) {
 *     u18923uhe12u90uy781gdu --verbose
 */
 exports.list = function (req, res) {
-    var cjr = new CJR({apiVersion: '1.0'});
+    var cjm = new CJM({apiVersion: '1.0'});
     try {
         if (!req.params.projectId) {
             res.status(400);
@@ -56,9 +56,9 @@ exports.list = function (req, res) {
                    code: 400,
                    message: 'projectId cannot be null',
                };
-            cjr.setError(err);
+            cjm.setError(err);
         } else {
-            cjr.setData(
+            cjm.setData(
                {
                    id: uuid.v4(),
                    items: [
@@ -69,7 +69,7 @@ exports.list = function (req, res) {
                }
             );
         }
-        res.json(cjr);
+        res.json(cjm);
         res.end();
     } catch (e) {
         res.status(500).end();

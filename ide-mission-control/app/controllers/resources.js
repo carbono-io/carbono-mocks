@@ -1,7 +1,7 @@
 'use strict';
 var path = require('path');
 var fs = require('fs');
-var CJR = require('carbono-json-response');
+var CJM = require('carbono-json-messages');
 
 /**
 * The marked function retrieves a marked .html file from a project
@@ -15,7 +15,7 @@ exports.marked = function (req, res) {
     var absolutePath =
     path.join(__dirname, '../../resources/marked-html', req.path);
     fs.exists(absolutePath, function (exists) {
-        var cjr = new CJR({apiVersion: '1.0'});
+        var cjm = new CJM({apiVersion: '1.0'});
         try {
             if (!exists) {
                 res.status(404);
@@ -23,8 +23,8 @@ exports.marked = function (req, res) {
                        code: 404,
                        message: 'File not found',
                    };
-                cjr.setError(err);
-                res.json(cjr);
+                cjm.setError(err);
+                res.json(cjm);
                 res.end();
             } else {
                 res.sendFile(absolutePath);
@@ -47,7 +47,7 @@ exports.clean = function (req, res) {
     var absolutePath =
     path.join(__dirname, '../../resources/clean-html', req.path);
     fs.exists(absolutePath, function (exists) {
-        var cjr = new CJR({apiVersion: '1.0'});
+        var cjm = new CJM({apiVersion: '1.0'});
         try {
             if (!exists) {
                 res.status(404);
@@ -55,8 +55,8 @@ exports.clean = function (req, res) {
                        code: 404,
                        message: 'File not found',
                    };
-                cjr.setError(err);
-                res.json(cjr);
+                cjm.setError(err);
+                res.json(cjm);
                 res.end();
             } else {
                 res.sendFile(absolutePath);
@@ -79,7 +79,7 @@ exports.other = function (req, res) {
     var absolutePath =
     path.join(__dirname, '../../resources/other', req.path);
     fs.exists(absolutePath, function (exists) {
-        var cjr = new CJR({apiVersion: '1.0'});
+        var cjm = new CJM({apiVersion: '1.0'});
         try {
             if (!exists) {
                 res.status(404);
@@ -87,8 +87,8 @@ exports.other = function (req, res) {
                        code: 404,
                        message: 'File not found',
                    };
-                cjr.setError(err);
-                res.json(cjr);
+                cjm.setError(err);
+                res.json(cjm);
                 res.end();
             } else {
                 res.sendFile(absolutePath);
