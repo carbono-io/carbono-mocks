@@ -10,6 +10,12 @@ var CJM = require('carbono-json-messages');
 * this function with this curl command:
 *     curl http://localhost:3000/ide-mission-control/project/
 *     u18923uhe12u90uy781gdu/resources/marked/index.html --verbose
+* @param {Object} req - Request object
+* @param {string} req.params.projectId - The id of the current project
+* @param {string} req.params.fileName - The name (with path) of the
+* clean file
+* @param {Object} res - Response object (will carry a file or error
+* carbono-json-message)
 */
 exports.marked = function (req, res) {
     var absolutePath =
@@ -42,6 +48,12 @@ exports.marked = function (req, res) {
 * this function with this curl command:
 *     curl http://localhost:3000/ide-mission-control/project/
 *	  u18923uhe12u90uy781gdu/resources/clean/index.html --verbose
+* @param {Object} req - Request object
+* @param {string} req.params.projectId - The id of the current project
+* @param {string} req.params.fileName - The name (with path) of the
+* required clean file
+* @param {Object} res - Response object (will carry a file or error
+* carbono-json-message)
 */
 exports.clean = function (req, res) {
     var absolutePath =
