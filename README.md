@@ -37,13 +37,13 @@ if you want to simulate a new project creation at Mission Control, you may use
 `/ide-mission-control/project` to access this mock.
 
 ## Mission Control
-Interface descriptions located at ide-mission-control/swagger.yaml.
+Interface descriptions located at `ide-mission-control/swagger.yaml`.
 
 ## Development Container Manager
-Interface descriptions located at ide-development-container-manager/swagger.yaml.
+Interface descriptions located at `ide-development-container-manager/swagger.yaml`.
 
 ## Code Machine
-Interface descriptions located at code-machine/swagger.yaml.
+Interface descriptions located at `code-machine/swagger.yaml`.
 
 For a better visualization of the swagger.yaml files, you can use [Swagger
 online editor](http://editor.swagger.io/#/).
