@@ -25,7 +25,7 @@ responding:
     * `curl http://localhost:2379/v2/keys/backends/dcm?recursive=true -XDELETE`
 4. Run `gulp serve`. It will listen at the port defined in `config` folder.
 
-Tests and Dev
+Tests
 =============
 There are no tests for this project. Being mocks, they only help testing other
 modules.
