@@ -71,10 +71,19 @@ module.exports = function (gulp, jsPath) {
     });
 
     gulp.task('serve', function (cb) {
-        exec('node index.js', function (err, stdout, stderr) {
-            console.log(stdout);
-            console.log(stderr);
+        var child = exec('node index.js', function (err, stdout, stderr) {
+            //console.log(stdout);
+            //console.log(stderr);
             cb(err);
+        });
+        child.stdout.on('data', function(data) {
+            console.log(data);
+        });
+        child.stderr.on('data', function(data) {
+            console.log('err: ' + data);
+        });
+        child.on('close', function(code) {
+            console.log('closing code: ' + code);
         });
     });
 

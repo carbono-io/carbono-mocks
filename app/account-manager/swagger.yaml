@@ -1,0 +1,124 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title: BRL - Account Manager
+  description: Account Manager module's API that exposes account and project functionality
+  contact:
+    name: Carbono team
+    email: team@carbono.io
+    url: http://carbono.io
+host: localhost:3000
+basePath: /account-manager
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /account:
+    post:
+      description: Creates a new account.
+      operationId: createAccount
+      produces:
+        - application/json
+      parameters:
+        - name: account
+          in: body
+          description: Account to create
+          required: true
+          schema:
+            $ref: '#/definitions/newAccount'
+      responses:
+        '200':
+          description: account created
+        '400':
+          description:  Malformed request
+          schema:
+            $ref: '#/definitions/errorModel'
+  /account/{id}:
+    get:
+      description: Returns an account user based on a ID, if the user does not have access to the pet
+      operationId: findAccountById
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: Account ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: account response
+          schema:
+            $ref: '#/definitions/account'
+        '400':
+          description:  Malformed request
+          schema:
+            $ref: '#/definitions/errorModel'
+        '404':
+          description:  Not Found
+          schema:
+            $ref: '#/definitions/errorModel'
+definitions:
+  newAccount:
+    properties:
+      id:
+        type: string
+        description: Id that identifies the unique success message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+            description: Id that identifies the unique requested data
+          items:
+            type: array
+            description: An array of data items
+            items:
+              required:
+                - email
+                - password
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+  account:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+  errorModel:
+    properties:
+      id:
+        type: string
+        description: Id that identifies the unique error message
+      apiVersion:
+        type: string
+        description: The version of the api
+      error:
+        required:
+          - code
+          - message
+        properties:
+          code:
+            type: integer
+            format: int64
+            description: The error code (i.e. 400, 404)
+          message:
+            type: string
+            description: The error message
