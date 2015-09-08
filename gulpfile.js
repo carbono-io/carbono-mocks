@@ -1,7 +1,7 @@
 'use strict';
-var gulp     = require('gulp');
+var gulp = require('gulp');
 
-var JS_PATH  = ['index.js',
+var JS_PATH = ['index.js',
     '{lib,app,test}/**/*.{js,json}',
     'code-machine/index.js',
     'code-machine/app/**/*.{js,json}',
