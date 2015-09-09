@@ -1,0 +1,97 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title: Multi-container - (NOGUEIRA)
+  description: Carbono paas module's API that exposes multi-container funcionality (Eg. Docker)
+  contact:
+    name: Carbono team
+    email: team@carbono.io
+    url: http://carbono.io
+host: localhost:3000
+basePath: /nog
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /machines:
+    post:
+      description: Instanciate a new machine. The machine creation will be performed in backgroud
+      operationId: createMachine
+      produces:
+        - application/json
+      parameters:
+        - name: machineDetails
+          in: body
+          description: Details of machine to be instanciated
+          required: true
+          schema:
+            $ref: '#/definitions/newMachineMessage'
+      responses:
+        '200':
+          description: machine creation confirmed
+        '400':
+          description:  Malformed request
+          schema:
+            $ref: '#/definitions/errorMessage'
+        '404':
+          description:  Machine not created
+definitions:
+  newMachineMessage:
+    properties:
+      id:
+        type: string
+        description: Id that unique identifies the message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+            description: Id that unique identifies requested data
+          items:
+            type: array
+            description: An array of data items
+            items:
+              properties:
+                profile:
+                  type: object
+                  required:
+                    - imageName
+                    - route
+                  $ref: '#/definitions/machine'
+  machine:
+    properties:
+      imageName:
+        type: string
+      route:
+        type: string
+      environment:
+        type: string
+        description: accepts DEV / HML / PRD
+  errorMessage:
+    properties:
+      id:
+        type: string
+        description: Id that unique identifies the error message
+      apiVersion:
+        type: string
+        description: The version of the api
+      error:
+        required:
+          - code
+          - message
+        properties:
+          code:
+            type: integer
+            format: int64
+            description: The error code (i.e. 400, 404)
+          message:
+            type: string
+            description: The error message
