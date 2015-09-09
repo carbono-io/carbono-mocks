@@ -1,14 +1,14 @@
 swagger: '2.0'
 info:
   version: '1.0.0'
-  title: BRL - Account Manager
-  description: Account Manager module's API that exposes account and project functionality
+  title: PaaS - (IPE)
+  description: Carbono paas module's API that exposes deploy machine functionality
   contact:
     name: Carbono team
     email: team@carbono.io
     url: http://carbono.io
 host: localhost:3000
-basePath: /account-manager
+basePath: /paas
 schemes:
   - http
 consumes:
@@ -16,43 +16,45 @@ consumes:
 produces:
   - application/json
 paths:
-  /profiles:
+  /machines:
     post:
-      description: Creates a new profile.
-      operationId: createProfile
+      description: Instanciate a new machine. The machine creation will be performed in backgroud
+      operationId: createMachine
       produces:
         - application/json
       parameters:
-        - name: profile
+        - name: machineDetails
           in: body
-          description: Profile to create
+          description: DEtails of machine to be instanciated
           required: true
           schema:
-            $ref: '#/definitions/newProfileMessage'
+            $ref: '#/definitions/newMachineMessage'
       responses:
         '200':
-          description: profile created
+          description: machine creation requested
+          schema:
+            $ref: '#/definitions/newMachineResponse'
         '400':
           description:  Malformed request
           schema:
             $ref: '#/definitions/errorMessage'
-  /profiles/{code}:
+  /machines/{token}:
     get:
-      description: Returns an profile user based on a ID
-      operationId: findProfileByCode
+      description: Returns a machine creation current status based on a token
+      operationId: getMachineCreationStatus
       produces:
         - application/json
       parameters:
-        - name: code
+        - name: token
           in: path
-          description: Profile code
+          description: Token received as response of create
           required: true
           type: string
       responses:
         '200':
-          description: profile response
+          description: machine creation status response
           schema:
-            $ref: '#/definitions/profileMessage'
+            $ref: '#/definitions/machineStatusMessage'
         '400':
           description:  Malformed request
           schema:
@@ -62,44 +64,7 @@ paths:
           schema:
             $ref: '#/definitions/errorMessage'
 definitions:
-  newProfileMessage:
-    properties:
-      id:
-        type: string
-        description: Id that unique identifies the  message
-      apiVersion:
-        type: string
-        description: The version of the api
-      data:
-        required:
-          - id
-          - items
-        properties:
-          id:
-            type: string
-            description: Id that unique identifies the requested data
-          items:
-            type: array
-            description: An array of data items
-            items:
-              properties:
-                profile:
-                  type: object
-                  required:
-                    - email
-                    - password
-                  $ref: '#/definitions/profile'
-  profile:
-    properties:
-      code:
-        type: string
-      name:
-        type: string
-      email:
-        type: string
-      password:
-        type: string
-  profileMessage:
+  newMachineMessage:
     properties:
       id:
         type: string
@@ -114,19 +79,86 @@ definitions:
         properties:
           id:
             type: string
-            description: Id that unique identifies the requested data
+            description: Id that unique identifies requested data
           items:
             type: array
             description: An array of data items
             items:
               properties:
-                profile:
+                machine:
                   type: object
                   required:
-                    - code
-                    - email
-                    - password
-                  $ref: '#/definitions/profile'
+                    - component
+                    - route
+                  $ref: '#/definitions/machine'
+  newMachineResponse:
+    properties:
+      id:
+        type: string
+        description: Id that unique identifies the message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+        properties:
+          id:
+            type: string
+            description: represent the token confirming that machine creation will be performed
+            default: TOKEN-0001
+          items:
+            type: array
+            description: An array of data items
+            items:
+              properties:
+                machine:
+                  type: object
+                  required:
+                    - component
+                    - route
+                  $ref: '#/definitions/machine'
+  machine:
+    properties:
+      component:
+        type: string
+      route:
+        type: string
+      environment:
+        type: string
+        description: accepts DEV / HML / PRD
+  machineStatus:
+    properties:
+      status:
+        type: string
+        description: accepts PENDING / OK / FAIL
+        default: OK
+  machineStatusMessage:
+    properties:
+      id:
+        type: string
+        description: Id that unique identifies the message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+            description: Id that unique identifies requested data
+          items:
+            type: array
+            description: An array of data items
+            items:
+              properties:
+                machineStatus:
+                  type: object
+                  required:
+                    - status
+                  $ref: '#/definitions/machineStatus'
   errorMessage:
     properties:
       id:
