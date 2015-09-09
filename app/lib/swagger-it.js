@@ -1,6 +1,6 @@
 'use strict';
 var path = require('path');
-var mockData = require('../mock-data.js');
+var mock = require('../mock-data.js');
 
 var swagger = require('swagger-express-middleware');
 var Middleware = swagger.Middleware;
@@ -16,14 +16,8 @@ var swaggerIt = function (app, module) {
             // NOTE: Some of these accept optional options (omitted here for brevity)
             //
             var myDB = new MemoryDataStore();
-            myDB.save(Resource.parse(mockData));
-
-            app.patch('/paas/machines/:token', function (req, res, next) {
-                    console.log(req);
-                    res.json({status: 'OK'});
-                    next();
-                }
-            );
+            mock.mock(app);
+            myDB.save(Resource.parse(mock.data()));
 
             app.use(
                 middleware.metadata(),
@@ -33,7 +27,6 @@ var swaggerIt = function (app, module) {
                 middleware.validateRequest(),
                 middleware.mock(myDB)
             );
-
         }
     );
     console.log(module + ' swagger mock running!!!');

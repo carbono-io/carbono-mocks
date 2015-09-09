@@ -60,7 +60,7 @@ definitions:
             description: An array of data items
             items:
               properties:
-                profile:
+                machine:
                   type: object
                   required:
                     - imageName

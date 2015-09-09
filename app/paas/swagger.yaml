@@ -85,13 +85,12 @@ definitions:
             description: An array of data items
             items:
               properties:
-                profile:
+                machine:
                   type: object
                   required:
                     - component
                     - route
                   $ref: '#/definitions/machine'
-
   newMachineResponse:
     properties:
       id:
@@ -108,6 +107,17 @@ definitions:
             type: string
             description: represent the token confirming that machine creation will be performed
             default: TOKEN-0001
+          items:
+            type: array
+            description: An array of data items
+            items:
+              properties:
+                machine:
+                  type: object
+                  required:
+                    - component
+                    - route
+                  $ref: '#/definitions/machine'
   machine:
     properties:
       component:
@@ -138,7 +148,7 @@ definitions:
         properties:
           id:
             type: string
-            description: Id that unitque identifies requested data
+            description: Id that unique identifies requested data
           items:
             type: array
             description: An array of data items
