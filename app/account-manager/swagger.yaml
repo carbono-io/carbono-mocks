@@ -61,6 +61,75 @@ paths:
           description:  Not Found
           schema:
             $ref: '#/definitions/errorModel'
+  /project:
+    post:
+      description: Creates a new project.
+      operationId: createProject
+      produces:
+        - application/json
+      parameters:
+        - name: project
+          in: body
+          description: Project to create
+          required: true
+          schema:
+            $ref: '#/definitions/newProject'
+      responses:
+        '200':
+          description: project created
+        '400':
+          description:  Malformed request
+          schema:
+            $ref: '#/definitions/errorModel'
+  /project/{id}:
+    get:
+      description: Retrieves an existing project.
+      operationId: findProjectById
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: Project Id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: project response
+          schema:
+            $ref: '#/definitions/project'
+        '400':
+          description:  Malformed request
+          schema:
+            $ref: '#/definitions/errorModel'
+        '404':
+          description:  Not Found
+          schema:
+            $ref: '#/definitions/errorModel'
+    put:
+      description: Updates data of an existing project
+      operationId: updateProject
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: Project Id
+          required: true
+          type: string        
+        - name: project
+          in: body
+          description: Project data to be updated
+          required: true
+          schema:
+            $ref: '#/definitions/newProject'
+      responses:
+        '200':
+          description: project updated
+        '400':
+          description:  Malformed request
+          schema:
+            $ref: '#/definitions/errorModel'      
 definitions:
   newAccount:
     properties:
@@ -92,6 +161,21 @@ definitions:
                   type: string
                 password:
                   type: string
+  newProject:
+    properties:
+      id:
+        type: string
+        description: Id that identifies the unique success message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - owner
+        properties:
+          owner:
+            type: string
+            description: Id that identifies the owner of this project
   account:
     properties:
       id:
@@ -101,6 +185,16 @@ definitions:
       email:
         type: string
       password:
+        type: string
+  project:
+    properties:
+      id:
+        type: string
+      owner:
+        type: string
+      name:
+        type: string
+      developmentContainerId:
         type: string
   errorModel:
     properties:
