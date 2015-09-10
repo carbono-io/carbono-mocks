@@ -36,7 +36,6 @@ var data = function (app) {
         }
     );
 
-
     var data = [
         {collection: '/account-manager/profiles', name: '/x1', data: profile.toObject()},
         {collection: '/paas/machines', name: '/TOKEN-0001', data: machineStatus.toObject()},
@@ -57,6 +56,26 @@ var mock = function (app) {
 
     app.post('/paas/machines/', function (req, res, next) {
         res.json(paasResponse.toObject());
+    });
+
+    // ------------- account manager -----------------------
+
+    var userInfo = new CJM({id: 'id1', apiVersion: '1.0.0'});
+    userInfo.setData(
+        {
+            id: 'id2',
+            items: [
+                {
+                    profile: {
+                        code: 'code',
+                    }
+                }
+            ]
+        }
+    );
+
+    app.post('/account-manager/userInfo', function (req, res, next) {
+        res.json(userInfo.toObject());
     });
 }
 
