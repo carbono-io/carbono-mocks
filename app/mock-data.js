@@ -3,7 +3,7 @@
 var CJM = require('carbono-json-messages');
 var profile = new CJM({id: 'x1', apiVersion: '1.0.0'});
 
-var data = function (app) {
+var data = function () {
 
     profile.setData(
         {
@@ -43,22 +43,20 @@ var data = function (app) {
         {collection: '/nog/machines', name: '/', data: ''},
     ];
     return data;
-}
+};
 
 var mock = function (app) {
-
     var paasResponse = new CJM({id: 'xxx-yyy', apiVersion: '1.0.0'});
-
     paasResponse.setData(
         {
             id: 'TOKEN-0001',
         }
     );
-
     app.post('/paas/machines/', function (req, res, next) {
         res.json(paasResponse.toObject());
+        next();
     });
-}
+};
 
 module.exports.mock = mock;
 module.exports.data = data;

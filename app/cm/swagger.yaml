@@ -1,0 +1,151 @@
+swagger: "2.0"
+info:
+  description: |
+    This API describes all the Code Machine operations.
+  version: "1.0.0"
+  title: Code Machine
+basePath: /code-machine
+schemes:
+  - http
+paths:
+  /install/:
+    post:
+      description: install a component.
+      operationId: installComponent
+      produces:
+        - application/json
+      parameters:
+        - name: install
+          in: body
+          description: Install information
+          required: true
+          schema:
+            $ref: '#/definitions/installWebSocketClient'
+      responses:
+        '200':
+          description: installMachine
+          schema:
+            allof:
+            $ref: '#/definitions/installWebSocketServer'
+        '400':
+          description:  Malformed request
+          schema:
+            $ref: '#/definitions/errorMessage'
+
+definitions:
+  installWebSocketClient:
+    allOf:
+    - $ref: '#/definitions/installMessage'
+    - $ref: '#/definitions/installReplyMessage'
+  installWebSocketServer:
+    allOf:
+    - $ref: '#/definitions/installMachineMessage'
+  install:
+    properties:
+      component:
+        type: string
+  installMachine:
+    properties:
+      component:
+        type: string
+      route:
+        type: string
+  installMessage:
+     properties:
+       id:
+         type: string
+         description: Id that unique identifies the  message
+       apiVersion:
+         type: string
+         description: The version of the api
+       data:
+         required:
+           - id
+           - items
+         properties:
+           id:
+             type: string
+             description: Id that unique identifies the requested data
+           items:
+             type: array
+             description: An array of data items
+             items:
+               properties:
+                 profile:
+                   type: object
+                   required:
+                     - component
+                   $ref: '#/definitions/install'
+  installReplyMessage:
+    properties:
+      id:
+        type: string
+        description: Id that unique identifies the  message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+            description: Id that unique identifies the requested data
+          items:
+            type: array
+            description: An array of data items
+            items:
+              required:
+                - status
+              properties:
+                status:
+                  description: status
+                  type: string
+  installMachineMessage:
+    properties:
+      id:
+        type: string
+        description: Id that unique identifies the  message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+            description: Id that unique identifies the requested data
+          items:
+            type: array
+            description: An array of data items
+            items:
+              properties:
+                installMachine:
+                  type: object
+                  required:
+                    - component
+                    - route
+                  $ref: '#/definitions/installMachine'
+  errorMessage:
+    properties:
+      id:
+        type: string
+        description: Id that unique identifies the error message
+      apiVersion:
+        type: string
+        description: The version of the api
+      error:
+        required:
+          - code
+          - message
+        properties:
+          code:
+            type: integer
+            format: int64
+            description: The error code (i.e. 400, 404)
+          message:
+            type: string
+            description: The error message

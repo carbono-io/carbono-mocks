@@ -8,6 +8,7 @@ var app = express();
 swaggerIt(app, 'account-manager');
 swaggerIt(app, 'paas');
 swaggerIt(app, 'multi-container');
+swaggerIt(app, 'cm');
 
 
 module.exports = app;
