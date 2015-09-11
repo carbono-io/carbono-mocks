@@ -81,15 +81,15 @@ paths:
           description:  Malformed request
           schema:
             $ref: '#/definitions/errorModel'
-  /project/{id}:
+  /project/{safeName}:
     get:
       description: Retrieves an existing project.
       operationId: findProjectById
       produces:
         - application/json
       parameters:
-        - name: id
-          in: path
+        - name: safeName
+          in: path{
           description: Project Id
           required: true
           type: string
@@ -112,7 +112,7 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: id
+        - name: safeName
           in: path
           description: Project Id
           required: true
@@ -122,14 +122,18 @@ paths:
           description: Project data to be updated
           required: true
           schema:
-            $ref: '#/definitions/newProject'
+            $ref: '#/definitions/updateProject'
       responses:
         '200':
           description: project updated
         '400':
           description:  Malformed request
           schema:
-            $ref: '#/definitions/errorModel'      
+            $ref: '#/definitions/errorModel'
+        '404':
+          description:  Not Found
+          schema:
+            $ref: '#/definitions/errorModel'
 definitions:
   newAccount:
     properties:
@@ -161,6 +165,38 @@ definitions:
                   type: string
                 password:
                   type: string
+    updateProject:
+    properties:
+      id:
+        type: string
+        description: Id that identifies the unique success message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+            description: Id that identifies the unique requested data
+          items:
+            type: array
+            description: An array of data items
+            items:
+              required:
+                - safeName
+              properties:
+                name:
+                  type: string
+                  description: Name of the project
+                description:
+                  type: string
+                  description: Description of the project
+                safeName:
+                  type: string
+                  description: Unique namespace of the project
   newProject:
     properties:
       id:
@@ -171,11 +207,31 @@ definitions:
         description: The version of the api
       data:
         required:
-          - owner
+          - id
+          - items
         properties:
-          owner:
+          id:
             type: string
-            description: Id that identifies the owner of this project
+            description: Id that identifies the unique requested data
+          items:
+            type: array
+            description: An array of data items
+            items:
+              required:
+                - owner
+                - name
+                - safeName
+              properties:
+                name:
+                  type: string
+                  description: Name of the project
+                safeName:
+                  type: string
+                  description: Unique namespace of the project
+                owner:
+                  type: string
+                  description: Id that identifies the owner of this project
+
   account:
     properties:
       id:
@@ -188,7 +244,7 @@ definitions:
         type: string
   project:
     properties:
-      id:
+      safeName:
         type: string
       owner:
         type: string
