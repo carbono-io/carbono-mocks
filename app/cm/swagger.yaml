@@ -8,14 +8,14 @@ basePath: /code-machine
 schemes:
   - http
 paths:
-  /install/:
+  /:
     post:
-      description: install a component.
-      operationId: installComponent
+      description: insert a element
+      operationId: command:insertElement
       produces:
         - application/json
       parameters:
-        - name: install
+        - name: command:insertElement
           in: body
           description: Install information
           required: true
@@ -23,7 +23,7 @@ paths:
             $ref: '#/definitions/installWebSocketClient'
       responses:
         '200':
-          description: installMachine
+          description: project:createMachine
           schema:
             allof:
             $ref: '#/definitions/installWebSocketServer'
@@ -35,22 +35,22 @@ paths:
 definitions:
   installWebSocketClient:
     allOf:
-    - $ref: '#/definitions/installMessage'
-    - $ref: '#/definitions/installReplyMessage'
+    - $ref: '#/definitions/insertElementMessage'
+    - $ref: '#/definitions/insertElementReplyMessage'
   installWebSocketServer:
     allOf:
-    - $ref: '#/definitions/installMachineMessage'
-  install:
+    - $ref: '#/definitions/createMachineMessage'
+  insertElement:
     properties:
       component:
         type: string
-  installMachine:
+  createMachine:
     properties:
       component:
         type: string
       route:
         type: string
-  installMessage:
+  insertElementMessage:
      properties:
        id:
          type: string
@@ -75,8 +75,8 @@ definitions:
                    type: object
                    required:
                      - component
-                   $ref: '#/definitions/install'
-  installReplyMessage:
+                   $ref: '#/definitions/insertElement'
+  insertElementReplyMessage:
     properties:
       id:
         type: string
@@ -102,7 +102,7 @@ definitions:
                 status:
                   description: status
                   type: string
-  installMachineMessage:
+  createMachineMessage:
     properties:
       id:
         type: string
@@ -128,7 +128,7 @@ definitions:
                   required:
                     - component
                     - route
-                  $ref: '#/definitions/installMachine'
+                  $ref: '#/definitions/createMachine'
   errorMessage:
     properties:
       id:
