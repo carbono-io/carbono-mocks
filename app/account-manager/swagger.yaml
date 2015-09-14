@@ -228,8 +228,6 @@ definitions:
             type: array
             description: An array of data items
             items:
-              required:
-                - safeName
               properties:
                 name:
                   type: string
@@ -237,9 +235,6 @@ definitions:
                 description:
                   type: string
                   description: Description of the project
-                safeName:
-                  type: string
-                  description: Unique namespace of the project
   newProject:
     properties:
       id:
