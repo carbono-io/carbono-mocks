@@ -50,7 +50,7 @@ cjmProject.setData(
     }
 );
 
-var urlProject = "http://localhost:3000/account-manager/project";
+var urlProject = "http://localhost:3000/account-manager/projects";
 
 var loadProject = {
     url: urlProject,

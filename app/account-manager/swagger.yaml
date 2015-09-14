@@ -61,7 +61,7 @@ paths:
           description:  Not Found
           schema:
             $ref: '#/definitions/errorModel'
-  /project:
+  /projects:
     post:
       description: Creates a new project.
       operationId: createProject
@@ -81,7 +81,7 @@ paths:
           description:  Malformed request
           schema:
             $ref: '#/definitions/errorModel'
-  /project/{safeName}:
+  /projects/{safeName}:
     get:
       description: Retrieves an existing project.
       operationId: findProjectById
@@ -89,7 +89,7 @@ paths:
         - application/json
       parameters:
         - name: safeName
-          in: path{
+          in: path
           description: Project Id
           required: true
           type: string
@@ -97,7 +97,7 @@ paths:
         '200':
           description: project response
           schema:
-            $ref: '#/definitions/project'
+            $ref: '#/definitions/retrieveProject'
         '400':
           description:  Malformed request
           schema:
@@ -126,6 +126,28 @@ paths:
       responses:
         '200':
           description: project updated
+        '400':
+          description:  Malformed request
+          schema:
+            $ref: '#/definitions/errorModel'
+        '404':
+          description:  Not Found
+          schema:
+            $ref: '#/definitions/errorModel'
+    delete:
+      description: Deletes an existing project.
+      operationId: deletesProject
+      produces:
+        - application/json
+      parameters:
+        - name: safeName
+          in: path
+          description: Project Id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: project deleted
         '400':
           description:  Malformed request
           schema:
@@ -165,7 +187,28 @@ definitions:
                   type: string
                 password:
                   type: string
-    updateProject:
+  retrieveProject:
+    properties:
+      id:
+        type: string
+        description: Id that identifies the unique success message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+            description: Id that identifies the unique requested data
+          items:
+            type: array
+            description: An array of data items
+            items:
+              $ref: '#/definitions/project'
+  updateProject:
     properties:
       id:
         type: string
