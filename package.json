@@ -35,7 +35,8 @@
   },
   "dependencies": {
     "body-parser": "^1.13.3",
-    "carbono-json-messages": "0.0.1",
+    "busboy": "^0.2.11",
+    "carbono-json-messages": "^0.0.2",
     "carbono-service-manager": "^0.0.3",
     "colors": "^1.1.2",
     "config": "^1.15.0",
@@ -44,6 +45,7 @@
     "node-uuid": "^1.4.3",
     "q": "^1.4.1",
     "request": "^2.60.0",
-    "swagger-express-middleware": "^0.4.7"
+    "swagger-express-middleware": "^0.4.7",
+    "swagger-parser": "^2.5.0"
   }
 }

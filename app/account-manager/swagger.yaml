@@ -61,6 +61,57 @@ paths:
           description:  Not Found
           schema:
             $ref: '#/definitions/errorMessage'
+  /login:
+    post:
+      description: Verifies if the credentials are valid.
+      operationId: authenticateProfile
+      produces:
+        - application/json
+      parameters:
+        - name: credentials
+          in: body
+          description: Credentials to be validated (email and password)
+          required: true
+          schema:
+            $ref: '#/definitions/credentialsMessage'
+      responses:
+        '200':
+          description: Confirmed credentials
+        '400':
+          description: Malformed request
+          schema:
+            $ref: '#/definitions/errorMessage'
+        '404':
+          description: Invalid credentials
+          schema:
+            $ref: '#/definitions/errorMessage'
+  /userInfo:
+    post:
+      description: Returns all user informations that will be available at oauth.
+      operationId: getUserInfo
+      produces:
+        - application/json
+      parameters:
+        - name: email
+          in: body
+          description: User's email
+          required: true
+          schema:
+            $ref: '#/definitions/userEmailMessage'
+      responses:
+        '200':
+          description: User informations.
+          schema:
+            $ref: '#/definitions/userInfoMessage'
+        '400':
+          description:  Malformed request
+          schema:
+            $ref: '#/definitions/errorMessage'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/errorMessage'
+
 definitions:
   newProfileMessage:
     properties:
@@ -127,6 +178,88 @@ definitions:
                     - email
                     - password
                   $ref: '#/definitions/profile'
+  credentialsMessage:
+    properties:
+      id:
+        type: string
+        description: Id that unique identifies the message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+            description: Id that unique identifies the requested data
+          items:
+            type: array
+            description: An array of data items
+            items:
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+  userInfoMessage:
+    properties:
+      id:
+        type: string
+        description: Id that unique identifies the message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+            description: Id that unique identifies the requested data
+          items:
+            type: array
+            description: An array of data items
+            items:
+              properties:
+                code:
+                  type: string
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+  userEmailMessage:
+    properties:
+      id:
+        type: string
+        description: Id that unique identifies the message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+            description: Id that unique identifies the requested data
+          items:
+            type: array
+            description: An array of data items
+            items:
+              required:
+                - email
+              properties:
+                email:
+                  type: string
   errorMessage:
     properties:
       id:

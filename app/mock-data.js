@@ -3,7 +3,7 @@
 var CJM = require('carbono-json-messages');
 var profile = new CJM({id: 'x1', apiVersion: '1.0.0'});
 
-var data = function (app) {
+var data = function () {
 
     profile.setData(
         {
@@ -15,9 +15,9 @@ var data = function (app) {
                         name: 'ariosvaldo',
                         email: 'ari@valdo.com.br',
                         password: 'foo',
-                    }
-                }
-            ]
+                    },
+                },
+            ],
         }
     );
 
@@ -30,20 +30,21 @@ var data = function (app) {
                 {
                     machineStatus: {
                         status: 'OK',
-                    }
-                }
-            ]
+                    },
+                },
+            ],
         }
     );
 
-
     var data = [
-        {collection: '/account-manager/profiles', name: '/x1', data: profile.toObject()},
-        {collection: '/paas/machines', name: '/TOKEN-0001', data: machineStatus.toObject()},
+        {collection: '/account-manager/profiles', name: '/x1',
+            data: profile.toObject(),},
+        {collection: '/paas/machines', name: '/TOKEN-0001',
+            data: machineStatus.toObject(),},
         {collection: '/nog/machines', name: '/', data: ''},
     ];
     return data;
-}
+};
 
 var mock = function (app) {
 
@@ -55,10 +56,30 @@ var mock = function (app) {
         }
     );
 
-    app.post('/paas/machines/', function (req, res, next) {
+    app.post('/paas/machines/', function (req, res) {
         res.json(paasResponse.toObject());
     });
-}
+
+    // ------------- account manager -----------------------
+
+    var userInfo = new CJM({id: 'id1', apiVersion: '1.0.0'});
+    userInfo.setData(
+        {
+            id: 'id2',
+            items: [
+                {
+                    profile: {
+                        code: 'code',
+                    },
+                },
+            ],
+        }
+    );
+
+    app.post('/account-manager/userInfo', function (req, res) {
+        res.json(userInfo.toObject());
+    });
+};
 
 module.exports.mock = mock;
 module.exports.data = data;
