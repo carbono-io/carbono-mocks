@@ -77,7 +77,7 @@ paths:
           schema:
             $ref: '#/definitions/userEmail'
       responses:
-        '200':
+        '204':
           description: User found
           schema:
             $ref: '#/definitions/userProfile'
