@@ -47,17 +47,16 @@ var data = function () {
 };
 
 var mock = function (app) {
-
     var paasResponse = new CJM({id: 'xxx-yyy', apiVersion: '1.0.0'});
-
     paasResponse.setData(
         {
             id: 'TOKEN-0001',
         }
     );
 
-    app.post('/paas/machines/', function (req, res) {
+    app.post('/paas/machines/', function (req, res, next) {
         res.json(paasResponse.toObject());
+        next();
     });
 
     // ------------- account manager -----------------------

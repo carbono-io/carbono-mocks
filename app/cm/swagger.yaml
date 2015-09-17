@@ -1,0 +1,151 @@
+swagger: "2.0"
+info:
+  description: |
+    This API describes all the Code Machine operations.
+  version: "1.0.0"
+  title: Code Machine
+basePath: /code-machine
+schemes:
+  - http
+paths:
+  /:
+    post:
+      description: insert a element
+      operationId: command:insertElement
+      produces:
+        - application/json
+      parameters:
+        - name: command:insertElement
+          in: body
+          description: Install information
+          required: true
+          schema:
+            $ref: '#/definitions/installWebSocketClient'
+      responses:
+        '200':
+          description: project:createMachine
+          schema:
+            allof:
+            $ref: '#/definitions/installWebSocketServer'
+        '400':
+          description:  Malformed request
+          schema:
+            $ref: '#/definitions/errorMessage'
+
+definitions:
+  installWebSocketClient:
+    allOf:
+    - $ref: '#/definitions/insertElementMessage'
+    - $ref: '#/definitions/insertElementReplyMessage'
+  installWebSocketServer:
+    allOf:
+    - $ref: '#/definitions/createMachineMessage'
+  insertElement:
+    properties:
+      component:
+        type: string
+  createMachine:
+    properties:
+      component:
+        type: string
+      route:
+        type: string
+  insertElementMessage:
+     properties:
+       id:
+         type: string
+         description: Id that unique identifies the  message
+       apiVersion:
+         type: string
+         description: The version of the api
+       data:
+         required:
+           - id
+           - items
+         properties:
+           id:
+             type: string
+             description: Id that unique identifies the requested data
+           items:
+             type: array
+             description: An array of data items
+             items:
+               properties:
+                 profile:
+                   type: object
+                   required:
+                     - component
+                   $ref: '#/definitions/insertElement'
+  insertElementReplyMessage:
+    properties:
+      id:
+        type: string
+        description: Id that unique identifies the  message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+            description: Id that unique identifies the requested data
+          items:
+            type: array
+            description: An array of data items
+            items:
+              required:
+                - status
+              properties:
+                status:
+                  description: status
+                  type: string
+  createMachineMessage:
+    properties:
+      id:
+        type: string
+        description: Id that unique identifies the  message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+            description: Id that unique identifies the requested data
+          items:
+            type: array
+            description: An array of data items
+            items:
+              properties:
+                installMachine:
+                  type: object
+                  required:
+                    - component
+                    - route
+                  $ref: '#/definitions/createMachine'
+  errorMessage:
+    properties:
+      id:
+        type: string
+        description: Id that unique identifies the error message
+      apiVersion:
+        type: string
+        description: The version of the api
+      error:
+        required:
+          - code
+          - message
+        properties:
+          code:
+            type: integer
+            format: int64
+            description: The error code (i.e. 400, 404)
+          message:
+            type: string
+            description: The error message
