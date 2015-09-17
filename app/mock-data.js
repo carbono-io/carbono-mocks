@@ -167,6 +167,7 @@ var mock = function (app) {
     // List Projects
     app.get('/account-manager/projects', function (req, res, next) {
         if (req.headers.crbemail === 'email@200.com') {
+            res.statusCode = 200;
             res.setHeader('content-type', 'application/json');
             res.json(listProjects.toObject());
             next();
