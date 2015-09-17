@@ -12,6 +12,7 @@ var app = express();
 app.httpServer = http.createServer(app);
 
 app.use(bodyParser.json());
+app.use('/account-manager', require('./app/account-manager'));
 app.use('/code-machine', require('./code-machine'));
 app.use('/ide-mission-control', require('./ide-mission-control'));
 app.use('/ide-development-container-manager',
