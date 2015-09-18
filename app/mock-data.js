@@ -94,7 +94,7 @@ var mock = function (app) {
             res.setHeader('content-type', 'application/json');
             res.statusCode = 400;
             res.json(buildResponse(true, 400, 'Malformed Request').toObject());
-            next();
+            res.end();
         } else {
             if (profile.name === 'John Connor 201') {
                 res.setHeader('content-type', 'application/json');
@@ -104,19 +104,19 @@ var mock = function (app) {
                     email: profile.email,
                     code: 'sjdh3434hdsj',
                 }).toObject());
-                next();
+                res.end();
             } else if (profile.name === 'John Connor 400') {
                 res.setHeader('content-type', 'application/json');
                 res.statusCode = 400;
                 res.json(buildResponse(true, 400,
                 'Malformed Request').toObject());
-                next();
+                res.end();
             } else {
                 res.setHeader('content-type', 'application/json');
                 res.statusCode = 500;
                 res.json(buildResponse(true, 500,
                 'Unexpected Error').toObject());
-                next();
+                res.end();
             }
         }
         
@@ -133,22 +133,22 @@ var mock = function (app) {
                     code: req.params.code,
                     
                 }).toObject());
-                next();
+                res.end();
         } else if (req.params.code == 'user400') {
             res.setHeader('content-type', 'application/json');
             res.statusCode = 400;
             res.json(buildResponse(true, 400, 'Malformed Request').toObject());
-            next();
+            res.end();
         } else if (req.params.code == 'user404') {
             res.setHeader('content-type', 'application/json');
             res.statusCode = 404;
             res.json(buildResponse(true, 404, 'Profile not found').toObject());
-            next();
+            res.end();
         } else {
             res.setHeader('content-type', 'application/json');
             res.statusCode = 500;
             res.json(buildResponse(true, 500, 'Unexpected Error').toObject());
-            next();
+            res.end();
         }
     });
 
@@ -163,19 +163,19 @@ var mock = function (app) {
                     code: 'askjdhsakj3343',
                     
                 }).toObject());
-            next();
+            res.end();
         } else if (req.headers.crbemail === 'email@400.com') {
             res.statusCode = 400;
             res.json(buildResponse(true, 400, 'Malformed Request').toObject());
-            next();
+            res.end();
         } else if (req.headers.crbemail === 'email@404.com') {
             res.statusCode = 404;
             res.json(buildResponse(true, 404, 'User not found').toObject());
-            next();
+            res.end();
         } else {
             res.statusCode = 500;
             res.json(buildResponse(true, 500, 'Unexpected Error').toObject());
-            next();
+            res.end();
         }
     });
 
@@ -187,7 +187,7 @@ var mock = function (app) {
             res.statusCode = 400;
             res.json(buildResponse(true, 400, 
             'Malformed Request - Missing email or password').toObject());
-            next();
+            res.end();
         } else {
             if (profile.email === 'email@200.com') {
                 res.setHeader('content-type', 'application/json');
@@ -198,24 +198,24 @@ var mock = function (app) {
                     code: 'sjdh3434hdsj',
                     
                 }).toObject());
-                next();
+                res.end();
             } else if (profile.email === 'email@400.com') {
                 res.setHeader('content-type', 'application/json');
                 res.statusCode = 400;
                 res.json(buildResponse(true, 400,
                 'Malformed Request').toObject());
-                next();
+                res.end();
             } else if (profile.email === 'email@404.com') {
                 res.setHeader('content-type', 'application/json');
                 res.statusCode = 404;
                 res.json(buildResponse(true, 404,
                 'Invalid email or password').toObject());
-                next();
+                res.end();
             } else {
                 res.statusCode = 500;
                 res.json(buildResponse(true, 500, 
                 'Unexpected Error').toObject());
-                next();
+                res.end();
             }
         }
         
@@ -269,17 +269,17 @@ var mock = function (app) {
             res.setHeader('content-type', 'application/json');
             res.statusCode = 201;
             res.json(projectResponse.toObject());
-            next();
+            res.end();
         } else if (req.body.data.items[0].name === 'Project 400') {
             res.setHeader('content-type', 'application/json');
             res.statusCode = 400;
             res.json(errResponse400.toObject());
-            next();
+            res.end();
         } else {
             res.setHeader('content-type', 'application/json');
             res.statusCode = 500;
             res.json(errResponse500.toObject());
-            next();
+            res.end();
         }
     });
     
@@ -311,19 +311,19 @@ var mock = function (app) {
             res.statusCode = 200;
             res.setHeader('content-type', 'application/json');
             res.json(listProjects.toObject());
-            next();
+            res.end();
         } else if (req.headers.crbemail === 'email@400.com') {
             res.statusCode = 400;
             res.json(errResponse400.toObject());
-            next();
+            res.end();
         } else if (req.headers.crbemail === 'email@404.com') {
             res.statusCode = 404;
             res.json(errResponse404.toObject());
-            next();
+            res.end();
         } else {
             res.statusCode = 500;
             res.json(errResponse500.toObject());
-            next();
+            res.end();
         }
     });
     
@@ -351,32 +351,32 @@ var mock = function (app) {
             if (req.headers.crbemail === 'email@200.com') {
                 res.statusCode = 200;
                 res.json(getProject.toObject());
-                next();
+                res.end();
             } else if (req.headers.crbemail === 'email@400.com') {
                 res.statusCode = 400;
                 res.json(errResponse400.toObject());
-                next();
+                res.end();
             } else if (req.headers.crbemail === 'email@404.com') {
                 res.statusCode = 404;
                 res.json(errResponse404.toObject());
-                next();
+                res.end();
             } else {
                 res.statusCode = 500;
                 res.json(errResponse500.toObject());
-                next();
+                res.end();
             }
         } else if (req.params.safeName == 'project-400') {
             res.statusCode = 400;
             res.json(errResponse400.toObject());
-            next();
+            res.end();
         } else if (req.params.safeName == 'project-404') {
             res.statusCode = 404;
             res.json(errResponse404.toObject());
-            next();
+            res.end();
         } else {
             res.statusCode = 500;
             res.json(errResponse500.toObject());
-            next();
+            res.end();
         }
     });
     
@@ -396,37 +396,37 @@ var mock = function (app) {
                             owner: '3432h'
                         },
                     }).toObject());
-                    next();
+                    res.end();
                 } else {
                     res.statusCode = 400;
                     res.json(buildResponse(true, 400, "Missing param name or description").toObject());
-                    next();
+                    res.end();
                 }
             } else if (req.headers.crbemail === 'email@400.com') {
                 res.statusCode = 400;
                 res.json(errResponse400.toObject());
-                next();
+                res.end();
             } else if (req.headers.crbemail === 'email@404.com') {
                 res.statusCode = 404;
                 res.json(errResponse404.toObject());
-                next();
+                res.end();
             } else {
                 res.statusCode = 500;
                 res.json(errResponse500.toObject());
-                next();
+                res.end();
             }
         } else if (req.params.safeName == 'project-400') {
             res.statusCode = 400;
             res.json(errResponse400.toObject());
-            next();
+            res.end();
         } else if (req.params.safeName == 'project-404') {
             res.statusCode = 404;
             res.json(errResponse404.toObject());
-            next();
+            res.end();
         } else {
             res.statusCode = 500;
             res.json(errResponse500.toObject());
-            next();
+            res.end();
         }
     });
     
@@ -437,32 +437,32 @@ var mock = function (app) {
             if (req.headers.crbemail === 'email@200.com') {
                 res.statusCode = 200;
                 res.json(getProject.toObject());
-                next();
+                res.end();
             } else if (req.headers.crbemail === 'email@400.com') {
                 res.statusCode = 400;
                 res.json(errResponse400.toObject());
-                next();
+                res.end();
             } else if (req.headers.crbemail === 'email@404.com') {
                 res.statusCode = 404;
                 res.json(errResponse404.toObject());
-                next();
+                res.end();
             } else {
                 res.statusCode = 500;
                 res.json(errResponse500.toObject());
-                next();
+                res.end();
             }
         } else if (req.params.safeName == 'project-400') {
             res.statusCode = 400;
             res.json(errResponse400.toObject());
-            next();
+            res.end();
         } else if (req.params.safeName == 'project-404') {
             res.statusCode = 404;
             res.json(errResponse404.toObject());
-            next();
+            res.end();
         } else {
             res.statusCode = 500;
             res.json(errResponse500.toObject());
-            next();
+            res.end();
         }
     });
 };
