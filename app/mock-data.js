@@ -125,8 +125,8 @@ var mock = function (app) {
     app.get('/account-manager/profiles/:code', function (req, res, next) {
         if (req.params.code == 'user200') {
             res.setHeader('content-type', 'application/json');
-                res.statusCode = 201;
-                res.json(buildResponse(false, 201, "", {
+                res.statusCode = 200;
+                res.json(buildResponse(false, 200, "", {
                     name: 'John Connor',
                     email: 'connor.john@resitance.com',
                     code: req.params.code,
