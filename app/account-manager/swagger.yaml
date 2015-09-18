@@ -18,8 +18,8 @@ produces:
 paths:
   /profiles:
     post:
-      description: Creates a new profile.
-      operationId: createProfile
+      description: Creates a new profile/user.
+      operationId: createAccount
       produces:
         - application/json
       parameters:
@@ -28,18 +28,20 @@ paths:
           description: Profile to create
           required: true
           schema:
-            $ref: '#/definitions/newProfileMessage'
+            $ref: '#/definitions/newProfile'
       responses:
-        '200':
-          description: profile created
+        '201':
+          description: Profile created
+          schema:
+            $ref: '#/definitions/userProfile'
         '400':
           description:  Malformed request
           schema:
-            $ref: '#/definitions/errorMessage'
+            $ref: '#/definitions/errorModel'
   /profiles/{code}:
     get:
-      description: Returns an profile user based on a ID
-      operationId: findProfileByCode
+      description: Returns an user profile based on a ID
+      operationId: findProfileById
       produces:
         - application/json
       parameters:
@@ -50,74 +52,219 @@ paths:
           type: string
       responses:
         '200':
-          description: profile response
+          description: Profile found
           schema:
-            $ref: '#/definitions/profileMessage'
+            $ref: '#/definitions/userProfile'
         '400':
           description:  Malformed request
           schema:
-            $ref: '#/definitions/errorMessage'
+            $ref: '#/definitions/errorModel'
         '404':
-          description:  Not Found
+          description:  Profile Not Found
           schema:
-            $ref: '#/definitions/errorMessage'
-  /login:
-    post:
-      description: Verifies if the credentials are valid.
-      operationId: authenticateProfile
-      produces:
-        - application/json
-      parameters:
-        - name: credentials
-          in: body
-          description: Credentials to be validated (email and password)
-          required: true
-          schema:
-            $ref: '#/definitions/credentialsMessage'
-      responses:
-        '200':
-          description: Confirmed credentials
-        '400':
-          description: Malformed request
-          schema:
-            $ref: '#/definitions/errorMessage'
-        '404':
-          description: Invalid credentials
-          schema:
-            $ref: '#/definitions/errorMessage'
-  /userInfo:
-    post:
-      description: Returns all user informations that will be available at oauth.
+            $ref: '#/definitions/errorModel'
+  /users:
+    get:
+      description: Gets user information
       operationId: getUserInfo
       produces:
         - application/json
       parameters:
-        - name: email
-          in: body
-          description: User's email
+        - name: crbEmail
+          in: header
+          description: Carbono user email
           required: true
-          schema:
-            $ref: '#/definitions/userEmailMessage'
+          type: string
       responses:
         '200':
-          description: User informations.
+          description: User found
           schema:
-            $ref: '#/definitions/userInfoMessage'
+            $ref: '#/definitions/userProfile'
         '400':
           description:  Malformed request
           schema:
-            $ref: '#/definitions/errorMessage'
+            $ref: '#/definitions/errorModel'
         '404':
-          description: Not found
+          description:  User not found
           schema:
-            $ref: '#/definitions/errorMessage'
-
+            $ref: '#/definitions/errorModel'
+  /login:
+    post:
+      description: Validates user login info
+      operationId: loginUser
+      produces:
+        - application/json
+      parameters:
+        - name: login
+          in: body
+          description: User's login info
+          required: true
+          schema:
+            $ref: '#/definitions/loginInfo'
+      responses:
+        '200':
+          description: Login Success
+          schema:
+            $ref: '#/definitions/userEmailCode'
+        '400':
+          description:  Malformed request
+          schema:
+            $ref: '#/definitions/errorModel'
+        '404':
+          description:  Invalid email or password
+          schema:
+            $ref: '#/definitions/errorModel'
+  /projects:
+    post:
+      description: Creates a new project.
+      operationId: createProject
+      produces:
+        - application/json
+      parameters:
+        - name: crbEmail
+          in: header
+          description: Carbono user email
+          required: true
+          type: string
+        - name: project
+          in: body
+          description: Project to create
+          required: true
+          schema:
+            $ref: '#/definitions/newProject'
+      responses:
+        '201':
+          description: Project created
+          schema:
+            $ref: '#/definitions/projectResponse'
+        '400':
+          description:  Malformed request
+          schema:
+            $ref: '#/definitions/errorModel'
+    get:
+      description: List all projects from a user
+      operationId: listProjects
+      produces:
+        - application/json
+      parameters:
+        - name: crbEmail
+          in: header
+          description: Carbono user email
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Operation success
+          schema:
+            $ref: '#/definitions/projectResponse'
+        '400':
+          description:  Malformed request
+          schema:
+            $ref: '#/definitions/errorModel'
+        '404':
+          description:  Not Found
+          schema:
+            $ref: '#/definitions/errorModel'
+  /projects/{safeName}:
+    get:
+      description: Gets an existing project.
+      operationId: findProjectById
+      produces:
+        - application/json
+      parameters:
+        - name: crbEmail
+          in: header
+          description: Carbono user email
+          required: true
+          type: string
+        - name: safeName
+          in: path
+          description: Project Id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Project response
+          schema:
+            $ref: '#/definitions/projectResponse'
+        '400':
+          description:  Malformed request
+          schema:
+            $ref: '#/definitions/errorModel'
+        '404':
+          description:  Not Found
+          schema:
+            $ref: '#/definitions/errorModel'
+    put:
+      description: Updates data of an existing project
+      operationId: updateProject
+      produces:
+        - application/json
+      parameters:
+        - name: crbEmail
+          in: header
+          description: Carbono user email
+          required: true
+          type: string
+        - name: safeName
+          in: path
+          description: Project Id
+          required: true
+          type: string        
+        - name: project
+          in: body
+          description: Project data to be updated
+          required: true
+          schema:
+            $ref: '#/definitions/updateProject'
+      responses:
+        '201':
+          description: project updated
+          schema:
+            $ref: '#/definitions/projectResponse'
+        '400':
+          description:  Malformed request
+          schema:
+            $ref: '#/definitions/errorModel'
+        '404':
+          description:  Not Found
+          schema:
+            $ref: '#/definitions/errorModel'
+    delete:
+      description: Deletes an existing project.
+      operationId: deletesProject
+      produces:
+        - application/json
+      parameters:
+        - name: crbEmail
+          in: header
+          description: Carbono user email
+          required: true
+          type: string
+        - name: safeName
+          in: path
+          description: Project Id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: project deleted
+          schema:
+            $ref: '#/definitions/projectResponse'
+        '400':
+          description:  Malformed request
+          schema:
+            $ref: '#/definitions/errorModel'
+        '404':
+          description:  Not Found
+          schema:
+            $ref: '#/definitions/errorModel'
 definitions:
-  newProfileMessage:
+  loginInfo:
     properties:
       id:
         type: string
-        description: Id that unique identifies the  message
+        description: Id that identifies the unique success message
       apiVersion:
         type: string
         description: The version of the api
@@ -128,72 +275,7 @@ definitions:
         properties:
           id:
             type: string
-            description: Id that unique identifies the requested data
-          items:
-            type: array
-            description: An array of data items
-            items:
-              properties:
-                profile:
-                  type: object
-                  required:
-                    - email
-                    - password
-                  $ref: '#/definitions/profile'
-  profile:
-    properties:
-      code:
-        type: string
-      name:
-        type: string
-      email:
-        type: string
-      password:
-        type: string
-  profileMessage:
-    properties:
-      id:
-        type: string
-        description: Id that unique identifies the message
-      apiVersion:
-        type: string
-        description: The version of the api
-      data:
-        required:
-          - id
-          - items
-        properties:
-          id:
-            type: string
-            description: Id that unique identifies the requested data
-          items:
-            type: array
-            description: An array of data items
-            items:
-              properties:
-                profile:
-                  type: object
-                  required:
-                    - code
-                    - email
-                    - password
-                  $ref: '#/definitions/profile'
-  credentialsMessage:
-    properties:
-      id:
-        type: string
-        description: Id that unique identifies the message
-      apiVersion:
-        type: string
-        description: The version of the api
-      data:
-        required:
-          - id
-          - items
-        properties:
-          id:
-            type: string
-            description: Id that unique identifies the requested data
+            description: Id that identifies the unique requested data
           items:
             type: array
             description: An array of data items
@@ -204,13 +286,15 @@ definitions:
               properties:
                 email:
                   type: string
+                  description: Email of the user
                 password:
                   type: string
-  userInfoMessage:
+                  description: Password of the user
+  userEmailCode:
     properties:
       id:
         type: string
-        description: Id that unique identifies the message
+        description: Id that identifies the unique success message
       apiVersion:
         type: string
         description: The version of the api
@@ -221,50 +305,184 @@ definitions:
         properties:
           id:
             type: string
-            description: Id that unique identifies the requested data
-          items:
-            type: array
-            description: An array of data items
-            items:
-              properties:
-                code:
-                  type: string
-                name:
-                  type: string
-                email:
-                  type: string
-                password:
-                  type: string
-  userEmailMessage:
-    properties:
-      id:
-        type: string
-        description: Id that unique identifies the message
-      apiVersion:
-        type: string
-        description: The version of the api
-      data:
-        required:
-          - id
-          - items
-        properties:
-          id:
-            type: string
-            description: Id that unique identifies the requested data
+            description: Id that identifies the unique requested data
           items:
             type: array
             description: An array of data items
             items:
               required:
                 - email
+                - code
               properties:
                 email:
                   type: string
-  errorMessage:
+                  description: Email of the User
+                code:
+                  type: string
+                  description: Code of the Profile
+  newProfile:
     properties:
       id:
         type: string
-        description: Id that unique identifies the error message
+        description: Id that identifies the unique success message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+            description: Id that identifies the unique requested data
+          items:
+            type: array
+            description: An array of data items
+            items:
+              required:
+                - name
+                - email
+                - password
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+  updateProject:
+    properties:
+      id:
+        type: string
+        description: Id that identifies the unique success message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+            description: Id that identifies the unique requested data
+          items:
+            type: array
+            description: An array of data items
+            items:
+              properties:
+                name:
+                  type: string
+                  description: Name of the project
+                description:
+                  type: string
+                  description: Description of the project
+  newProject:
+    properties:
+      id:
+        type: string
+        description: Id that identifies the unique success message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+            description: Id that identifies the unique requested data
+          items:
+            type: array
+            description: An array of data items
+            items:
+              required:
+                - owner
+                - name
+                - description
+              properties:
+                name:
+                  type: string
+                  description: Name of the project
+                description:
+                  type: string
+                  description: Description of the project
+                owner:
+                  type: string
+                  description: Id that identifies the owner of this project
+  projectResponse:
+    properties:
+      id:
+        type: string
+        description: Id that identifies the unique success message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+            description: Id that identifies the unique requested data
+          items:
+            type: array
+            description: An array of data items
+            items:
+              $ref: '#/definitions/project'
+
+  profile:
+    required:
+      - code
+      - name
+      - email
+    properties:
+      code:
+        type: string
+      name:
+        type: string
+      email:
+        type: string
+  userProfile:
+    properties:
+      id:
+        type: string
+        description: Id that identifies the unique success message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+            description: Id that identifies the unique requested data
+          items:
+            type: array
+            description: An array of data items
+            items:
+              $ref: '#/definitions/profile'
+  
+  project:
+    properties:
+      safeName:
+        type: string
+      owner:
+        type: string
+      name:
+        type: string
+      description:
+        type: string
+  errorModel:
+    properties:
+      id:
+        type: string
+        description: Id that identifies the unique error message
       apiVersion:
         type: string
         description: The version of the api
