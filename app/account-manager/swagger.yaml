@@ -156,7 +156,7 @@ paths:
         '200':
           description: Operation success
           schema:
-            $ref: '#/definitions/projectResponse'
+            $ref: '#/definitions/getProject'
         '400':
           description:  Malformed request
           schema:
@@ -186,9 +186,13 @@ paths:
         '200':
           description: Project response
           schema:
-            $ref: '#/definitions/projectResponse'
+            $ref: '#/definitions/getProject'
         '400':
           description:  Malformed request
+          schema:
+            $ref: '#/definitions/errorModel'
+        '403':
+          description:  Access Denied
           schema:
             $ref: '#/definitions/errorModel'
         '404':
@@ -226,6 +230,10 @@ paths:
           description:  Malformed request
           schema:
             $ref: '#/definitions/errorModel'
+        '403':
+          description:  Access Denied
+          schema:
+            $ref: '#/definitions/errorModel'
         '404':
           description:  Not Found
           schema:
@@ -253,6 +261,10 @@ paths:
             $ref: '#/definitions/projectResponse'
         '400':
           description:  Malformed request
+          schema:
+            $ref: '#/definitions/errorModel'
+        '403':
+          description:  Access Denied
           schema:
             $ref: '#/definitions/errorModel'
         '404':
@@ -399,7 +411,6 @@ definitions:
             description: An array of data items
             items:
               required:
-                - owner
                 - name
                 - description
               properties:
@@ -409,9 +420,44 @@ definitions:
                 description:
                   type: string
                   description: Description of the project
-                owner:
-                  type: string
-                  description: Id that identifies the owner of this project
+  getProject:
+    properties:
+      id:
+        type: string
+        description: Id that identifies the unique success message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+            description: Id that identifies the unique requested data
+          items:
+            type: array
+            description: An array of data items
+            items:
+              properties:
+                project:
+                  properties:
+                    code:
+                      type: string
+                      description: The unique code of the project
+                    safeName:
+                      type: string
+                    name:
+                      type: string
+                    description:
+                      type: string
+                    access:
+                      type: string
+                      description: The access level of user
+                    owner:
+                      type: boolean
+                      description: Indicates if the user owns the project
   projectResponse:
     properties:
       id:
@@ -470,14 +516,16 @@ definitions:
   
   project:
     properties:
-      safeName:
+      code:
         type: string
-      owner:
+        description: The unique code of the project
+      safeName:
         type: string
       name:
         type: string
       description:
         type: string
+  
   errorModel:
     properties:
       id:

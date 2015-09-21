@@ -40,9 +40,11 @@ curl localhost:3000/account-manager/projects/  * -H "Content-Type: application/j
 // Get a project
 curl localhost:3000/account-manager/projects/project-200  * -H "Content-Type: application/json" -H "crbemail: email@200.com"
 curl localhost:3000/account-manager/projects/project-200  * -H "Content-Type: application/json" -H "crbemail: email@400.com"
+curl localhost:3000/account-manager/projects/project-200  * -H "Content-Type: application/json" -H "crbemail: email@403.com"
 curl localhost:3000/account-manager/projects/project-200  * -H "Content-Type: application/json" -H "crbemail: email@404.com"
 curl localhost:3000/account-manager/projects/project-200  * -H "Content-Type: application/json" -H "crbemail: email@500.com"
 curl localhost:3000/account-manager/projects/project-400  * -H "Content-Type: application/json" -H "crbemail: email@200.com"
+curl localhost:3000/account-manager/projects/project-403  * -H "Content-Type: application/json" -H "crbemail: email@200.com"
 curl localhost:3000/account-manager/projects/project-404  * -H "Content-Type: application/json" -H "crbemail: email@200.com"
 curl localhost:3000/account-manager/projects/project-500  * -H "Content-Type: application/json" -H "crbemail: email@200.com"
 
@@ -51,17 +53,21 @@ curl localhost:3000/account-manager/projects/project-500  * -H "Content-Type: ap
 curl -X PUT localhost:3000/account-manager/projects/project-201  * -H "Content-Type: application/json" -H "crbemail: email@200.com" -d '{"apiVersion":"1.0", "id":"23123-123123123-12312",  "data":{"id": "1234", "items": [{"name" : "New Name", "description": "New Description"}]}}'
 curl -X PUT localhost:3000/account-manager/projects/project-201  * -H "Content-Type: application/json" -H "crbemail: email@200.com" -d '{"apiVersion":"1.0", "id":"23123-123123123-12312",  "data":{"id": "1234", "items": [{"name" : "New Name"}]}}'
 curl -X PUT localhost:3000/account-manager/projects/project-201  * -H "Content-Type: application/json" -H "crbemail: email@400.com" '{"apiVersion":"1.0", "id":"23123-123123123-12312",  "data":{"id": "1234", "items": [{"name" : "New Name", "description": "New Description"}]}}'
+curl -X PUT localhost:3000/account-manager/projects/project-201  * -H "Content-Type: application/json" -H "crbemail: email@403.com" '{"apiVersion":"1.0", "id":"23123-123123123-12312",  "data":{"id": "1234", "items": [{"name" : "New Name", "description": "New Description"}]}}'
 curl -X PUT localhost:3000/account-manager/projects/project-201  * -H "Content-Type: application/json" -H "crbemail: email@404.com" '{"apiVersion":"1.0", "id":"23123-123123123-12312",  "data":{"id": "1234", "items": [{"name" : "New Name", "description": "New Description"}]}}'
 curl -X PUT localhost:3000/account-manager/projects/project-201  * -H "Content-Type: application/json" -H "crbemail: email@500.com" '{"apiVersion":"1.0", "id":"23123-123123123-12312",  "data":{"id": "1234", "items": [{"name" : "New Name", "description": "New Description"}]}}'
 curl -X PUT localhost:3000/account-manager/projects/project-400  * -H "Content-Type: application/json" -H "crbemail: email@200.com" '{"apiVersion":"1.0", "id":"23123-123123123-12312",  "data":{"id": "1234", "items": [{"name" : "New Name", "description": "New Description"}]}}'
+curl -X PUT localhost:3000/account-manager/projects/project-403  * -H "Content-Type: application/json" -H "crbemail: email@200.com" '{"apiVersion":"1.0", "id":"23123-123123123-12312",  "data":{"id": "1234", "items": [{"name" : "New Name", "description": "New Description"}]}}'
 curl -X PUT localhost:3000/account-manager/projects/project-404  * -H "Content-Type: application/json" -H "crbemail: email@200.com" '{"apiVersion":"1.0", "id":"23123-123123123-12312",  "data":{"id": "1234", "items": [{"name" : "New Name", "description": "New Description"}]}}'
 curl -X PUT localhost:3000/account-manager/projects/project-500  * -H "Content-Type: application/json" -H "crbemail: email@200.com" '{"apiVersion":"1.0", "id":"23123-123123123-12312",  "data":{"id": "1234", "items": [{"name" : "New Name", "description": "New Description"}]}}'
 
 // Deletes a project
 curl -X DELETE localhost:3000/account-manager/projects/project-200  * -H "Content-Type: application/json" -H "crbemail: email@200.com"
 curl -X DELETE localhost:3000/account-manager/projects/project-200  * -H "Content-Type: application/json" -H "crbemail: email@400.com"
+curl -X DELETE localhost:3000/account-manager/projects/project-200  * -H "Content-Type: application/json" -H "crbemail: email@403.com"
 curl -X DELETE localhost:3000/account-manager/projects/project-200  * -H "Content-Type: application/json" -H "crbemail: email@404.com"
 curl -X DELETE localhost:3000/account-manager/projects/project-200  * -H "Content-Type: application/json" -H "crbemail: email@500.com"
 curl -X DELETE localhost:3000/account-manager/projects/project-400  * -H "Content-Type: application/json" -H "crbemail: email@200.com"
+curl -X DELETE localhost:3000/account-manager/projects/project-403  * -H "Content-Type: application/json" -H "crbemail: email@200.com"
 curl -X DELETE localhost:3000/account-manager/projects/project-404  * -H "Content-Type: application/json" -H "crbemail: email@200.com"
 curl -X DELETE localhost:3000/account-manager/projects/project-500  * -H "Content-Type: application/json" -H "crbemail: email@200.com"
