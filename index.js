@@ -4,7 +4,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var config = require('config');
 var EtcdManager = require('./app/lib/etcd-manager.js');
-var mockSocket = require('./app/cm/mock-routes.js');
+var cmMockSocket = require('./app/cm/mock-routes.js');
+var mcMockSocket = require('./app/mc/mock-routes.js');
 
 require('colors');
 
@@ -38,5 +39,5 @@ server.listen(port, function () {
     etcdManager.init();
 //});
 
-
-mockSocket.createRoutes(io);
+cmMockSocket.createRoutes(io);
+mcMockSocket.createRoutes(io);
