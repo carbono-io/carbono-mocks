@@ -230,7 +230,7 @@ var mock = function (app) {
                         safeName: 'projeto-teste',
                         name: 'Projeto Teste',
                         description: 'Description',
-                        owner: '3432h'
+                        code: 'dasdasd-443-3r4ww',
                     },
                 },
             ],
@@ -250,6 +250,14 @@ var mock = function (app) {
         {
             code: 404,
             message: 'Project not found for the user',
+        }
+    );
+
+    var errResponse403 = new CJM({id: 'x1', apiVersion: '1.0.0'});
+    errResponse403.setError(
+        {
+            code: 403,
+            message: 'Access denied for the user',
         }
     );
 
@@ -281,24 +289,28 @@ var mock = function (app) {
             res.end();
         }
     });
-    
+
     var listProjects = new CJM({id: 'x1', apiVersion: '1.0.0'});
     listProjects.setData(
         {
             id: 'y2',
             items: [
                 {   
-                    project01: {
+                    project: {
                         safeName: 'projeto-teste',
                         name: 'Projeto Teste',
                         description: 'Description',
-                        owner: '3432h'
+                        code: 'dasdasd-443-3r4ww',
+                        access: 'write',
+                        owner: true,
                     },
-                    project02: {
+                    project2: {
                         safeName: 'projeto-teste2',
                         name: 'Projeto Teste 2',
                         description: 'Description 2',
-                        owner: '5553e'
+                        code: 'dasdasd-443-3r4w2',
+                        access: 'read',
+                        owner: false,
                     },
                 },
             ],
@@ -336,7 +348,9 @@ var mock = function (app) {
                         safeName: 'projeto-teste',
                         name: 'Projeto Teste',
                         description: 'Description',
-                        owner: '3432h'
+                        code: 'dasdasd-443-3r4ww',
+                        access: 'write',
+                        owner: true,
                     },
                 },
             ],
@@ -344,9 +358,9 @@ var mock = function (app) {
     );
     
     // Get a Project
-    app.get('/account-manager/projects/:safeName', function (req, res, next) {
+    app.get('/account-manager/projects/:code', function (req, res, next) {
         res.setHeader('content-type', 'application/json');
-        if (req.params.safeName == 'project-200') {
+        if (req.params.code == 'project-200') {
             if (req.headers.crbemail === 'email@200.com') {
                 res.statusCode = 200;
                 res.json(getProject.toObject());
@@ -354,6 +368,10 @@ var mock = function (app) {
             } else if (req.headers.crbemail === 'email@400.com') {
                 res.statusCode = 400;
                 res.json(errResponse400.toObject());
+                res.end();
+            } else if (req.headers.crbemail === 'email@403.com') {
+                res.statusCode = 403;
+                res.json(errResponse403.toObject());
                 res.end();
             } else if (req.headers.crbemail === 'email@404.com') {
                 res.statusCode = 404;
@@ -364,11 +382,15 @@ var mock = function (app) {
                 res.json(errResponse500.toObject());
                 res.end();
             }
-        } else if (req.params.safeName == 'project-400') {
+        } else if (req.params.code == 'project-400') {
             res.statusCode = 400;
             res.json(errResponse400.toObject());
             res.end();
-        } else if (req.params.safeName == 'project-404') {
+        } else if (req.params.code == 'project-403') {
+            res.statusCode = 403;
+            res.json(errResponse403.toObject());
+            res.end();
+        } else if (req.params.code == 'project-404') {
             res.statusCode = 404;
             res.json(errResponse404.toObject());
             res.end();
@@ -380,9 +402,9 @@ var mock = function (app) {
     });
     
     // Updates a Project
-    app.put('/account-manager/projects/:safeName', function (req, res, next) {
+    app.put('/account-manager/projects/:code', function (req, res, next) {
         res.setHeader('content-type', 'application/json');
-        if (req.params.safeName == 'project-201') {
+        if (req.params.code == 'project-201') {
             if (req.headers.crbemail === 'email@200.com') {
                 var projectData = req.body.data.items[0];
                 if(projectData.name && projectData.description) {
@@ -392,7 +414,7 @@ var mock = function (app) {
                             safeName: 'projeto-teste',
                             name: projectData.name,
                             description: projectData.description,
-                            owner: '3432h'
+                            code: req.params.code,
                         },
                     }).toObject());
                     res.end();
@@ -405,6 +427,10 @@ var mock = function (app) {
                 res.statusCode = 400;
                 res.json(errResponse400.toObject());
                 res.end();
+            } else if (req.headers.crbemail === 'email@403.com') {
+                res.statusCode = 403;
+                res.json(errResponse403.toObject());
+                res.end();
             } else if (req.headers.crbemail === 'email@404.com') {
                 res.statusCode = 404;
                 res.json(errResponse404.toObject());
@@ -414,11 +440,15 @@ var mock = function (app) {
                 res.json(errResponse500.toObject());
                 res.end();
             }
-        } else if (req.params.safeName == 'project-400') {
+        } else if (req.params.code == 'project-400') {
             res.statusCode = 400;
             res.json(errResponse400.toObject());
             res.end();
-        } else if (req.params.safeName == 'project-404') {
+        } else if (req.params.code == 'project-403') {
+            res.statusCode = 403;
+            res.json(errResponse403.toObject());
+            res.end();
+        } else if (req.params.code == 'project-404') {
             res.statusCode = 404;
             res.json(errResponse404.toObject());
             res.end();
@@ -430,16 +460,27 @@ var mock = function (app) {
     });
     
     // Deletes a Project
-    app.delete('/account-manager/projects/:safeName', function (req, res, next) {
+    app.delete('/account-manager/projects/:code', function (req, res, next) {
         res.setHeader('content-type', 'application/json');
-        if (req.params.safeName == 'project-200') {
+        if (req.params.code == 'project-200') {
             if (req.headers.crbemail === 'email@200.com') {
                 res.statusCode = 200;
-                res.json(getProject.toObject());
+                res.json(buildResponse(false, 201, "", {
+                    project: {
+                        safeName: 'projeto-teste',
+                        name: 'Project Name',
+                        description: 'Project Description',
+                        code: req.params.code,
+                    },
+                }).toObject());
                 res.end();
             } else if (req.headers.crbemail === 'email@400.com') {
                 res.statusCode = 400;
                 res.json(errResponse400.toObject());
+                res.end();
+            } else if (req.headers.crbemail === 'email@403.com') {
+                res.statusCode = 403;
+                res.json(errResponse403.toObject());
                 res.end();
             } else if (req.headers.crbemail === 'email@404.com') {
                 res.statusCode = 404;
@@ -450,11 +491,15 @@ var mock = function (app) {
                 res.json(errResponse500.toObject());
                 res.end();
             }
-        } else if (req.params.safeName == 'project-400') {
+        } else if (req.params.code == 'project-400') {
             res.statusCode = 400;
             res.json(errResponse400.toObject());
             res.end();
-        } else if (req.params.safeName == 'project-404') {
+        } else if (req.params.code == 'project-403') {
+            res.statusCode = 403;
+            res.json(errResponse403.toObject());
+            res.end();
+        } else if (req.params.code == 'project-404') {
             res.statusCode = 404;
             res.json(errResponse404.toObject());
             res.end();
