@@ -14,7 +14,7 @@ var mock = function (app) {
             var reqData = req.body.data.items[0];
             var token = reqData.token;
 
-            if (token === 'token valido') {
+            if (token === 'token_valido') {
                 res.status(200);
                 cjm.setData(
                     {
@@ -28,7 +28,7 @@ var mock = function (app) {
                         },],
                     }
                 );
-            } else if (token === 'token invalido') {
+            } else if (token === 'token_invalido') {
                 res.status(404);
                 cjm.setError(
                     {
