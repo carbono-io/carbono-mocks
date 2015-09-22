@@ -15,6 +15,7 @@ var mock = function (app) {
             var token = reqData.token;
 
             if (token === 'token valido') {
+                res.status(200);
                 cjm.setData(
                     {
                         id: uuid.v4(),
@@ -28,14 +29,24 @@ var mock = function (app) {
                     }
                 );
             } else if (token === 'token invalido') {
+                res.status(404);
                 cjm.setError(
                     {
                         code: 404,
                         message: 'User not found',
                     }
                 );
+            } else {
+                res.status(500);
+                cjm.setError(
+                    {
+                        code: 500,
+                        message: 'Status code desconhecido',
+                    }
+                );
             }
         } catch (err) {
+            res.status(400);
             cjm.setError(
                 {
                     code: 400,
