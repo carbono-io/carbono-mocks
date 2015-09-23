@@ -2,15 +2,15 @@
 
 var CJM = require('carbono-json-messages');
 var uuid = require('node-uuid');
-var cjm = new CJM({id: 'x1', apiVersion: '1.0.0'});
 
 var data = function () {
     return [];
 };
 
 var mock = function (app) {
-    app.post('/carbono-auth/validate', function (req, res, next) {
+    app.post('/carbono-auth/bearer/validate', function (req, res, next) {
         try {
+            var cjm = new CJM({id: 'x1', apiVersion: '1.0.0'});
             var reqData = req.body.data.items[0];
             var token = reqData.token;
 
@@ -54,7 +54,7 @@ var mock = function (app) {
                 }
             );
         }
-        res.json(cjm);
+        res.json(cjm.toObject());
         res.end();
     });
 };
