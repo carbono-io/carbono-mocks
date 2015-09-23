@@ -165,7 +165,7 @@ paths:
           description:  Not Found
           schema:
             $ref: '#/definitions/errorModel'
-  /projects/{safeName}:
+  /projects/{code}:
     get:
       description: Gets an existing project.
       operationId: findProjectById
@@ -177,7 +177,7 @@ paths:
           description: Carbono user email
           required: true
           type: string
-        - name: safeName
+        - name: code
           in: path
           description: Project Id
           required: true
@@ -210,7 +210,7 @@ paths:
           description: Carbono user email
           required: true
           type: string
-        - name: safeName
+        - name: code
           in: path
           description: Project Id
           required: true
@@ -249,7 +249,7 @@ paths:
           description: Carbono user email
           required: true
           type: string
-        - name: safeName
+        - name: code
           in: path
           description: Project Id
           required: true
