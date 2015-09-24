@@ -8,7 +8,7 @@ var data = function () {
 };
 
 var mock = function (app) {
-    app.post('/carbono-auth/bearer/validate', function (req, res, next) {
+    app.post('/carbono-auth/bearer/validate', function (req, res) {
         try {
             var cjm = new CJM({id: 'x1', apiVersion: '1.0.0'});
             var reqData = req.body.data.items[0];
@@ -21,9 +21,19 @@ var mock = function (app) {
                         id: uuid.v4(),
                         items: [{
                             userInfo: {
-                                code: '1234',
-                                name: 'fulano',
-                                email: 'email@email.com',
+                                provider: 'carbono-oauth2',
+                                id: '1234',
+                                displayName: 'fulano',
+                                name: {
+                                    familyName: 'fulano',
+                                    givenName: 'fulano',
+                                    middleName: '',
+                                },
+                                emails: [{
+                                    value: 'email@email.com',
+                                    type: 'personal',
+                                },],
+                                photos: [],
                             },
                         },],
                     }
