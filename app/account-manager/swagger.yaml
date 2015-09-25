@@ -214,7 +214,7 @@ paths:
           in: path
           description: Project Id
           required: true
-          type: string        
+          type: string
         - name: project
           in: body
           description: Project data to be updated
@@ -411,6 +411,40 @@ definitions:
             description: An array of data items
             items:
               required:
+                - owner
+                - name
+                - safeName
+              properties:
+                name:
+                  type: string
+                  description: Name of the project
+                safeName:
+                  type: string
+                  description: Unique namespace of the project
+                owner:
+                  type: string
+                  description: Id that identifies the owner of this project
+  newProject:
+    properties:
+      id:
+        type: string
+        description: Id that identifies the unique success message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+            description: Id that identifies the unique requested data
+          items:
+            type: array
+            description: An array of data items
+            items:
+              required:
                 - name
                 - description
               properties:
@@ -513,7 +547,7 @@ definitions:
             description: An array of data items
             items:
               $ref: '#/definitions/profile'
-  
+
   project:
     properties:
       code:
@@ -525,7 +559,6 @@ definitions:
         type: string
       description:
         type: string
-  
   errorModel:
     properties:
       id:
