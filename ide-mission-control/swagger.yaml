@@ -14,46 +14,42 @@ produces:
   - application/json
   - text/html
 paths:
-  /project:
+  /projects:
     post:
-      summary: |
-        Creates a new Project.
-      responses:
-        200:
-          description:  Project was successfuly created, returns project ID
-          schema:
-            $ref: '#/definitions/ResponseSucess'
-        400:
-          description:  Malformed request
-          schema:
-            $ref: '#/definitions/ResponseError'
-  /project/{projectId}:
-    get:
-      summary: Retrieves a Project.
+      description: Creates a new project
+      operationId: createProject
+      produces:
+        - application/json
       parameters:
-        - name: projectId
-          in: path
-          type: string
-          description: Id of the project
+        - name: Authorization
+          in: header
+          description: Access token
           required: true
-      responses:
-        200:
-          description:  Project was retrieved
+          type: string
+        - name: project
+          in: body
+          description: Project info to be created
+          required: true
           schema:
-            $ref: '#/definitions/ResponseSucess'
+            $ref: '#/definitions/newProject'
+      responses:
+        201:
+          description:  Project was successfuly created
+          schema:
+            $ref: '#/definitions/projectResponse'
         400:
           description:  Malformed request
           schema:
             $ref: '#/definitions/ResponseError'
-        404:
-          description:  Project does not exist
+        403:
+          description: Forbidden - Access Denied
           schema:
             $ref: '#/definitions/ResponseError'
-  /project/{projectId}/resources/marked/{fileName}:
+  /projects/{code}/resources/marked/{fileName}:
     get:
-      summary: Retrieves a marked file {fileName} from a Project using the identifier {projectId}.
+      summary: Retrieves a marked file {fileName} from a Project using the identifier {code}.
       parameters:
-        - name: projectId
+        - name: code
           in: path
           type: string
           description: Id of the project
@@ -77,11 +73,11 @@ paths:
           description:  File not found
           schema:
             $ref: '#/definitions/ResponseError'
-  /project/{projectId}/resources/clean/{fileName}:
+  /projects/{code}/resources/clean/{fileName}:
     get:
-      summary: Retrieves a clean file {fileName} from a Project using the identifier {projectId}.
+      summary: Retrieves a clean file {fileName} from a Project using the identifier {code}.
       parameters:
-        - name: projectId
+        - name: code
           in: path
           type: string
           description: Id of the project
@@ -107,12 +103,7 @@ paths:
             $ref: '#/definitions/ResponseError'
 
 definitions:
-  Item:
-    properties:
-      projectId:
-        description: The id of a project
-        type: string
-  ResponseSucess:
+  projectResponse:
     properties:
       id:
         type: string
@@ -132,7 +123,57 @@ definitions:
             type: array
             description: An array of data items
             items:
-              $ref: "#/definitions/Item"
+              required:
+                - project
+              properties:
+                project:
+                  required:
+                    - code
+                    - safeName
+                    - name
+                    - description
+                  properties:
+                    code:
+                      type: string
+                      description: The unique code of the project
+                    safeName:
+                      type: string
+                      description: The unique safeName (namespace) of the project for the given owner
+                    name:
+                      type: string
+                    description:
+                      type: string
+
+  newProject:
+    properties:
+      id:
+        type: string
+        description: Id that identifies the unique success message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+            description: Id that identifies the unique requested data
+          items:
+            type: array
+            description: An array of data items
+            items:
+              required:
+                - name
+                - description
+              properties:
+                name:
+                  type: string
+                  description: Name of the project
+                description:
+                  type: string
+                  description: Description of the project
   ResponseError:
     properties:
       id:
