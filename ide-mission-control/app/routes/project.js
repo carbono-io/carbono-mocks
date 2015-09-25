@@ -6,9 +6,7 @@ var projectController = require('../controllers/project');
 
 var app = express();
 
-app.use('/:projectId/resources', resources);
-
-app.get('/:projectId', projectController.list);
+app.use('/:code/resources', resources);
 
 app.post('/', projectController.create);
 
