@@ -99,9 +99,11 @@ var mock = function (app) {
                 res.setHeader('content-type', 'application/json');
                 res.statusCode = 201;
                 res.json(buildResponse(false, 201, "", {
-                    name: profile.name,
-                    email: profile.email,
-                    code: 'sjdh3434hdsj',
+                    profile: {
+                        name: profile.name,
+                        email: profile.email,
+                        code: 'sjdh3434hdsj',
+                    },
                 }).toObject());
                 res.end();
             } else if (profile.name === 'John Connor 400') {
@@ -127,10 +129,11 @@ var mock = function (app) {
             res.setHeader('content-type', 'application/json');
                 res.statusCode = 200;
                 res.json(buildResponse(false, 200, "", {
-                    name: 'John Connor',
-                    email: 'connor.john@resitance.com',
-                    code: req.params.code,
-                    
+                    profile: {
+                        name: 'John Connor',
+                        email: 'connor.john@resitance.com',
+                        code: req.params.code,
+                    },
                 }).toObject());
                 res.end();
         } else if (req.params.code == 'user400') {
@@ -157,10 +160,11 @@ var mock = function (app) {
             res.statusCode = 200;
             res.setHeader('content-type', 'application/json');
             res.json(buildResponse(false, 200, "", {
-                    name: 'John Connor',
-                    email: req.headers.crbemail,
-                    code: 'askjdhsakj3343',
-                    
+                    profile: {
+                        name: 'John Connor',
+                        email: req.headers.crbemail,
+                        code: 'askjdhsakj3343',
+                    },
                 }).toObject());
             res.end();
         } else if (req.headers.crbemail === 'email@400.com') {
