@@ -1,0 +1,507 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title: Imperial Router Module
+  description: Imperial Router module's API that exposes account and project functionality
+  contact:
+    name: Carbono team
+    email: team@carbono.io
+    url: http://carbono.io
+host: localhost:3000
+basePath: /imperial
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /profiles:
+    post:
+      description: Creates a new profile/user.
+      operationId: createAccount
+      produces:
+        - application/json
+      parameters:
+        - name: profile
+          in: body
+          description: Profile to create
+          required: true
+          schema:
+            $ref: '#/definitions/newProfile'
+      responses:
+        '201':
+          description: Profile created
+          schema:
+            $ref: '#/definitions/userProfile'
+        '400':
+          description:  Malformed request
+          schema:
+            $ref: '#/definitions/errorModel'
+  /profiles/{code}:
+    get:
+      description: Returns an user profile based on a ID
+      operationId: findProfileById
+      produces:
+        - application/json
+      parameters:
+        - name: code
+          in: path
+          description: Profile code
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Profile found
+          schema:
+            $ref: '#/definitions/userProfile'
+        '400':
+          description:  Malformed request
+          schema:
+            $ref: '#/definitions/errorModel'
+        '404':
+          description:  Profile Not Found
+          schema:
+            $ref: '#/definitions/errorModel'
+  /users:
+    get:
+      description: Gets user information
+      operationId: getUserInfo
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization token
+          required: true
+          type: string
+      responses:
+        '200':
+          description: User found
+          schema:
+            $ref: '#/definitions/userProfile'
+        '400':
+          description:  Malformed request
+          schema:
+            $ref: '#/definitions/errorModel'
+        '403':
+          description:  Access Denied
+          schema:
+            $ref: '#/definitions/errorModel'
+        '404':
+          description:  User not found
+          schema:
+            $ref: '#/definitions/errorModel'
+  /projects:
+    post:
+      description: Creates a new project.
+      operationId: createProject
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization token
+          required: true
+          type: string
+        - name: project
+          in: body
+          description: Project to create
+          required: true
+          schema:
+            $ref: '#/definitions/newProject'
+      responses:
+        '201':
+          description: Project created
+          schema:
+            $ref: '#/definitions/projectResponse'
+        '400':
+          description:  Malformed request
+          schema:
+            $ref: '#/definitions/errorModel'
+        '403':
+          description:  Access Denied
+          schema:
+            $ref: '#/definitions/errorModel'
+    get:
+      description: List all projects from a user
+      operationId: listProjects
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization token
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Operation success
+          schema:
+            $ref: '#/definitions/getProject'
+        '400':
+          description:  Malformed request
+          schema:
+            $ref: '#/definitions/errorModel'
+        '403':
+          description:  Access Denied
+          schema:
+            $ref: '#/definitions/errorModel'
+        '404':
+          description:  Not Found
+          schema:
+            $ref: '#/definitions/errorModel'
+  /projects/{code}:
+    get:
+      description: Gets an existing project.
+      operationId: findProjectById
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization token
+          required: true
+          type: string
+        - name: code
+          in: path
+          description: Project Id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Project response
+          schema:
+            $ref: '#/definitions/getProject'
+        '400':
+          description:  Malformed request
+          schema:
+            $ref: '#/definitions/errorModel'
+        '403':
+          description:  Access Denied
+          schema:
+            $ref: '#/definitions/errorModel'
+        '404':
+          description:  Not Found
+          schema:
+            $ref: '#/definitions/errorModel'
+    put:
+      description: Updates data of an existing project
+      operationId: updateProject
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization token
+          required: true
+          type: string
+        - name: code
+          in: path
+          description: Project Id
+          required: true
+          type: string
+        - name: project
+          in: body
+          description: Project data to be updated
+          required: true
+          schema:
+            $ref: '#/definitions/updateProject'
+      responses:
+        '201':
+          description: project updated
+          schema:
+            $ref: '#/definitions/projectResponse'
+        '400':
+          description:  Malformed request
+          schema:
+            $ref: '#/definitions/errorModel'
+        '403':
+          description:  Access Denied
+          schema:
+            $ref: '#/definitions/errorModel'
+        '404':
+          description:  Not Found
+          schema:
+            $ref: '#/definitions/errorModel'
+    delete:
+      description: Deletes an existing project.
+      operationId: deletesProject
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization token
+          required: true
+          type: string
+        - name: code
+          in: path
+          description: Project Id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: project deleted
+          schema:
+            $ref: '#/definitions/projectResponse'
+        '400':
+          description:  Malformed request
+          schema:
+            $ref: '#/definitions/errorModel'
+        '403':
+          description:  Access Denied
+          schema:
+            $ref: '#/definitions/errorModel'
+        '404':
+          description:  Not Found
+          schema:
+            $ref: '#/definitions/errorModel'
+definitions:
+  newProfile:
+    properties:
+      id:
+        type: string
+        description: Id that identifies the unique success message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+            description: Id that identifies the unique requested data
+          items:
+            type: array
+            description: An array of data items
+            items:
+              required:
+                - name
+                - email
+                - password
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+  updateProject:
+    properties:
+      id:
+        type: string
+        description: Id that identifies the unique success message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+            description: Id that identifies the unique requested data
+          items:
+            type: array
+            description: An array of data items
+            items:
+              properties:
+                name:
+                  type: string
+                  description: Name of the project
+                description:
+                  type: string
+                  description: Description of the project
+  newProject:
+    properties:
+      id:
+        type: string
+        description: Id that identifies the unique success message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+            description: Id that identifies the unique requested data
+          items:
+            type: array
+            description: An array of data items
+            items:
+              required:
+                - owner
+                - name
+                - safeName
+              properties:
+                name:
+                  type: string
+                  description: Name of the project
+                safeName:
+                  type: string
+                  description: Unique namespace of the project
+                owner:
+                  type: string
+                  description: Id that identifies the owner of this project
+  newProject:
+    properties:
+      id:
+        type: string
+        description: Id that identifies the unique success message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+            description: Id that identifies the unique requested data
+          items:
+            type: array
+            description: An array of data items
+            items:
+              required:
+                - name
+                - description
+              properties:
+                name:
+                  type: string
+                  description: Name of the project
+                description:
+                  type: string
+                  description: Description of the project
+  getProject:
+    properties:
+      id:
+        type: string
+        description: Id that identifies the unique success message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+            description: Id that identifies the unique requested data
+          items:
+            type: array
+            description: An array of data items
+            items:
+              properties:
+                project:
+                  properties:
+                    code:
+                      type: string
+                      description: The unique code of the project
+                    safeName:
+                      type: string
+                    name:
+                      type: string
+                    description:
+                      type: string
+                    access:
+                      type: string
+                      description: The access level of user
+                    owner:
+                      type: boolean
+                      description: Indicates if the user owns the project
+  projectResponse:
+    properties:
+      id:
+        type: string
+        description: Id that identifies the unique success message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+            description: Id that identifies the unique requested data
+          items:
+            type: array
+            description: An array of data items
+            items:
+              $ref: '#/definitions/project'
+
+  profile:
+    required:
+      - code
+      - name
+      - email
+    properties:
+      code:
+        type: string
+      name:
+        type: string
+      email:
+        type: string
+  userProfile:
+    properties:
+      id:
+        type: string
+        description: Id that identifies the unique success message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+            description: Id that identifies the unique requested data
+          items:
+            type: array
+            description: An array of data items
+            items:
+              $ref: '#/definitions/profile'
+
+  project:
+    properties:
+      code:
+        type: string
+        description: The unique code of the project
+      safeName:
+        type: string
+      name:
+        type: string
+      description:
+        type: string
+  errorModel:
+    properties:
+      id:
+        type: string
+        description: Id that identifies the unique error message
+      apiVersion:
+        type: string
+        description: The version of the api
+      error:
+        required:
+          - code
+          - message
+        properties:
+          code:
+            type: integer
+            format: int64
+            description: The error code (i.e. 400, 404)
+          message:
+            type: string
+            description: The error message

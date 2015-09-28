@@ -15,6 +15,7 @@ app.httpServer = server;
 var io = require('socket.io')(server);
 
 app.use(bodyParser.json());
+app.use('/imperial', require('./app/imperial-router'));
 app.use('/account-manager', require('./app/account-manager'));
 app.use('/code-machine', require('./code-machine'));
 app.use('/ide-mission-control', require('./ide-mission-control'));
