@@ -1,16 +1,20 @@
 'use strict';
 
-var CJM = require('carbono-json-messages');
-var uuid = require('node-uuid');
+var CJM     = require('carbono-json-messages');
+var uuid    = require('node-uuid');
+var parser  = require('body-parser');
 
 var data = function () {
     return [];
 };
 
 var mock = function (app) {
+    app.use(parser.urlencoded({
+        extended: true,
+    }));
     app.post('/carbono-auth/bearer/validate', function (req, res) {
         try {
-            var cjm = new CJM({id: 'x1', apiVersion: '1.0.0'});
+            var cjm = new CJM({id: 'id', apiVersion: '1.0.0'});
             var reqData = req.body.data.items[0];
             var token = reqData.token;
 
@@ -51,7 +55,7 @@ var mock = function (app) {
                 cjm.setError(
                     {
                         code: 500,
-                        message: 'Status code desconhecido',
+                        message: 'Unknown status code',
                     }
                 );
             }
@@ -65,6 +69,20 @@ var mock = function (app) {
             );
         }
         res.json(cjm.toObject());
+        res.end();
+    });
+
+    app.get('/carbono-auth/oauth2/authorize', function (req, res) {
+        res.redirect(req.query.redirect_uri + '?code=123456');
+    });
+
+    app.post('/carbono-auth/oauth2/token', function (req, res) {
+        res.setHeader('Content-Type', 'application/json');
+        res.setHeader('Cache-Control', 'no-store');
+        res.setHeader('Pragma', 'no-cache');
+        res.json({
+            access_token: {value: 'valid_token',},
+        });
         res.end();
     });
 };
