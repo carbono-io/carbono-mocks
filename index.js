@@ -30,15 +30,12 @@ server.listen(port, function () {
     console.log('Listen on port %d', port);
 });
 
-//var server = app.listen(config.get('port'), function () {
-    var host = server.address().address;
-    var port = server.address().port;
-    var etcdManager = new EtcdManager();
+var host = server.address().address;
+var port = server.address().port;
+var etcdManager = new EtcdManager();
 
-    console.log('Carbono-Mocks listening at http://%s:%s', host, port);
+console.log('Carbono-Mocks listening at http://%s:%s', host, port);
 
-    etcdManager.init();
-//});
-
+etcdManager.init();
 
 mockSocket.createRoutes(io);

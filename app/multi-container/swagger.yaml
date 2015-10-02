@@ -30,14 +30,71 @@ paths:
           schema:
             $ref: '#/definitions/newMachineMessage'
       responses:
-        '200':
+        '201':
           description: machine creation confirmed
+          schema:
+            $ref: '#/definitions/newMachineResponse'
         '400':
           description:  Malformed request
           schema:
             $ref: '#/definitions/errorMessage'
         '404':
           description:  Machine not created
+          schema:
+            $ref: '#/definitions/errorMessage'
+        default:
+          description:  Unexpected Error
+  /machines/{token}:
+    get:
+      description: Returns a machine creation current status based on a token
+      operationId: getMachineCreationStatus
+      produces:
+        - application/json
+      parameters:
+        - name: token
+          in: path
+          description: Token received as response of create
+          required: true
+          type: string
+      responses:
+        '201':
+          description: machine creation status response
+          schema:
+            $ref: '#/definitions/machineStatusMessage'
+        '400':
+          description:  Malformed request
+          schema:
+            $ref: '#/definitions/errorMessage'
+        '404':
+          description:  Not Found
+          schema:
+            $ref: '#/definitions/errorMessage'
+        default:
+          description:  Unexpected Error
+  /tokens:
+    post:
+      description: Save a token relative to a new machine criation request.
+      operationId: saveToken
+      produces:
+        - application/json
+      parameters:
+        - name: tokenInfo
+          in: body
+          description: Token information to store
+          required: true
+          schema:
+            $ref: '#/definitions/tokenMessage'
+      responses:
+        '200':
+          description: token saved sucessfull
+          schema:
+            $ref: '#/definitions/tokenResponse'
+        '400':
+          description:  Token could not be saved
+          schema:
+            $ref: '#/definitions/errorMessage'
+        default:
+          description:  Unexpected Error
 definitions:
   newMachineMessage:
     properties:
@@ -57,16 +114,28 @@ definitions:
             description: Id that unique identifies requested data
           items:
             type: array
-            description: An array of data items
             items:
-              properties:
-                machine:
-                  type: object
-                  required:
-                    - imageName
-                    - route
-                  $ref: '#/definitions/machine'
+              $ref: '#/definitions/machine'
+  newMachineResponse:
+    properties:
+      id:
+        type: string
+        description: Id that unique identifies the message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+        properties:
+          id:
+            type: string
+            description: represent the token confirming that machine creation will be performed
+            default: TOKEN-0001
   machine:
+    required:
+      - imageName
+      - route
     properties:
       imageName:
         type: string
@@ -75,6 +144,67 @@ definitions:
       environment:
         type: string
         description: accepts DEV / HML / PRD
+  machineStatus:
+    required:
+      - status
+    properties:
+      status:
+        type: string
+        description: accepts PENDING / OK / FAIL
+        default: OK
+  machineStatusMessage:
+    properties:
+      id:
+        type: string
+        description: Id that unique identifies the message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+            description: Id that unique identifies requested data
+          items:
+            type: array
+            description: An array of data items
+            items:
+              $ref: '#/definitions/machineStatus'
+  tokenMessage:
+    properties:
+      id:
+        type: string
+        description: Id that unique identifies the message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+          - items
+        properties:
+          id:
+            type: string
+            description: Id containing token value
+  tokenResponse:
+    properties:
+      id:
+        type: string
+        description: Id that unique identifies the message
+      apiVersion:
+        type: string
+        description: The version of the api
+      data:
+        required:
+          - id
+        properties:
+          id:
+            type: string
+            description: represent the token confirming that machine creation will be performed
+            default: TOKEN-0001
   errorMessage:
     properties:
       id:

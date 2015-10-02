@@ -2,7 +2,6 @@
 var CJM = require('carbono-json-messages');
 
 function createRoutes(io) {
-    console.log('yyyy');
 
     io.of('code-machine').addListener('connection',
         function (socket) {
