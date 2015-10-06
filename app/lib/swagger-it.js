@@ -7,8 +7,9 @@ var Middleware = swagger.Middleware;
 var MemoryDataStore = swagger.MemoryDataStore;
 var Resource = swagger.Resource;
 
-var swaggerIt = function (app, module) {
+var swaggerIt = function (app, module, customMock) {
 
+    customMock = customMock || mock;
     var middleware = new Middleware(app);
 
     middleware.init(path.resolve(__dirname, "../" + module + '/swagger.yaml'), function () {
@@ -16,8 +17,8 @@ var swaggerIt = function (app, module) {
             // NOTE: Some of these accept optional options (omitted here for brevity)
             //
             var myDB = new MemoryDataStore();
-            mock.mock(app);
-            myDB.save(Resource.parse(mock.data()));
+            customMock.mock(app);
+            myDB.save(Resource.parse(customMock.data()));
 
             app.use(
                 middleware.metadata(),

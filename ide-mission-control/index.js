@@ -5,5 +5,5 @@ var project = require(path.join(__dirname, '/app/routes/project'));
 
 var app = express();
 
-app.use('/project', project);
+app.use('/projects', project);
 module.exports = app;

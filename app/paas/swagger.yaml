@@ -25,7 +25,7 @@ paths:
       parameters:
         - name: machineDetails
           in: body
-          description: DEtails of machine to be instanciated
+          description: Details of machine to be instanciated
           required: true
           schema:
             $ref: '#/definitions/newMachineMessage'
@@ -84,13 +84,7 @@ definitions:
             type: array
             description: An array of data items
             items:
-              properties:
-                machine:
-                  type: object
-                  required:
-                    - component
-                    - route
-                  $ref: '#/definitions/machine'
+              $ref: '#/definitions/machine'
   newMachineResponse:
     properties:
       id:
@@ -107,18 +101,10 @@ definitions:
             type: string
             description: represent the token confirming that machine creation will be performed
             default: TOKEN-0001
-          items:
-            type: array
-            description: An array of data items
-            items:
-              properties:
-                machine:
-                  type: object
-                  required:
-                    - component
-                    - route
-                  $ref: '#/definitions/machine'
   machine:
+    required:
+      - component
+      - route
     properties:
       component:
         type: string
@@ -128,6 +114,8 @@ definitions:
         type: string
         description: accepts DEV / HML / PRD
   machineStatus:
+    required:
+      - status
     properties:
       status:
         type: string
@@ -153,12 +141,7 @@ definitions:
             type: array
             description: An array of data items
             items:
-              properties:
-                machineStatus:
-                  type: object
-                  required:
-                    - status
-                  $ref: '#/definitions/machineStatus'
+              $ref: '#/definitions/machineStatus'
   errorMessage:
     properties:
       id:

@@ -15,7 +15,9 @@ app.httpServer = server;
 var io = require('socket.io')(server);
 
 app.use(bodyParser.json());
+app.use('/imperial', require('./app/imperial-router'));
 app.use('/account-manager', require('./app/account-manager'));
+app.use('/carbono-auth', require('./app/carbono-auth'));
 app.use('/code-machine', require('./code-machine'));
 app.use('/ide-mission-control', require('./ide-mission-control'));
 app.use('/ide-development-container-manager',
@@ -28,15 +30,12 @@ server.listen(port, function () {
     console.log('Listen on port %d', port);
 });
 
-//var server = app.listen(config.get('port'), function () {
-    var host = server.address().address;
-    var port = server.address().port;
-    var etcdManager = new EtcdManager();
+var host = server.address().address;
+var port = server.address().port;
+var etcdManager = new EtcdManager();
 
-    console.log('Carbono-Mocks listening at http://%s:%s', host, port);
+console.log('Carbono-Mocks listening at http://%s:%s', host, port);
 
-    etcdManager.init();
-//});
-
+etcdManager.init();
 
 mockSocket.createRoutes(io);

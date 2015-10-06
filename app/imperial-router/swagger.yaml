@@ -1,14 +1,14 @@
 swagger: '2.0'
 info:
   version: '1.0.0'
-  title: BRL - Account Manager
-  description: Account Manager module's API that exposes account and project functionality
+  title: Imperial Router Module
+  description: Imperial Router module's API that exposes account and project functionality
   contact:
     name: Carbono team
     email: team@carbono.io
     url: http://carbono.io
 host: localhost:3000
-basePath: /account-manager
+basePath: /imperial
 schemes:
   - http
 consumes:
@@ -70,9 +70,9 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: crbEmail
+        - name: Authorization
           in: header
-          description: Carbono user email
+          description: Authorization token
           required: true
           type: string
       responses:
@@ -84,34 +84,12 @@ paths:
           description:  Malformed request
           schema:
             $ref: '#/definitions/errorModel'
+        '403':
+          description:  Access Denied
+          schema:
+            $ref: '#/definitions/errorModel'
         '404':
           description:  User not found
-          schema:
-            $ref: '#/definitions/errorModel'
-  /login:
-    post:
-      description: Validates user login info
-      operationId: loginUser
-      produces:
-        - application/json
-      parameters:
-        - name: login
-          in: body
-          description: User's login info
-          required: true
-          schema:
-            $ref: '#/definitions/loginInfo'
-      responses:
-        '200':
-          description: Login Success
-          schema:
-            $ref: '#/definitions/userEmailCode'
-        '400':
-          description:  Malformed request
-          schema:
-            $ref: '#/definitions/errorModel'
-        '404':
-          description:  Invalid email or password
           schema:
             $ref: '#/definitions/errorModel'
   /projects:
@@ -121,9 +99,9 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: crbEmail
+        - name: Authorization
           in: header
-          description: Carbono user email
+          description: Authorization token
           required: true
           type: string
         - name: project
@@ -141,15 +119,19 @@ paths:
           description:  Malformed request
           schema:
             $ref: '#/definitions/errorModel'
+        '403':
+          description:  Access Denied
+          schema:
+            $ref: '#/definitions/errorModel'
     get:
       description: List all projects from a user
       operationId: listProjects
       produces:
         - application/json
       parameters:
-        - name: crbEmail
+        - name: Authorization
           in: header
-          description: Carbono user email
+          description: Authorization token
           required: true
           type: string
       responses:
@@ -159,6 +141,10 @@ paths:
             $ref: '#/definitions/getProject'
         '400':
           description:  Malformed request
+          schema:
+            $ref: '#/definitions/errorModel'
+        '403':
+          description:  Access Denied
           schema:
             $ref: '#/definitions/errorModel'
         '404':
@@ -172,9 +158,9 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: crbEmail
+        - name: Authorization
           in: header
-          description: Carbono user email
+          description: Authorization token
           required: true
           type: string
         - name: code
@@ -205,9 +191,9 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: crbEmail
+        - name: Authorization
           in: header
-          description: Carbono user email
+          description: Authorization token
           required: true
           type: string
         - name: code
@@ -244,9 +230,9 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: crbEmail
+        - name: Authorization
           in: header
-          description: Carbono user email
+          description: Authorization token
           required: true
           type: string
         - name: code
@@ -272,66 +258,6 @@ paths:
           schema:
             $ref: '#/definitions/errorModel'
 definitions:
-  loginInfo:
-    properties:
-      id:
-        type: string
-        description: Id that identifies the unique success message
-      apiVersion:
-        type: string
-        description: The version of the api
-      data:
-        required:
-          - id
-          - items
-        properties:
-          id:
-            type: string
-            description: Id that identifies the unique requested data
-          items:
-            type: array
-            description: An array of data items
-            items:
-              required:
-                - email
-                - password
-              properties:
-                email:
-                  type: string
-                  description: Email of the user
-                password:
-                  type: string
-                  description: Password of the user
-  userEmailCode:
-    properties:
-      id:
-        type: string
-        description: Id that identifies the unique success message
-      apiVersion:
-        type: string
-        description: The version of the api
-      data:
-        required:
-          - id
-          - items
-        properties:
-          id:
-            type: string
-            description: Id that identifies the unique requested data
-          items:
-            type: array
-            description: An array of data items
-            items:
-              required:
-                - email
-                - code
-              properties:
-                email:
-                  type: string
-                  description: Email of the User
-                code:
-                  type: string
-                  description: Code of the Profile
   newProfile:
     properties:
       id:

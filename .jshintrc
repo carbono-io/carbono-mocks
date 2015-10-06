@@ -12,7 +12,8 @@
     "unused"        : true,
     "nocomma"       : true,
     "maxdepth"      : 10,
-    "maxstatements" : 20,
+//50 only for mocks
+    "maxstatements" : 50,
     "funcscope"     : true,
     "futurehostile" : true,
     "nonbsp"        : true
