@@ -80,15 +80,70 @@ paths:
           schema:
             $ref: '#/definitions/errorMessage'
 
+  
+  /oauth2/token/: # password-grant
+    post:
+      description: |
+        Password grant flow for trusted Clients on browsers and mobiles apps.
+      produces:
+        - application/json
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - name: Authorization
+          type: string
+          in: header
+          required: true
+          description: |
+            Valid Client credentials. See Basic Access Authorization 'http://tools.ietf.org/html/rfc2617' and Password-Type Grant ' http://tools.ietf.org/html/draft-ietf-oauth-v2-28#section-4.3'.
+        - name: grant_type
+          type: string
+          in: formData
+          required: true
+          description: Must be 'password'.
+        - name: username
+          type: string
+          in: formData
+          required: true
+          description: |
+            User Id on Imperial, usually an email.
+        - name: password
+          type: string
+          in: formData
+          required: true
+          description: |
+            User password on Imperial matching the username.
+        - name: scope
+          type: string
+          in: formData
+          required: false
+          description: |
+            Comma separated words, useful to set and authorization scope for the token.
+      responses:
+        '200':
+          description: User authenticated and a Token object is returned.
+          schema:
+            $ref: '#/definitions/accessToken'
+        '401':
+          description: Invalid Client credentials.
+        '403':
+          description: Invalid Resource Owner ( User ) credentials.
+
   /oauth2/authorize:
     get:
       description: |
-        First step of OAuth2 flow.
+        First step of OAuth2 flow for external Clients.
       produces:
         - text/html
       consumes:
         - application/x-www-form-urlencoded
       parameters:
+        - name: Authorization
+          type: string
+          in: header
+          required: true
+          description: |
+            Valid user id and password through (Basic Access Authentication)[http://tools.ietf.org/html/rfc2617] of an user previously registered at Imperial.
         - name: client_id
           type: string
           in: query
@@ -110,7 +165,7 @@ paths:
           description: HTML file asking for user permissions.
     post:
       description: |
-        Second step of OAuth2 flow.
+        Second step of OAuth2 flow for external Clients.
       produces:
         - application/json
       consumes:
@@ -127,15 +182,22 @@ paths:
           description: |
             Redirects to redirect_uri, with an Authorization Code inside query string.
 
-  /oauth2/token:
+
+  /oauth2/token: # code-grant
     post:
       description: |
-        Last step of OAuth2 flow.
+        Last step of OAuth2 flow for external Clients.
       produces:
         - application/json
       consumes:
         - application/x-www-form-urlencoded
       parameters:
+        - name: Authorization
+          type: string
+          in: header
+          required: true
+          description: |
+            Valid Client credentials. See Basic Access Authorization 'http://tools.ietf.org/html/rfc2617' and Password-Type Grant ' http://tools.ietf.org/html/draft-ietf-oauth-v2-28#section-4.3'.
         - name: code
           type: string
           in: formData
@@ -146,27 +208,22 @@ paths:
           type: string
           in: formData
           required: true
-          description: Must be 'authorization_code'
+          description: Must be 'authorization_code'.
         - name: redirect_uri
           type: string
           in: formData
           required: true
           description: |
             Redirect url which must match the redirect_uri parameter used at the first step of OAuth2 flow.
-        - name: client_id
-          type: string
-          in: formData
-          required: true
-          description: Client ID.
-        - name: client_secret
-          type: string
-          in: formData
-          required: true
-          description: |
-            Client Secret. Client ID and Secret can be combined and used through Basic Authentication, instead of added inside payload
       responses:
         '200':
-          description: User authenticated.
+          description: User authenticated and a Token object is returned.
+          schema:
+            $ref: '#/definitions/accessToken'
+        '401':
+          description: Invalid Client credentials.
+        '403':
+          description: Invalid Authorization Code.
 
   /bearer/validate:
     post:
@@ -342,3 +399,15 @@ definitions:
           message:
             type: string
             description: The error message
+  
+  accessToken:
+    properties:
+      value:
+        type: string
+        description: The token hash.
+      clientId:
+        type: string
+        description: The client uid.
+      userId:
+        type: string
+        description: The user uid (code).
