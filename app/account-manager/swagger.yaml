@@ -493,9 +493,11 @@ definitions:
                       type: boolean
                       description: Indicates if the user owns the project
                     createdAt:
-                      type: date (mm/dd/aaaa)
+                      type: string
+                      format: date
                     modifiedAt:
-                      type: date (mm/dd/aaaa)
+                      type: string
+                      format: date
   projectResponse:
     properties:
       id:
@@ -564,9 +566,12 @@ definitions:
       description:
         type: string
       createdAt:
-        type: date (mm/dd/aaaa)
+        type: string
+        format: date
       modifiedAt:
-        type: date (mm/dd/aaaa)
+        type: string
+        format: date
+
   errorModel:
     properties:
       id:

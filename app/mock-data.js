@@ -25,9 +25,9 @@ machineStatus.setData(
         id: 'token1',
         items: [
             {
-                status: 0
-            }
-        ]
+                status: 0,
+            },
+        ],
     }
 );
 
@@ -117,7 +117,7 @@ var mock = function (app) {
             if (profile.name === 'John Connor 201') {
                 res.setHeader('content-type', 'application/json');
                 res.statusCode = 201;
-                res.json(buildResponse(false, 201, "", {
+                res.json(buildResponse(false, 201, '', {
                     profile: {
                         name: profile.name,
                         email: profile.email,
@@ -147,7 +147,7 @@ var mock = function (app) {
         if (req.params.code === 'user200') {
             res.setHeader('content-type', 'application/json');
             res.statusCode = 200;
-            res.json(buildResponse(false, 200, "", {
+            res.json(buildResponse(false, 200, '', {
                 profile: {
                     name: 'John Connor',
                     email: 'connor.john@resitance.com',
@@ -178,7 +178,7 @@ var mock = function (app) {
         if (req.headers.crbemail === 'email@200.com') {
             res.statusCode = 200;
             res.setHeader('content-type', 'application/json');
-            res.json(buildResponse(false, 200, "", {
+            res.json(buildResponse(false, 200, '', {
                 profile: {
                     name: 'John Connor',
                     email: req.headers.crbemail,
@@ -214,7 +214,7 @@ var mock = function (app) {
             if (profile.email === 'email@200.com') {
                 res.setHeader('content-type', 'application/json');
                 res.statusCode = 200;
-                res.json(buildResponse(false, 200, "", {
+                res.json(buildResponse(false, 200, '', {
                     name: 'John Connor',
                     email: profile.email,
                     code: 'sjdh3434hdsj',
@@ -252,6 +252,8 @@ var mock = function (app) {
                         name: 'Projeto Teste',
                         description: 'Description',
                         code: 'dasdasd-443-3r4ww',
+                        createdAt: new Date(2015,7,12),
+                        modifiedAt: new Date(2015,8,25),
                     },
                 },
             ],
@@ -324,6 +326,8 @@ var mock = function (app) {
                         code: 'dasdasd-443-3r4ww',
                         access: 'write',
                         owner: true,
+                        createdAt: new Date(2015,7,12),
+                        modifiedAt: new Date(2015,8,25),
                     },
                     project2: {
                         safeName: 'projeto-teste2',
@@ -332,6 +336,8 @@ var mock = function (app) {
                         code: 'dasdasd-443-3r4w2',
                         access: 'read',
                         owner: false,
+                        createdAt: new Date(2015,7,12),
+                        modifiedAt: new Date(2015,8,25),
                     },
                 },
             ],
@@ -372,6 +378,8 @@ var mock = function (app) {
                         code: 'dasdasd-443-3r4ww',
                         access: 'write',
                         owner: true,
+                        createdAt: new Date(2015,7,12),
+                        modifiedAt: new Date(2015,8,25),
                     },
                 },
             ],
@@ -430,7 +438,7 @@ var mock = function (app) {
                 var projectData = req.body.data.items[0];
                 if (projectData.name && projectData.description) {
                     res.statusCode = 201;
-                    res.json(buildResponse(false, 201, "", {
+                    res.json(buildResponse(false, 201, '', {
                         project: {
                             safeName: 'projeto-teste',
                             name: projectData.name,
@@ -441,7 +449,8 @@ var mock = function (app) {
                     res.end();
                 } else {
                     res.statusCode = 400;
-                    res.json(buildResponse(true, 400, "Missing param name or description").toObject());
+                    res.json(buildResponse(true, 400,
+                        'Missing param name or description').toObject());
                     res.end();
                 }
             } else if (req.headers.crbemail === 'email@400.com') {
@@ -486,7 +495,7 @@ var mock = function (app) {
         if (req.params.code === 'project-200') {
             if (req.headers.crbemail === 'email@200.com') {
                 res.statusCode = 200;
-                res.json(buildResponse(false, 201, "", {
+                res.json(buildResponse(false, 201, '', {
                     project: {
                         safeName: 'projeto-teste',
                         name: 'Project Name',
@@ -530,7 +539,6 @@ var mock = function (app) {
             res.end();
         }
     });
-
 
     // ------------- Imperial Router -----------------------
 
@@ -633,7 +641,6 @@ var mock = function (app) {
             res.end();
         }
     });
-
 
     // Projects ------------------------------
     // Create project
