@@ -1,4 +1,10 @@
 {
-    "host": "carbonohost",
-    "port": 3000
+    "host": "localhost",
+    "port": 3000,
+    "etcd": {
+        "host": "localhost",
+        "port": 3000,
+        "key" : "mock",
+        "alias" : "Carbono Mock Tretão"
+    }
 }

@@ -1,13 +1,13 @@
 'use strict';
 
-var config          = require('config');
-var ServiceManager  = require('carbono-service-manager');
-var Q               = require('q');
-var url             = require('url');
+var config = require('config');
+var etcd   = require('carbono-service-manager');
+var Q      = require('q');
+var url    = require('url');
 require('colors');
 
-var PATH_MISSION_CONTROL = '/ide-mission-control';
-var PATH_DEV_CONTAINER_MANAGER = '/ide-development-container-manager';
+var PATH_MC = '/ide-mission-control';
+var PATH_DCM = '/ide-development-container-manager';
 var PATH_ACCM = '/account-manager';
 var PATH_IMP = '/imperial';
 var PATH_AUTH = '/carbono-auth';
@@ -30,65 +30,24 @@ var EtcdManager = function () {
 };
 
 /**
- * Registers a submodule as a service at etcd.
- *
- * @param {Object} Object representing a ServiceManager.
- * @param {string} service - Service identifier.
- * @param {string} path - Path to access the submodule.
- *
- * @function
- */
-function register(serviceManager, service, path) {
-    var promise = serviceManager.registerService(service, path);
-    promise.then(
-        function () {
-            console.log(service + ' submodule registered');
-        }, function (err) {
-            console.log('[ERROR] Registering ' + service +
-                ' with etcd: ' + err);
-        });
-    return promise;
-}
-
-/**
  * Registers all mocks at etcd.
  *
  * @return {Object} Array of promisses, with all submodules to be registered.
  * @function
  */
 function registerAll() {
-    if (process.env.ETCD_SERVER) {
-        var serviceManager = new ServiceManager(process.env.ETCD_SERVER);
 
-        var basePath = url.format({
-            protocol: 'http',
-            hostname: config.get('host'),
-            port: config.get('port'),
-        });
+    var host = config.get('host');
+    var port = config.get('port');
 
-        return Q.all([
-            register(serviceManager, MC_SERVICE_KEY,
-                    url.resolve(basePath, PATH_MISSION_CONTROL)),
-            register(serviceManager, DCM_SERVICE_KEY,
-                    url.resolve(basePath, PATH_DEV_CONTAINER_MANAGER)),
-            register(serviceManager, ACCM_SERVICE_KEY,
-                    url.resolve(basePath, PATH_ACCM)),
-            register(serviceManager, IMP_SERVICE_KEY,
-                    url.resolve(basePath, PATH_IMP)),
-            register(serviceManager, AUTH_SERVICE_KEY,
-                    url.resolve(basePath, PATH_AUTH)),
-            register(serviceManager, IPE_SERVICE_KEY,
-                    url.resolve(basePath, PATH_IPE)),
-        ]);
+//key, alias, host, port, _namespac
+    etcd.register(MC_SERVICE_KEY, 'Mission-Control', host, port, PATH_MC);
+    etcd.register(DCM_SERVICE_KEY, 'Dev-Container-M', host, port, PATH_DCM);
+    etcd.register(ACCM_SERVICE_KEY, 'Account-M', host, port, PATH_ACCM);
+    etcd.register(IMP_SERVICE_KEY, 'Bromelia Imperial', host, port, PATH_IMP);
+    etcd.register(AUTH_SERVICE_KEY, 'OAuth2', host, port, PATH_AUTH);
+    etcd.register(IPE_SERVICE_KEY, 'Mogno Ipê', host, port, PATH_IPE);
 
-    } else {
-        console.log(
-            'The environment variable ETCD_SERVER is not defined!'.bold.red);
-        console.log('Please, define it before continuing, otherwise the'.red);
-        console.log('integration will not work!'.red);
-        console.log();
-        return null;
-    }
 }
 
 /**

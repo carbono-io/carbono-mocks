@@ -14,6 +14,8 @@ produces:
   - application/json
   - text/html
 paths:
+
+
   /projects:
     post:
       description: Creates a new project
@@ -45,7 +47,9 @@ paths:
           description: Forbidden - Access Denied
           schema:
             $ref: '#/definitions/ResponseError'
-  /projects/{code}/resources/marked/{fileName}:
+
+
+  /mc/cm/{code}/marked/{fileName}:
     get:
       summary: Retrieves a marked file {fileName} from a Project using the identifier {code}.
       parameters:
@@ -73,7 +77,9 @@ paths:
           description:  File not found
           schema:
             $ref: '#/definitions/ResponseError'
-  /projects/{code}/resources/clean/{fileName}:
+
+
+  /mc/cm/{code}/clean/{fileName}:
     get:
       summary: Retrieves a clean file {fileName} from a Project using the identifier {code}.
       parameters:
@@ -101,6 +107,7 @@ paths:
           description:  File not found
           schema:
             $ref: '#/definitions/ResponseError'
+
 
 definitions:
   projectResponse:
@@ -144,6 +151,7 @@ definitions:
                     description:
                       type: string
 
+
   newProject:
     properties:
       id:
@@ -174,6 +182,8 @@ definitions:
                 description:
                   type: string
                   description: Description of the project
+
+
   ResponseError:
     properties:
       id:
