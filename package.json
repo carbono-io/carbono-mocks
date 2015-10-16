@@ -39,7 +39,7 @@
     "body-parser": "^1.13.3",
     "busboy": "^0.2.11",
     "carbono-json-messages": "0.0.2",
-    "carbono-service-manager": "^0.0.8",
+    "carbono-service-manager": "^0.0.9",
     "colors": "^1.1.2",
     "config": "^1.15.0",
     "consign": "^0.1.1",
